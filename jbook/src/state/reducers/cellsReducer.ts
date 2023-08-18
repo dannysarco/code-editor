@@ -1,4 +1,5 @@
-import produce from 'immer';
+// Add {} around produce. It seems to have got rid of the error.
+import { produce } from 'immer';
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
 import { Cell } from '../cell';
@@ -18,6 +19,7 @@ const initialState: CellsState = {
   order: [],
   data: {},
 };
+
 
 const reducer = produce((state: CellsState = initialState, action: Action) => {
   switch (action.type) {
@@ -67,7 +69,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       return state;
     default:
       return state;
-  }
+  } 
 });
 
 const randomId = () => {
