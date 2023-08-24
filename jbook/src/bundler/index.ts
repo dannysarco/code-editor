@@ -21,6 +21,8 @@ const bundle = async (rawCode: string) => {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
       },
+      jsxFactory: '_React.createElement',
+      jsxFragment: '_React.Fragment',
     });
 
     return {
@@ -30,7 +32,7 @@ const bundle = async (rawCode: string) => {
   } catch (err) {
     return {
       code: '',
-      // err: err.message,
+      err: (err as Error).message,
     };
   }
 };
