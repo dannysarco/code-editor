@@ -1,10 +1,39 @@
-# Getting Started with Code Editor
+# Getting Started with Code Editor with is a dynamic coding environment.
+
+# This process will change once I'm down implenting this to be run in a CLI.
 
 - Clone the project to your local hard drive.
 - Navigate to Node.js to download and install Node if you don't have it installed.
 - Open an instance of Terminal and navigate to ../code-editor/jbook
 - Run the following command: npm i react --legacy-peer-deps
 - Then run the following command to start the app: npm start
+
+## Current Functionality
+
+- Everything should be working except being able to save off any code or text written
+  in the markdown editor.
+- I've created a function show() that works like console.log()
+- React and ReactDOM are already imported.
+  Example:
+
+  const App = () => {
+  return <h1>Hi! I'm a react.js component!</h1>
+  };
+
+  show(App);
+
+- Ability to import any npm module and use it.
+  Example:
+  import axios from 'axios';
+  import 'bulma/css/bulma.css;
+
+  axios.get('http://jsonplaceholder.typicode.com/users/1')
+  .then(({ data }) => show(data.name));
+
+## Future Functionality
+
+- Ability to install this from a CLI
+- Ability to save your work to a file from a CLI
 
 ## Available Scripts
 
