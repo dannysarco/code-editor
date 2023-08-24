@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ResizableBox, ResizableBoxProps } from 'react-resizable';
 
 interface ResizableProps {
-  direction: 'horizontal' | 'vertical';
+  direction: "horizontal" | "vertical";
   children?: React.ReactNode;
 }
 
