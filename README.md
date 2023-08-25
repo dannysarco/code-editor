@@ -17,19 +17,25 @@
 - React and ReactDOM are already imported.
   Example:
 
+```
   const App = () => {
   return <h1>Hi! I'm a react.js component!</h1>
   };
 
   show(App);
+```
 
 - Ability to import any npm module and use it.
   Example:
+
+```
   import axios from 'axios';
-  import 'bulma/css/bulma.css;
+  import 'bulma/css/bulma.css';
 
   axios.get('http://jsonplaceholder.typicode.com/users/1')
   .then(({ data }) => show(data.name));
+```
+
 
 ## Future Functionality
 
