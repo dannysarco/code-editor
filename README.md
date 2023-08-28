@@ -4,10 +4,10 @@
 
 - Clone the project to your local hard drive.
 - Navigate to Node.js to download and install Node if you don't have it installed.
-- Open an instance of Terminal and navigate to ../code-editor/jbook
-  //Run the following command: npm i react --legacy-peer-deps
-  //Then run the following command to start the app: "npm start"
-- While in the jbook directory, run: "npm run start"
+- Open an instance of Terminal and navigate to ../code-editor/jbook/packages/local-client
+- Run ```npm install```
+- Run ```npm i react --legacy-peer-deps```
+- Run ```npm run start```
 
 ## Current Functionality
 
