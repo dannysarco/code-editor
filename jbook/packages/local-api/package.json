@@ -1,5 +1,5 @@
 {
-  "name": "@jsnote/local-api",
+  "name": "@my-scrapbook/local-api",
   "version": "1.0.0",
   "description": "",
   "files": [
@@ -23,7 +23,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@jsnote/local-client": "^1.0.0",
+    "@my-scrapbook/local-client": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6"

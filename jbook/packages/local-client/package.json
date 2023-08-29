@@ -1,5 +1,5 @@
 {
-  "name": "@jsnote/local-client",
+  "name": "@my-scrapbook/local-client",
   "version": "1.0.0",
   "publishConfig": {
     "access": "public"
