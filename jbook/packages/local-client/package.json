@@ -48,6 +48,8 @@
     "eject": "react-scripts eject",
     "prepublishOnly": "npm run build"
   },
+  "author": "Danny Sarco",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",
