@@ -15,16 +15,39 @@
 - I've created a function show() that works similar to console.log()
 - Ability to import any npm module and use it without actually installing it.
 
+## Markdown example for the text editor with "Explainer."
+
+```
+**My Scrap Book** 
+----------
+This is an interactive coding environment. You can write Javascript, see it executed, and write comprehensive documentation using markdown. 
+
+- Click any text cell (including this one) to edit it 
+- The code in each code editor is joined into one file. If you define a variable in cell #1, you can refer to it in any of the following cells! 
+- You can show any React component, string, number, or anything else by calling the `show` function. This is a function built into this environment. Call show multiple times to show multiple values
+- Re-order or delete cells using the buttons on the top right
+- Add new cells by hovering on the divider between each cell
+
+All of your changes get saved to the file you opened JBook with. So if you ran `npx jbook test.js`, all of the text and code you write will be saved to the `test.js` file.
+
+```
+
 ## Code samples to play with in the code editor.
 
 ```
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { useState } from 'react';
 
-const App = () => {
-  return <h1>Hi! I'm a react.js component!</h1>;
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Click</button>
+      <h3>Count: {count}</h3>
+    </div>
+  );
 };
-show(<App />);
+// Display any variable or React Component by calling 'show'
+show(Counter);
 
 ```
 
