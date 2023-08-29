@@ -6,9 +6,9 @@
 - Navigate to Node.js to download and install Node if you don't have it installed.
 - Open an instance of Terminal and navigate to ../code-editor/jbook/packages/local-client
 - Run the following individually, in order:
- ```
- npm install
- ```
+```
+npm install
+```
 ```
 npm i react --legacy-peer-deps
 ```
