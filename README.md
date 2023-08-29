@@ -1,6 +1,6 @@
-# Getting Started with Code Editor is a dynamic coding environment.
+# Getting Started with Code Editor - a dynamic coding environment.
 
-# This process will change once I'm down to implement this in a CLI.
+## This process will change once I'm down to implement this in a CLI.
 
 - Clone the project to your local hard drive.
 - Navigate to Node.js to download and install Node if you don't have it installed.
@@ -11,22 +11,22 @@
 
 ## Current Functionality
 
-- Everything should be working except being able to save any code or text written
-  in the markdown editor.
-- I've created a function show() that works like console.log()
-- React and ReactDOM are already imported.
-  Example:
+- All of the core functionality should be working except the ability to save your code and markdown to a file.
+- I've created a function show() that works similar to console.log()
+- Ability to import any npm module and use it without actually installing it.
+
+## Code samples to play with in the code editor.
 
 ```
-  const App = () => {
-  return <h1>Hi! I'm a react.js component!</h1>
-  };
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-  show(App);
+const App = () => {
+  return <h1>Hi! I'm a react.js component!</h1>;
+};
+show(<App />);
+
 ```
-
-- Ability to import any npm module and use it.
-  Example:
 
 ```
   import axios from 'axios';
@@ -41,36 +41,3 @@
 
 - Ability to install this from a CLI
 - Ability to save your work to a file from a CLI
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified, and the filenames include the hashes.\
-
-### `npm run eject`
-
-**Note: This is a one-way operation. Once you `eject,` you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single-build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc.) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
-
-You don’t ever have to use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However, I understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
