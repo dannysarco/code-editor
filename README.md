@@ -5,9 +5,16 @@
 - Clone the project to your local hard drive.
 - Navigate to Node.js to download and install Node if you don't have it installed.
 - Open an instance of Terminal and navigate to ../code-editor/jbook/packages/local-client
-- Run ```npm install```
-- Run ```npm i react --legacy-peer-deps```
-- Run ```npm run start```
+- Run the following individually, in order:
+ ```
+ npm install
+ ```
+```
+npm i react --legacy-peer-deps
+```
+```
+npm run start
+```
 
 ## Current Functionality
 
@@ -47,7 +54,7 @@ const Counter = () => {
   );
 };
 // Display any variable or React Component by calling 'show'
-show(Counter);
+show(<Counter />);
 
 ```
 
