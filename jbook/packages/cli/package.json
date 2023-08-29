@@ -14,8 +14,8 @@
     "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Danny Sarco",
+  "license": "MIT",
   "dependencies": {
     "@my-scrapbook/local-client": "^1.0.0"
   },
