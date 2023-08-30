@@ -35,7 +35,7 @@ This is an interactive coding environment. You can write Javascript, see it exec
 - Re-order or delete cells using the buttons on the top right
 - Add new cells by hovering on the divider between each cell
 
-All of your changes get saved to the file you opened JBook with. So if you ran `npx jbook test.js`, all of the text and code you write will be saved to the `test.js` file.
+All of your changes get saved to the file you opened JBook with. So if you ran `npx jbook notebook.js`, all of the text and code you write will be saved to the `notebook.js` file.
 
 ```
 
