@@ -1,6 +1,6 @@
 {
   "name": "my-scrapbook",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "keywords": [],
   "author": "Danny Sarco",
@@ -17,10 +17,10 @@
     "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
   "dependencies": {
-    "@my-scrapbook/local-client": "^2.0.1"
+    "@my-scrapbook/local-client": "^2.0.2"
   },
   "devDependencies": {
-    "@my-scrapbook/local-api": "^2.0.1",
+    "@my-scrapbook/local-api": "^2.0.2",
     "@types/node": "^14.14.22",
     "commander": "^7.0.0",
     "esbuild": "0.8.26",
