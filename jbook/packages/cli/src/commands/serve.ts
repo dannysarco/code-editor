@@ -20,11 +20,11 @@ export const serveCommand = new Command()
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
       );
-    } catch (err) {
+    } catch (err: any) {
       if (err.code === "EADDRINUSE") {
         console.error("Port is in use. Try running on a different port.");
       } else {
-        console.log("Heres the problem", (err as Error).message);
+        console.log("Heres the problem", err.message);
       }
       process.exit(1);
     }
