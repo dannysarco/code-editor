@@ -1,6 +1,6 @@
 {
   "name": "my-scrapbook",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "bin": "dist/index.js",
   "publishConfig": {
@@ -17,10 +17,10 @@
   "author": "Danny Sarco",
   "license": "MIT",
   "dependencies": {
-    "@my-scrapbook/local-client": "^1.0.0"
+    "@my-scrapbook/local-client": "^2.0.0"
   },
   "devDependencies": {
-    "@my-scrapbook/local-api": "^1.0.0",
+    "@my-scrapbook/local-api": "^2.0.0",
     "@types/node": "^14.14.22",
     "commander": "^7.0.0",
     "esbuild": "0.8.26",
