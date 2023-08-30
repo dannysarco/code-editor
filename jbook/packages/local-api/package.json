@@ -15,8 +15,8 @@
     "prepublishOnly": "tsc"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Danny Sarco",
+  "license": "MIT",
   "devDependencies": {
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.11",
