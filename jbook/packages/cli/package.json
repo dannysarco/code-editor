@@ -2,6 +2,9 @@
   "name": "my-scrapbook",
   "version": "2.0.1",
   "description": "",
+  "keywords": [],
+  "author": "Danny Sarco",
+  "license": "MIT",
   "bin": "dist/index.js",
   "publishConfig": {
     "access": "public"
@@ -13,9 +16,6 @@
     "start": "tsc --watch --preserveWatchOutput",
     "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
-  "keywords": [],
-  "author": "Danny Sarco",
-  "license": "MIT",
   "dependencies": {
     "@my-scrapbook/local-client": "^2.0.1"
   },

@@ -2,6 +2,9 @@
   "name": "@my-scrapbook/local-api",
   "version": "2.0.1",
   "description": "",
+  "keywords": [],
+  "author": "Danny Sarco",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -14,9 +17,6 @@
     "start": "tsc --watch --preserveWatchOutput",
     "prepublishOnly": "tsc"
   },
-  "keywords": [],
-  "author": "Danny Sarco",
-  "license": "MIT",
   "devDependencies": {
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.11",
