@@ -17,7 +17,6 @@
   "author": "Danny Sarco",
   "license": "MIT",
   "dependencies": {
-    "commander": "^7.0.0",
     "@my-scrapbook/local-client": "^1.0.0"
   },
   "devDependencies": {
