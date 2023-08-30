@@ -42,14 +42,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.serveCommand = void 0;
 var path_1 = __importDefault(require("path"));
 var commander_1 = require("commander");
-var local_api_1 = require("@jsnote/local-api");
-var isProduction = process.env.NODE_ENV === 'production';
+var local_api_1 = require("@my-scrapbook/local-api");
+var isProduction = process.env.NODE_ENV === "production";
 exports.serveCommand = new commander_1.Command()
-    .command('serve [filename]')
-    .description('Open a file for editing')
-    .option('-p, --port <number>', 'port to run server on', '4005')
+    .command("serve [filename]")
+    .description("Open a file for editing")
+    .option("-p, --port <number>", "port to run server on", "4005")
     .action(function (filename, options) {
-    if (filename === void 0) { filename = 'notebook.js'; }
+    if (filename === void 0) { filename = "notebook.js"; }
     return __awaiter(void 0, void 0, void 0, function () {
         var dir, err_1;
         return __generator(this, function (_a) {
@@ -64,11 +64,11 @@ exports.serveCommand = new commander_1.Command()
                     return [3 /*break*/, 3];
                 case 2:
                     err_1 = _a.sent();
-                    if (err_1.code === 'EADDRINUSE') {
-                        console.error('Port is in use. Try running on a different port.');
+                    if (err_1.code === "EADDRINUSE") {
+                        console.error("Port is in use. Try running on a different port.");
                     }
                     else {
-                        console.log('Heres the problem', err_1.message);
+                        console.log("Heres the problem", err_1.message);
                     }
                     process.exit(1);
                     return [3 /*break*/, 3];
