@@ -1,45 +1,54 @@
-# Getting Started with Code Editor - a dynamic coding environment.
+# Getting Started with My Scrapbook - a dynamic coding environment.
 
-## This process will change once I'm down to implement this in a CLI.
 
-- Clone the project to your local hard drive.
-- Navigate to Node.js to download and install Node if you don't have it installed.
-- Open an instance of Terminal and navigate to ../code-editor/jbook/packages/local-client
-- Run the following individually, in order:
-```
-npm install
-```
-```
-npm i react --legacy-peer-deps
-```
-```
-npm run start
-```
+## What is My Scrapbook, and what does it do?
 
-## Current Functionality
+- It's a full-featured in-browser IDE and markdown editor for documentation.
+- You can import any npm module in the IDE. The bundling and transpiling of your code are handled in the browser.
+- React and ReactDOM are already imported and ready for use.
+- All of your text and code are automatically saved to a file named notebook.js
 
-- All of the core functionality should be working except the ability to save your code and markdown to a file.
-- I've created a function show() that works similar to console.log()
-- Ability to import any npm module and use it without actually installing it.
+## Install Instructions.
 
-## Markdown example for the text editor with "Explainer."
+- Open a folder on your terminal where you don't mind a few files being written.
+- Run the following command:
+```
+npm i my-scrapbook
+```
+## To Run My Scrapbook
+
+- In the same folder you install My Scrapbook, open up a terminal session and run:
 
 ```
-**My Scrap Book** 
+npx my-scrapbook serve
+```
+- **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
+- Click the **+ Code** or **+Text** button at the top of the screen to get started!
+- All your work is saved to the file **notebook.js**.
+- Next time you run the application using the same command, it will open to your previous **notebook.js** file.
+- If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again. (Or you could leave the **notebook.js** and click the **X** button on all your previous work once the IDE is loaded into the browser.)
+- If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
+
+
+## Markdown sample text for the text editor that contains an "Explainer".
+
+```
+**My Scrapbook** 
 ----------
 This is an interactive coding environment. You can write Javascript, see it executed, and write comprehensive documentation using markdown. 
 
 - Click any text cell (including this one) to edit it 
-- The code in each code editor is joined into one file. If you define a variable in cell #1, you can refer to it in any of the following cells! 
+- The code in each code editor is joined into one file. If you define a variable in cell #1, you can refer to it in any of the following cells!
+- Click the **Format** button in any code cell, and Prettier will its thing to your code!
 - You can show any React component, string, number, or anything else by calling the `show` function. This is a function built into this environment. Call show multiple times to show multiple values
 - Re-order or delete cells using the buttons on the top right
 - Add new cells by hovering on the divider between each cell
 
-All of your changes get saved to the file you opened JBook with. So if you ran `npx jbook notebook.js`, all of the text and code you write will be saved to the `notebook.js` file.
+All of your changes get saved to the file you opened JBook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
 
 ```
 
-## Code samples to play with in the code editor.
+## Code samples for the code editor.
 
 ```
 import { useState } from 'react';
@@ -69,5 +78,5 @@ show(<Counter />);
 
 ## Future Functionality
 
-- Ability to install this from a CLI
-- Ability to save your work to a file from a CLI
+- Lots! This is just the beginning.
+
