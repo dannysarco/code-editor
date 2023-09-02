@@ -54,20 +54,32 @@ All of your changes get saved to the file you opened JBook with. So if you ran `
 ## Code samples for the code editor.
 
 ```
-import { useState } from 'react';
+import React, { useState } from 'react';
+
+const styles = {
+    padding: '10px 20px',
+    fontSize: '16px',
+    borderRadius: '4px',
+    fontWeight: 600,
+    transition: 'background-color 0.3s, transform 0.3s'
+};
 
 const Counter = () => {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <button onClick={() => setCount(count + 1)}>Add to Count</button>
-      <button onClick={() => setCount(0)}>Reset</button>
+      <button style={styles} onClick={() => setCount(count + 1)}>
+        Add to Count
+      </button>
+      <button style={styles} onClick={() => setCount(0)}>
+        Reset
+      </button>
       <h3>Count: {count}</h3>
     </div>
   );
 };
 // Display any variable or React Component by calling 'show'
-show(<Counter />);
+show(<Counter />)
 
 ```
 
