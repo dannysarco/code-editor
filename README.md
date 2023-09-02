@@ -56,30 +56,60 @@ All of your changes get saved to the file you opened JBook with. So if you ran `
 ```
 import { useState } from 'react';
 
-const styles = {
-    padding: '10px 20px',
-    fontSize: '16px',
-    borderRadius: '4px',
-    fontWeight: 600,
-    transition: 'background-color 0.3s, transform 0.3s'
+const buttonStyle = {
+  padding: '10px 20px',
+  fontSize: '16px',
+  borderRadius: '4px',
+  fontWeight: 600,
+  backgroundColor: '#007BFF',
+  color: '#ffffff',
+  transition: 'background-color 0.3s, transform 0.3s, color 0.3s',
+  margin: '10px',
+};
+
+const hoverStyles = {
+  ...buttonStyle,
+  backgroundColor: '#0056b3',
+};
+
+const countStyle = {
+  fontSize: '20px',
+  fontWeight: 'bold',
+   fontFamily: 'Arial, sans-serif',
+  color: '#333',
+  marginTop: '20px',
+  border: '1px solid #007BFF',
+  padding: '10px',
+  borderRadius: '4px',
 };
 
 const Counter = () => {
+  const [isAddHovered, setIsAddHovered] = useState(false); // for Add button
+  const [isResetHovered, setIsResetHovered] = useState(false); // for Reset button
   const [count, setCount] = useState(0);
   return (
     <div>
-      <button style={styles} onClick={() => setCount(count + 1)}>
+      <button
+        style={isAddHovered ? hoverStyles : buttonStyle}
+        onMouseEnter={() => setIsAddHovered(true)}
+        onMouseLeave={() => setIsAddHovered(false)}
+        onClick={() => setCount(count + 1)}
+      >
         Add to Count
       </button>
-      <button style={styles} onClick={() => setCount(0)}>
+      <button
+        style={isResetHovered ? hoverStyles : buttonStyle}
+        onMouseEnter={() => setIsResetHovered(true)}
+        onMouseLeave={() => setIsResetHovered(false)}
+        onClick={() => setCount(0)}
+      >
         Reset
       </button>
-      <h3>Count: {count}</h3>
+      <h3 style={countStyle}>Count: {count}</h3>
     </div>
   );
-};
-// Display any variable or React Component by calling 'show'
-show(<Counter />)
+}; // Display any variable or React Component by calling 'show'
+show(<Counter />);
 
 ```
 
