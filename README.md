@@ -60,7 +60,8 @@ const Counter = () => {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <button onClick={() => setCount(count + 1)}>Click</button>
+      <button onClick={() => setCount(count + 1)}>Add to Count</button>
+      <button onClick={() => setCount(0)}>Reset</button>
       <h3>Count: {count}</h3>
     </div>
   );
