@@ -54,7 +54,7 @@ All of your changes get saved to the file you opened JBook with. So if you ran `
 ## Code samples for the code editor.
 
 ```
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const styles = {
     padding: '10px 20px',
