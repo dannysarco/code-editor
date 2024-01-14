@@ -2,9 +2,12 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "lerna": "^8.0.2"
   },
   "scripts": {
     "start": "lerna run start --parallel"
+  },
+  "dependencies": {
+    "my-scrapbook": "^2.0.3"
   }
 }
