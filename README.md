@@ -8,6 +8,9 @@
 - React and ReactDOM are already imported and ready for use.
 - All of your text and code are automatically saved to a file named notebook.js
 
+## Wanna try it without installing it?
+- Just go to [DannySarco.com](https://dannysarco.com)
+
 ## Install Instructions.
 
 - Open a folder on your terminal where you don't mind a few files being written.
