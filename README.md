@@ -117,11 +117,13 @@ show(<Counter />);
 ```
 
 ```
-  import axios from 'axios';
-  import 'bulma/css/bulma.css';
+import axios from 'axios';
+import 'bulma/css/bulma.css';
 
-  axios.get('http://jsonplaceholder.typicode.com/users/1')
-  .then(({ data }) => show(data.name));
+axios
+  .get('https://jsonplaceholder.typicode.com/users/1')
+  .then(({ data }) => show(data.name))
+  .catch(error => console.error('There was an error!', error));
 ```
 ![sample](https://github.com/dannysarco/code-editor/assets/54184032/ff98a6a8-d055-40a1-a2c7-836bb4f24e8a)
 
