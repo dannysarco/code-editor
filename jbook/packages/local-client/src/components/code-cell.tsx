@@ -4,6 +4,7 @@ import CodeEditor from './code-editor';
 import Preview from './preview';
 import Resizable from './resizable';
 import { Cell } from '../state';
+import { BUNDLE_DEBOUNCE_MS } from '../constants';
 import { useActions } from '../hooks/use-actions';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import { useCumulativeCode } from '../hooks/use-cumulative-code';
@@ -25,7 +26,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
     const timer = setTimeout(async () => {
       createBundle(cell.id, cumulativeCode);
-    }, 750);
+    }, BUNDLE_DEBOUNCE_MS);
 
     return () => {
       clearTimeout(timer);

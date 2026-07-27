@@ -7,6 +7,7 @@ import parser from 'prettier/parser-babel';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 import MonacoJSXHighlighter, { makeBabelParse } from 'monaco-jsx-highlighter';
+import { JSX_HIGHLIGHT_DEBOUNCE_MS } from '../constants';
 
 // Configures @babel/parser for module source type + JSX with error recovery;
 // the raw parse function rejects top-level import/export statements.
@@ -34,7 +35,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     // Silence the parse/highlight error handlers: user code is routinely
     // invalid mid-keystroke and the defaults log every attempt.
     highlighter.highlightOnDidChangeModelContent(
-      100,
+      JSX_HIGHLIGHT_DEBOUNCE_MS,
       undefined,
       () => {},
       undefined,
