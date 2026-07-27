@@ -89,13 +89,13 @@
 **Effort:** 4 hours
 **Impact:** Single source of truth, prevents API drift
 
-- [ ] Create `jbook/packages/types/` directory
-- [ ] Extract `Cell` interface from both locations
-- [ ] Extract API request/response types
-- [ ] Extract Bundle result types
-- [ ] Update package.json with proper exports
-- [ ] Update imports in cli, local-api, local-client
-- [ ] Add to Lerna workspaces
+- [x] Create `jbook/packages/types/` directory (PR #12)
+- [x] Extract `Cell` interface from both locations (PR #12)
+- [x] Extract API request/response types (PR #12)
+- [x] Extract Bundle result types (PR #12)
+- [x] Update package.json with proper exports (PR #12)
+- [x] Update imports in local-api and local-client (the cli uses no shared types) (PR #12)
+- [x] Add to workspaces (covered by the existing `packages/*` glob) (PR #12)
 
 **New Files:**
 - `jbook/packages/types/package.json`
