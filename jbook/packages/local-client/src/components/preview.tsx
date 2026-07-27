@@ -1,5 +1,6 @@
 import './preview.css';
 import { useRef, useEffect } from 'react';
+import { PREVIEW_EXECUTE_DELAY_MS } from '../constants';
 
 interface PreviewProps {
   code: string;
@@ -44,7 +45,7 @@ const Preview: React.FC<PreviewProps> = ({ code, err }) => {
     iframe.current.srcdoc = html;
     setTimeout(() => {
       iframe.current.contentWindow.postMessage(code, '*');
-    }, 50);
+    }, PREVIEW_EXECUTE_DELAY_MS);
   }, [code]);
 
   return (
