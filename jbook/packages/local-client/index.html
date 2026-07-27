@@ -13,6 +13,12 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- @babel/traverse reads process.env at module evaluation. The
+         production build replaces it statically; the Vite dev server does
+         not transform bare `process` references in dependencies. -->
+    <script>
+      window.process = window.process || { env: {} };
+    </script>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
