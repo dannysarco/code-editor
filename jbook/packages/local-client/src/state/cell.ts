@@ -1,6 +1,3 @@
-export type CellTypes = 'code' | 'text';
-export interface Cell {
-  id: string;
-  type: CellTypes;
-  content: string;
-}
+// Re-exported so existing `import { Cell } from '../state'` sites keep
+// working; the definitions live in the shared @my-scrapbook/types package.
+export type { Cell, CellTypes } from '@my-scrapbook/types';
