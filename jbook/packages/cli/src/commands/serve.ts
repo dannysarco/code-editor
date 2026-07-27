@@ -20,11 +20,17 @@ export const serveCommand = new Command()
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
       );
-    } catch (err: any) {
-      if (err.code === "EADDRINUSE") {
-        console.error("Port is in use. Try running on a different port.");
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException).code;
+      if (code === "EADDRINUSE") {
+        console.error(
+          `Port ${options.port} is already in use. Pick another with: my-scrapbook serve ${filename} -p <port>`
+        );
       } else {
-        console.log("Heres the problem", err.message);
+        const message = err instanceof Error ? err.message : String(err);
+        console.error(
+          `Failed to open ${filename} on port ${options.port}: ${message}`
+        );
       }
       process.exit(1);
     }
