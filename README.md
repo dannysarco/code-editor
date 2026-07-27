@@ -1,6 +1,5 @@
 # Getting Started with My Scrapbook - a dynamic coding environment.
 
-
 ## What is My Scrapbook, and what does it do?
 
 - It's a full-featured in-browser IDE and markdown editor for documentation.
@@ -8,11 +7,9 @@
 - React and ReactDOM are already imported and ready for use.
 - All of your text and code are automatically saved to a file named notebook.js
 
-## Wanna try it without installing it?
-- Just go to [DannySarco.com](https://dannysarco.com)
-
 ## Install Instructions.
 
+- You'll need [Node.js](https://nodejs.org/) 18 or newer.
 - Open a folder on your terminal where you don't mind a few files being written.
 - Run the following command:
 ```
@@ -35,6 +32,13 @@ npx my-scrapbook serve
 - If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
 ![notebook](https://github.com/dannysarco/code-editor/assets/54184032/2a840f72-1afa-4566-a714-005eee0af76a)
 
+## What's new in 3.0
+
+- Rebuilt on a modern toolchain: Vite, TypeScript 5, React 18, and Redux Toolkit.
+- The in-browser bundler ships its own copy of esbuild, so bundling no longer depends on a CDN.
+- A crashed cell shows an error message with a Reset button instead of taking down the whole notebook.
+- The save API validates what it writes, and a corrupted notebook.js can no longer crash the server.
+- Versions 2.x are deprecated on npm: they can no longer render React components (they relied on an API that current React, served from unpkg, removed).
 
 ## Markdown sample text for the text editor that contains an "Explainer".
 
@@ -50,7 +54,7 @@ This is an interactive coding environment. You can write Javascript, see it exec
 - Re-order or delete cells using the buttons on the top right
 - Add new cells by hovering on the divider between each cell
 
-All of your changes get saved to the file you opened JBook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
+All of your changes get saved to the file you opened My Scrapbook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
 
 ```
 
@@ -127,7 +131,18 @@ axios
 ```
 ![sample](https://github.com/dannysarco/code-editor/assets/54184032/ff98a6a8-d055-40a1-a2c7-836bb4f24e8a)
 
-## Future Functionality
+## Development
 
-- Lots! This is just the beginning.
+The code lives in [`jbook/`](jbook), an npm-workspaces monorepo with four packages: the `my-scrapbook` CLI, the Express API (`local-api`), the browser app (`local-client`, built with Vite), and shared TypeScript types (`types`). You'll want Node 20+ for development.
 
+```
+cd jbook
+npm install
+npm test
+```
+
+To work on the browser app with hot reload, run `npm start` in `jbook/packages/local-client` (it serves on port 3000; run the CLI's `serve` command alongside it to have a real API to talk to). Each package's README has more detail, and CI runs the builds and tests on every pull request.
+
+## Roadmap
+
+See [TODO.md](TODO.md) for what's done and what's planned — larger ideas include undo/redo, offline caching of npm modules, and collaborative editing.
