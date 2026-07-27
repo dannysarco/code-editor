@@ -18,7 +18,8 @@ export const serve = (
       createProxyMiddleware({
         target: "http://localhost:3000",
         ws: true,
-        logLevel: "silent",
+        // http-proxy-middleware 3.x replaced logLevel with an optional
+        // logger; omitting it keeps the proxy silent.
       })
     );
   } else {
