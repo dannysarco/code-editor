@@ -1,18 +1,31 @@
 import * as esbuild from "esbuild-wasm";
+// Bundle the wasm binary from the installed package rather than fetching it
+// from unpkg: the app works offline and the binary always matches the JS API
+// version.
+import wasmURL from "esbuild-wasm/esbuild.wasm?url";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
-let service: esbuild.Service;
-const bundle = async (rawCode: string) => {
-  if (!service) {
-    service = await esbuild.startService({
-      worker: true,
-      wasmURL: "https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm",
-    });
-  }
+let initPromise: Promise<void> | null = null;
 
+const ensureInitialized = () => {
+  if (!initPromise) {
+    initPromise = esbuild
+      .initialize({ wasmURL, worker: true })
+      .catch((err) => {
+        // Allow a later bundle() call to retry initialization.
+        initPromise = null;
+        throw err;
+      });
+  }
+  return initPromise;
+};
+
+const bundle = async (rawCode: string) => {
   try {
-    const result = await service.build({
+    await ensureInitialized();
+
+    const result = await esbuild.build({
       entryPoints: ["index.js"],
       bundle: true,
       write: false,
@@ -32,7 +45,7 @@ const bundle = async (rawCode: string) => {
   } catch (err) {
     return {
       code: "",
-      err: (err as Error).message,
+      err: err instanceof Error ? err.message : String(err),
     };
   }
 };

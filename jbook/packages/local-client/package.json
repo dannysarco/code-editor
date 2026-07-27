@@ -27,7 +27,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "axios": "0.21.1",
     "bulmaswatch": "^0.8.1",
-    "esbuild-wasm": "0.8.27",
+    "esbuild-wasm": "^0.25.0",
     "immer": "^8.0.0",
     "jscodeshift": "0.11.0",
     "localforage": "^1.9.0",
