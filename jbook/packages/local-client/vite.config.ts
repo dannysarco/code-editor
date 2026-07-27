@@ -1,8 +1,15 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.ts'],
+    coverage: {
+      include: ['src/**'],
+    },
+  },
   server: {
     // Port 3000 is load-bearing: in development, @my-scrapbook/local-api
     // proxies unmatched requests (including the HMR websocket) to

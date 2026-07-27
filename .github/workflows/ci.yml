@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [live]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: jbook
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: jbook/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Build local-api
+        run: npx tsc
+        working-directory: jbook/packages/local-api
+
+      - name: Build local-client
+        run: npm run build
+        working-directory: jbook/packages/local-client
+
+      - name: Bundle cli
+        run: npx esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\"production\"
+        working-directory: jbook/packages/cli
+
+      - name: Test
+        run: npm test
