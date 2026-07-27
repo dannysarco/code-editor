@@ -9,10 +9,10 @@
 **Effort:** 5 minutes
 **Impact:** Product literally doesn't work
 
-- [ ] Move `@my-scrapbook/local-api` from devDependencies to dependencies in `jbook/packages/cli/package.json`
+- [x] Move `@my-scrapbook/local-api` from devDependencies to dependencies in `jbook/packages/cli/package.json` (PR #5)
 - [ ] Test: Run `npm pack` and verify package contents
 - [ ] Test: Clean install in fresh directory
-- [ ] Publish patch version
+- [ ] Publish patch version (pending: v3.0.0 was never published to npm; latest on the registry is 2.0.3 with the same bug — needs an `npm publish` decision)
 
 **Files:**
 - `jbook/packages/cli/package.json:23-24`
@@ -24,10 +24,10 @@
 **Effort:** 30 minutes
 **Impact:** Prevents potential data loss from ID collisions
 
-- [ ] Install `uuid` package in local-client
-- [ ] Replace `Math.random().toString(36).substr(2, 5)` with `uuidv4()`
-- [ ] Add unit test for unique ID generation
-- [ ] Migration note: Existing 5-char IDs still work
+- [x] Install `uuid` package in local-client (PR #10)
+- [x] Replace `Math.random().toString(36).substr(2, 5)` with `uuidv4()` (PR #10)
+- [ ] Add unit test for unique ID generation (deferred to item 10 — no test infrastructure yet)
+- [x] Migration note: Existing 5-char IDs still work (IDs are opaque keys)
 
 **Files:**
 - `jbook/packages/local-client/src/state/reducers/cellsReducer.ts:95-97`
@@ -39,10 +39,10 @@
 **Effort:** 2 hours
 **Impact:** Prevents user code crashes from breaking entire app
 
-- [ ] Create `ErrorBoundary` component
-- [ ] Wrap `<Preview>` component with error boundary
-- [ ] Add fallback UI with error message + "Reset" button
-- [ ] Log errors to console in development
+- [x] Create `ErrorBoundary` component (PR #10)
+- [x] Wrap each cell with an error boundary (broader than just `<Preview>`; one crashed cell can't take down the notebook) (PR #10)
+- [x] Add fallback UI with error message + "Reset" button (PR #10)
+- [x] Log errors to console (componentDidCatch) (PR #10)
 
 **Files:**
 - `jbook/packages/local-client/src/components/preview.tsx`
@@ -156,10 +156,10 @@
 **Effort:** 4 hours
 **Impact:** Works offline, version flexibility
 
-- [ ] Download esbuild-wasm to `public/esbuild.wasm`
-- [ ] Update bundler to use local WASM file first
+- [x] Ship esbuild.wasm locally — bundled from the installed package via Vite `?url` import (PR #7)
+- [x] Update bundler to use the local WASM file (PR #7)
 - [ ] Fallback to unpkg if local fails
-- [ ] Make version configurable
+- [x] Version always matches the installed esbuild-wasm package (PR #7)
 - [ ] Update README with offline capabilities
 
 **Files:**
