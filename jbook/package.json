@@ -6,8 +6,5 @@
   },
   "scripts": {
     "start": "lerna run start --parallel"
-  },
-  "dependencies": {
-    "my-scrapbook": "^2.0.3"
   }
 }
