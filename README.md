@@ -24,13 +24,13 @@ npx my-scrapbook serve
 ```
 - **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
 - Click the **+ Code** or **+Text** button at the top of the screen to get started!
-  ![blank](https://github.com/dannysarco/code-editor/assets/54184032/5f32d564-f338-42d8-bacc-4b5a881dcc0e)
-  ![emptycells](https://github.com/dannysarco/code-editor/assets/54184032/f1aafc94-92c7-4bd2-b6df-07c76eb3b889)
+  ![The empty notebook with the add-cell buttons](docs/images/blank.png)
+  ![A text cell open in the markdown editor above an empty code cell](docs/images/editing.png)
 - All your work is saved to the file **notebook.js**.
 - Next time you run the application using the same command, it will open to your previous **notebook.js** file.
 - If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again. (Or you could leave the **notebook.js** and click the **X** button on all your previous work once the IDE is loaded into the browser.)
 - If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
-![notebook](https://github.com/dannysarco/code-editor/assets/54184032/2a840f72-1afa-4566-a714-005eee0af76a)
+![The install folder showing the saved notebook.js file](docs/images/notebook-file.png)
 
 ## What's new in 3.0
 
@@ -129,7 +129,7 @@ axios
   .then(({ data }) => show(data.name))
   .catch(error => console.error('There was an error!', error));
 ```
-![sample](https://github.com/dannysarco/code-editor/assets/54184032/ff98a6a8-d055-40a1-a2c7-836bb4f24e8a)
+![A notebook with markdown documentation and a React counter component rendered in the preview](docs/images/sample.png)
 
 ## Development
 
