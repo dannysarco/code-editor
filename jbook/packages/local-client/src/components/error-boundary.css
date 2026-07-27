@@ -1,0 +1,9 @@
+.error-boundary {
+  margin: 10px 0;
+}
+
+.error-boundary-message {
+  font-family: monospace;
+  margin: 8px 0;
+  word-break: break-word;
+}
