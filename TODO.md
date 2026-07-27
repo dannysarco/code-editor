@@ -116,15 +116,15 @@
 **Effort:** 2 days
 **Impact:** 60% less boilerplate, faster feature development
 
-- [ ] Install `@reduxjs/toolkit`
-- [ ] Convert cellsReducer to `createSlice`
-- [ ] Convert bundlesReducer to `createSlice`
-- [ ] Replace action creators with RTK auto-generated actions
-- [ ] Use `createAsyncThunk` for fetchCells, saveCells, createBundle
-- [ ] Update middleware to work with RTK actions
-- [ ] Update component imports
-- [ ] Remove old action-types, actions, action-creators directories
-- [ ] Update hooks to use RTK patterns
+- [x] Install `@reduxjs/toolkit` (PR #11)
+- [x] Convert cellsReducer to `createSlice` (PR #11)
+- [x] Convert bundlesReducer to `createSlice` (PR #11)
+- [x] Replace action creators with RTK auto-generated actions (prepare callbacks keep the original signatures) (PR #11)
+- [x] Use `createAsyncThunk` for fetchCells, saveCells, createBundle (PR #11)
+- [x] Update middleware to work with RTK actions (`isAnyOf` matchers) (PR #11)
+- [x] Update component imports (none needed; public state API preserved) (PR #11)
+- [x] Remove old action-types, actions, action-creators directories (PR #11)
+- [x] Update hooks to use RTK patterns (PR #11)
 
 **Files to Refactor:**
 - Entire `jbook/packages/local-client/src/state/` directory
