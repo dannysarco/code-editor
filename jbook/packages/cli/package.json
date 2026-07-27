@@ -1,11 +1,20 @@
 {
   "name": "my-scrapbook",
-  "version": "3.0.0",
-  "description": "",
-  "keywords": [],
+  "version": "3.0.1",
+  "description": "An in-browser coding notebook: write JavaScript with npm imports and markdown docs, see it run live",
+  "keywords": [
+    "notebook",
+    "repl",
+    "playground",
+    "markdown",
+    "react",
+    "esbuild"
+  ],
   "author": "Danny Sarco",
   "license": "MIT",
-  "bin": "dist/index.js",
+  "bin": {
+    "my-scrapbook": "dist/index.js"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -26,5 +35,13 @@
     "esbuild": "^0.25.0",
     "typescript": "^5.9.3"
   },
-  "gitHead": "e297e727b7ac849fcbb530045a9ce6e41663364f"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannysarco/code-editor.git",
+    "directory": "jbook/packages/cli"
+  },
+  "homepage": "https://github.com/dannysarco/code-editor#readme",
+  "bugs": {
+    "url": "https://github.com/dannysarco/code-editor/issues"
+  }
 }
