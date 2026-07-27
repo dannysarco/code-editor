@@ -35,5 +35,13 @@
     "http-proxy-middleware": "^3.0.7",
     "zod": "^4.4.3"
   },
-  "gitHead": "e297e727b7ac849fcbb530045a9ce6e41663364f"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannysarco/code-editor.git",
+    "directory": "jbook/packages/local-api"
+  },
+  "homepage": "https://github.com/dannysarco/code-editor#readme",
+  "bugs": {
+    "url": "https://github.com/dannysarco/code-editor/issues"
+  }
 }
