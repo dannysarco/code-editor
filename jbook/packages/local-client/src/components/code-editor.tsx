@@ -1,11 +1,16 @@
 import './code-editor.css';
 import './syntax.css';
 import { useRef } from 'react';
-import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
+import Editor, { OnMount } from '@monaco-editor/react';
 import prettier from 'prettier/standalone';
 import parser from 'prettier/parser-babel';
-import codeShift from 'jscodeshift';
-import Highlighter from 'monaco-jsx-highlighter';
+import { parse } from '@babel/parser';
+import traverse from '@babel/traverse';
+import MonacoJSXHighlighter, { makeBabelParse } from 'monaco-jsx-highlighter';
+
+// Configures @babel/parser for module source type + JSX with error recovery;
+// the raw parse function rejects top-level import/export statements.
+const babelParse = makeBabelParse(parse);
 
 interface CodeEditorProps {
   initialValue: string;
@@ -13,33 +18,40 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
-  const editorRef = useRef<any>();
+  const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
 
-  const onEditorDidMount: EditorDidMount = (getValue, monacoEditor) => {
-    editorRef.current = monacoEditor;
-    monacoEditor.onDidChangeModelContent(() => {
-      onChange(getValue());
-    });
+  const onEditorMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
 
-    monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+    editor.getModel()?.updateOptions({ tabSize: 2 });
 
-    const highlighter = new Highlighter(
-      // @ts-ignore
-      window.monaco,
-      codeShift,
-      monacoEditor
+    const highlighter = new MonacoJSXHighlighter(
+      monaco,
+      babelParse,
+      traverse,
+      editor
     );
-    highlighter.highLightOnDidChangeModelContent(
-      () => {},
+    // Silence the parse/highlight error handlers: user code is routinely
+    // invalid mid-keystroke and the defaults log every attempt.
+    highlighter.highlightOnDidChangeModelContent(
+      100,
+      undefined,
       () => {},
       undefined,
       () => {}
     );
+    // highlightOnDidChangeModelContent only fires on edits; highlight the
+    // initial cell content too (a no-op error handler for invalid saved code).
+    highlighter.highlightCode(undefined, () => {}, undefined, () => {});
   };
 
   const onFormatClick = () => {
+    if (!editorRef.current) {
+      return;
+    }
+
     // get current value from editor
-    const unformatted = editorRef.current.getModel().getValue();
+    const unformatted = editorRef.current.getModel()?.getValue() || '';
 
     // format that value
     const formatted = prettier
@@ -64,10 +76,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
       >
         Format
       </button>
-      <MonacoEditor
-        editorDidMount={onEditorDidMount}
+      <Editor
+        onMount={onEditorMount}
         value={initialValue}
-        theme="dark"
+        onChange={(value) => onChange(value ?? '')}
+        theme="vs-dark"
         language="javascript"
         height="100%"
         options={{
