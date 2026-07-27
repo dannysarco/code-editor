@@ -188,9 +188,9 @@
 #### Phase 3: Integration Tests
 - [ ] Test Express server setup (partially covered via the router tests; the proxy path was verified manually in PR #9)
 - [x] Test full Redux store with middleware (persist debounce integration) (PR #14)
-- [ ] Test cumulative code hook (needs jsdom + @testing-library for hooks; future work)
+- [x] Test cumulative code hook (PR #19)
 
-**Target:** 60% coverage minimum
+**Target:** 60% coverage minimum — reached: local-client at 78% statements after the component tests (PR #19)
 
 ---
 
