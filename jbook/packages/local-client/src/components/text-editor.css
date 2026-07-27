@@ -66,3 +66,12 @@
 .text-editor .token.list.punctuation {
   background-color: unset;
 }
+
+/* Restore list markers: @uiw/react-md-editor 4.x's markdown styles no longer
+   override Bulma's `ul { list-style: none }` reset. */
+.wmde-markdown ul {
+  list-style: disc;
+}
+.wmde-markdown ol {
+  list-style: decimal;
+}
