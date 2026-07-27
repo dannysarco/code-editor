@@ -173,22 +173,22 @@
 **Impact:** Prevents regressions, enables confident refactoring
 
 #### Phase 1: Setup
-- [ ] Configure Jest in root workspace
-- [ ] Add test scripts to all packages
-- [ ] Set up code coverage reporting
+- [x] Configure Vitest per package with a root `npm test` orchestrator (Vitest, not Jest — the repo is on Vite now) (PR #14)
+- [x] Add test scripts to local-client and local-api (`test`, `test:coverage`); cli and types have nothing meaningful to unit test yet (PR #14)
+- [x] Set up code coverage reporting (@vitest/coverage-v8, scoped to src) (PR #14)
 
 #### Phase 2: Unit Tests
-- [ ] Test cellsReducer (all actions)
-- [ ] Test bundlesReducer
-- [ ] Test action creators (saveCells, fetchCells)
-- [ ] Test bundler plugins (fetch-plugin, unpkg-path-plugin)
-- [ ] Test API routes (/cells GET, POST)
-- [ ] Test CLI command parsing
+- [x] Test cellsReducer (all actions, boundaries, UUID uniqueness) (PR #14)
+- [x] Test bundlesReducer (pending/fulfilled/rejected lifecycle) (PR #14)
+- [x] Test thunks (saveCells, fetchCells) with mocked axios (PR #14)
+- [x] Test bundler plugins (fetch-plugin, unpkg-path-plugin) at 100% coverage (PR #14)
+- [x] Test API routes (/cells GET, POST) with supertest, incl. validation and corrupted-file cases (PR #14)
+- [ ] Test CLI command parsing (deferred; the serve command is a thin commander wrapper)
 
 #### Phase 3: Integration Tests
-- [ ] Test Express server setup
-- [ ] Test full Redux store with middleware
-- [ ] Test cumulative code hook
+- [ ] Test Express server setup (partially covered via the router tests; the proxy path was verified manually in PR #9)
+- [x] Test full Redux store with middleware (persist debounce integration) (PR #14)
+- [ ] Test cumulative code hook (needs jsdom + @testing-library for hooks; future work)
 
 **Target:** 60% coverage minimum
 
