@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import cellsReducer, { fetchCells, updateCell, deleteCell } from '../cells-slice';
 import bundlesReducer from '../bundles-slice';
 import { persistMiddleware } from './persist-middleware';
+import { PERSIST_SAVE_DEBOUNCE_MS } from '../../constants';
 
 vi.mock('axios');
 vi.mock('../../bundler', () => ({ default: vi.fn() }));
@@ -34,13 +35,13 @@ describe('persist middleware', () => {
     vi.useRealTimers();
   });
 
-  it('saves after a cell-changing action, debounced at 250ms', async () => {
+  it('saves after a cell-changing action, debounced', async () => {
     const store = makeStore();
 
     store.dispatch(updateCell('a', 'show(1);'));
     expect(axios.post).not.toHaveBeenCalled();
 
-    await vi.advanceTimersByTimeAsync(250);
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
     expect(axios.post).toHaveBeenCalledTimes(1);
   });
 
@@ -52,7 +53,7 @@ describe('persist middleware', () => {
     store.dispatch(updateCell('a', 'sh'));
     await vi.advanceTimersByTimeAsync(100);
     store.dispatch(deleteCell('a'));
-    await vi.advanceTimersByTimeAsync(250);
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
 
     expect(axios.post).toHaveBeenCalledTimes(1);
   });

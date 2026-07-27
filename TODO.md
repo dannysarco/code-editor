@@ -57,11 +57,11 @@
 **Effort:** 1 hour
 **Impact:** Improves readability and configurability
 
-- [ ] Create `jbook/packages/local-client/src/constants.ts`
-- [ ] Extract `BUNDLE_DEBOUNCE_MS = 750`
-- [ ] Extract `PERSIST_DEBOUNCE_MS = 250`
-- [ ] Extract `RANDOM_ID_LENGTH = 5` (if keeping random IDs)
-- [ ] Document why each value was chosen
+- [x] Create `jbook/packages/local-client/src/constants.ts` (PR #15)
+- [x] Extract `BUNDLE_DEBOUNCE_MS = 750` (PR #15)
+- [x] Extract `PERSIST_SAVE_DEBOUNCE_MS = 250` (plus the JSX-highlight and preview-execute delays found along the way) (PR #15)
+- [x] ~~Extract `RANDOM_ID_LENGTH = 5`~~ obsolete — cell IDs are UUIDs since PR #10
+- [x] Document why each value was chosen (PR #15)
 
 **Files:**
 - `jbook/packages/local-client/src/components/code-cell.tsx:27`
@@ -74,10 +74,10 @@
 **Effort:** 2 hours
 **Impact:** Better error messages, easier debugging
 
-- [ ] Fix typo: "Heres the problem" → "Here's the problem"
-- [ ] Add structured error messages with error codes
-- [ ] Consider adding winston/pino for structured logging
-- [ ] Add error context (file, port, command)
+- [x] Fix the serve error output (typo gone; message now carries file + port context) (PR #15)
+- [x] Add structured error messages (EADDRINUSE handled by code with an actionable hint; other failures report file, port, and cause) (PR #15)
+- [x] Considered winston/pino and decided against: the CLI emits two messages total; a logging framework adds a runtime dependency for no benefit at this size (PR #15)
+- [x] Add error context (file, port, suggested command) (PR #15)
 
 **Files:**
 - `jbook/packages/cli/src/commands/serve.ts:27`

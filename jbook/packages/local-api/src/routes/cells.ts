@@ -16,11 +16,13 @@ const saveCellsRequestSchema: z.ZodType<SaveCellsRequest> = z.object({
   cells: z.array(cellSchema),
 });
 
+// Explicit body size limit; the express default (100kb) is small enough that
+// a large notebook could fail to save.
+const MAX_NOTEBOOK_BODY_SIZE = "5mb";
+
 export const createCellsRouter = (filename: string, dir: string) => {
   const router = express.Router();
-  // Explicit body size limit; the express default (100kb) is small enough
-  // that a large notebook could fail to save.
-  router.use(express.json({ limit: "5mb" }));
+  router.use(express.json({ limit: MAX_NOTEBOOK_BODY_SIZE }));
 
   const fullPath = path.join(dir, filename);
 

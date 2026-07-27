@@ -7,6 +7,7 @@ import {
   updateCell,
 } from '../cells-slice';
 import type { AppDispatch } from '../store';
+import { PERSIST_SAVE_DEBOUNCE_MS } from '../../constants';
 
 const isPersistTrigger = isAnyOf(
   updateCell,
@@ -29,7 +30,7 @@ export const persistMiddleware: Middleware = ({ dispatch }) => {
       }
       timer = setTimeout(() => {
         (dispatch as AppDispatch)(saveCells());
-      }, 250);
+      }, PERSIST_SAVE_DEBOUNCE_MS);
     }
 
     return result;
