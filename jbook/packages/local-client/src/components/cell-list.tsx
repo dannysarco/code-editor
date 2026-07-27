@@ -3,6 +3,7 @@ import { Fragment, useEffect } from "react";
 import { useTypedSelector } from "../hooks/use-typed-selector";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
+import ErrorBoundary from "./error-boundary";
 import { useActions } from "../hooks/use-actions";
 
 const CellList: React.FC = () => {
@@ -17,7 +18,9 @@ const CellList: React.FC = () => {
 
   const renderedCells = cells.map((cell) => (
     <Fragment key={cell.id}>
-      <CellListItem cell={cell} />
+      <ErrorBoundary>
+        <CellListItem cell={cell} />
+      </ErrorBoundary>
       <AddCell previousCellId={cell.id} />
     </Fragment>
   ));

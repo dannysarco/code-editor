@@ -1,4 +1,5 @@
 import { produce } from 'immer';
+import { v4 as uuidv4 } from 'uuid';
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
 import { Cell } from '../cell';
@@ -92,8 +93,8 @@ const reducer = produce((state: CellsState, action: Action) => {
   }
 }, initialState);
 
-const randomId = () => {
-  return Math.random().toString(36).substr(2, 5);
-};
+// Cell IDs are UUIDs; older notebooks with 5-char Math.random() IDs keep
+// working since IDs are only used as opaque keys.
+const randomId = () => uuidv4();
 
 export default reducer;
