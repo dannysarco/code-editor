@@ -26,7 +26,8 @@
   "dependencies": {
     "@my-scrapbook/local-client": "^3.0.0",
     "express": "^4.22.2",
-    "http-proxy-middleware": "^3.0.7"
+    "http-proxy-middleware": "^3.0.7",
+    "zod": "^4.4.3"
   },
   "gitHead": "e297e727b7ac849fcbb530045a9ce6e41663364f"
 }

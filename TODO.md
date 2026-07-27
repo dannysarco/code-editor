@@ -139,12 +139,12 @@
 **Effort:** 4 hours
 **Impact:** Prevents bad data, better error messages
 
-- [ ] Install `zod` in local-api
-- [ ] Create Cell schema validation
-- [ ] Validate POST /cells request body
-- [ ] Return 400 with validation errors
-- [ ] Add request body size limits
-- [ ] Add tests for invalid inputs
+- [x] Install `zod` in local-api (PR #13)
+- [x] Create Cell schema validation, annotated with the shared wire types so it cannot drift (PR #13)
+- [x] Validate POST /cells request body (PR #13)
+- [x] Return 400 with validation errors (PR #13)
+- [x] Add request body size limits (5mb explicit; express default was 100kb) (PR #13)
+- [ ] Add tests for invalid inputs (deferred to item 10 — no test infrastructure yet; the cases were exercised manually against the running server)
 
 **Files:**
 - `jbook/packages/local-api/src/routes/cells.ts:33-42`
