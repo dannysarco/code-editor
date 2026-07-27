@@ -1,0 +1,21 @@
+{
+  "name": "@my-scrapbook/types",
+  "version": "3.0.0",
+  "description": "Shared TypeScript types for My Scrapbook packages",
+  "author": "Danny Sarco",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

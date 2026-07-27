@@ -3,6 +3,7 @@ import * as esbuild from "esbuild-wasm";
 // from unpkg: the app works offline and the binary always matches the JS API
 // version.
 import wasmURL from "esbuild-wasm/esbuild.wasm?url";
+import type { BundleResult } from "@my-scrapbook/types";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
@@ -21,7 +22,7 @@ const ensureInitialized = () => {
   return initPromise;
 };
 
-const bundle = async (rawCode: string) => {
+const bundle = async (rawCode: string): Promise<BundleResult> => {
   try {
     await ensureInitialized();
 

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import type { FetchCellsResponse, SaveCellsRequest } from '@my-scrapbook/types';
 import { Cell, CellTypes } from './cell';
 
 export type Direction = 'up' | 'down';
@@ -22,7 +23,7 @@ const initialState: CellsState = {
 };
 
 export const fetchCells = createAsyncThunk('cells/fetchCells', async () => {
-  const { data }: { data: Cell[] } = await axios.get('/cells');
+  const { data }: { data: FetchCellsResponse } = await axios.get('/cells');
   return data;
 });
 
@@ -39,7 +40,8 @@ export const saveCells = createAsyncThunk<
 
   const cells = order.map((id) => data[id]);
 
-  await axios.post('/cells', { cells });
+  const body: SaveCellsRequest = { cells };
+  await axios.post('/cells', body);
 });
 
 const cellsSlice = createSlice({
