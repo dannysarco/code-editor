@@ -1,4 +1,4 @@
-# Getting Started with My Scrapbook - a dynamic coding environment.
+# My Scrapbook - a dynamic coding environment.
 
 ## What is My Scrapbook, and what does it do?
 
@@ -9,13 +9,12 @@
 
 ## Install Instructions.
 
+- You'll need [Node.js](https://nodejs.org/) 18 or newer.
 - Open a folder on your terminal where you don't mind a few files being written.
 - Run the following command:
-
 ```
 npm i my-scrapbook
 ```
-
 ## To Run My Scrapbook
 
 - In the same folder you install My Scrapbook, open up a terminal session and run:
@@ -23,38 +22,26 @@ npm i my-scrapbook
 ```
 npx my-scrapbook serve
 ```
-
 - **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
 - Click the **+ Code** or **+Text** button at the top of the screen to get started!
-  ![blank](https://github.com/dannysarco/code-editor/assets/54184032/5f32d564-f338-42d8-bacc-4b5a881dcc0e)
-  ![emptycells](https://github.com/dannysarco/code-editor/assets/54184032/f1aafc94-92c7-4bd2-b6df-07c76eb3b889)
+  ![The empty notebook with the add-cell buttons](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/blank.png)
+  ![A text cell open in the markdown editor above an empty code cell](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/editing.png)
 - All your work is saved to the file **notebook.js**.
 - Next time you run the application using the same command, it will open to your previous **notebook.js** file.
-- If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again. (Or you could leave the **notebook.js** and click the **X** button on all your previous work once the IDE is loaded into the browser.)
+- If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again.
 - If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
-  ![notebook](https://github.com/dannysarco/code-editor/assets/54184032/2a840f72-1afa-4566-a714-005eee0af76a)
 
-## Markdown sample text for the text editor that contains an "Explainer".
+## What's new in 3.0
 
-```
-**My Scrapbook**
-----------
-This is an interactive coding environment. You can write Javascript, see it executed, and write comprehensive documentation using markdown.
+- Rebuilt on a modern toolchain: Vite, TypeScript 5, React 18, and Redux Toolkit.
+- The in-browser bundler ships its own copy of esbuild, so bundling no longer depends on a CDN.
+- A crashed cell shows an error message with a Reset button instead of taking down the whole notebook.
+- The save API validates what it writes, and a corrupted notebook.js can no longer crash the server.
+- Versions 2.x are deprecated: they can no longer render React components (they relied on an API that current React, served from unpkg, removed).
 
-- Click any text cell (including this one) to edit it
-- The code in each code editor is joined into one file. If you define a variable in cell #1, you can refer to it in any of the following cells!
-- Click the **Format** button in any code cell, and Prettier will its thing to your code!
-- You can show any React component, string, number, or anything else by calling the `show` function. This is a function built into this environment. Call show multiple times to show multiple values
-- Re-order or delete cells using the buttons on the top right
-- Add new cells by hovering on the divider between each cell
+## Example
 
-All of your changes get saved to the file you opened JBook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
-
-```
-
-## Code samples for the code editor.
-
-```
+```js
 import { useState } from 'react';
 
 const Counter = () => {
@@ -65,22 +52,12 @@ const Counter = () => {
       <h3>Count: {count}</h3>
     </div>
   );
-};
-// Display any variable or React Component by calling 'show'
+}; // Display any variable or React Component by calling 'show'
 show(<Counter />);
-
 ```
 
-```
-  import axios from 'axios';
-  import 'bulma/css/bulma.css';
+![A notebook with markdown documentation and a React counter component rendered in the preview](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/sample.png)
 
-  axios.get('http://jsonplaceholder.typicode.com/users/1')
-  .then(({ data }) => show(data.name));
-```
+## Source & development
 
-![sample](https://github.com/dannysarco/code-editor/assets/54184032/ff98a6a8-d055-40a1-a2c7-836bb4f24e8a)
-
-## Future Functionality
-
-- Lots! This is just the beginning.
+The code lives at [dannysarco/code-editor](https://github.com/dannysarco/code-editor) — see the repository README for the development setup and [TODO.md](https://github.com/dannysarco/code-editor/blob/live/TODO.md) for the roadmap.

@@ -17,5 +17,14 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannysarco/code-editor.git",
+    "directory": "jbook/packages/types"
+  },
+  "homepage": "https://github.com/dannysarco/code-editor#readme",
+  "bugs": {
+    "url": "https://github.com/dannysarco/code-editor/issues"
   }
 }
