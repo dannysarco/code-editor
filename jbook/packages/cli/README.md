@@ -23,9 +23,9 @@ npm i my-scrapbook
 npx my-scrapbook serve
 ```
 - **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
-- Click the **+ Code** or **+Text** button at the top of the screen to get started!
-  ![The empty notebook with the add-cell buttons](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/blank.png)
-  ![A text cell open in the markdown editor above an empty code cell](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/editing.png)
+- Click **Code cell** or **Text cell** on the start screen to create your first cell. After that, use the **+ Code** / **+ Text** buttons between cells to add more.
+  ![The start screen with Code cell and Text cell buttons](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/blank.png)
+  ![A text cell open in the markdown editor above a code cell](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/editing.png)
 - All your work is saved to the file **notebook.js**.
 - Next time you run the application using the same command, it will open to your previous **notebook.js** file.
 - If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again.
