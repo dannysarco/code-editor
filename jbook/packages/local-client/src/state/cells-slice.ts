@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { StateWithHistory } from 'redux-undo';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import type { FetchCellsResponse, SaveCellsRequest } from '@my-scrapbook/types';
@@ -6,7 +7,7 @@ import { Cell, CellTypes } from './cell';
 
 export type Direction = 'up' | 'down';
 
-interface CellsState {
+export interface CellsState {
   loading: boolean;
   error: string | null;
   order: string[];
@@ -29,13 +30,17 @@ export const fetchCells = createAsyncThunk('cells/fetchCells', async () => {
 
 // The state type is declared structurally instead of importing RootState from
 // the store, which would create an import cycle (store -> slice -> store).
+// The cells slice is wrapped in redux-undo history at the store level, so the
+// current notebook lives under `present`.
 export const saveCells = createAsyncThunk<
   void,
   void,
-  { state: { cells: CellsState } }
+  { state: { cells: StateWithHistory<CellsState> } }
 >('cells/saveCells', async (_, { getState }) => {
   const {
-    cells: { data, order },
+    cells: {
+      present: { data, order },
+    },
   } = getState();
 
   const cells = order.map((id) => data[id]);

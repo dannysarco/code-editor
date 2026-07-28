@@ -242,12 +242,12 @@
 **Effort:** 1 week
 **Impact:** Professional editor experience
 
-- [ ] Install `redux-undo` or implement custom middleware
-- [ ] Add undo/redo to cell updates
-- [ ] Add keyboard shortcuts (Ctrl+Z, Ctrl+Y)
-- [ ] Add undo/redo buttons in UI
-- [ ] Limit history depth (e.g., 50 actions)
-- [ ] Don't track every keystroke (debounce)
+- [x] Install `redux-undo` (PR #20)
+- [x] Add undo/redo to cell updates, deletes, moves, and inserts (PR #20)
+- [x] Add keyboard shortcuts (Ctrl/Cmd+Z, Ctrl+Y, Ctrl/Cmd+Shift+Z), deferring to Monaco/markdown editors when focus is inside them (PR #20)
+- [x] Add undo/redo buttons in UI with disabled states (PR #20)
+- [x] Limit history depth (50 states) (PR #20)
+- [x] Don't track every keystroke (consecutive edits to a cell group into one history entry) (PR #20)
 
 ---
 
