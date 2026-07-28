@@ -42,10 +42,19 @@ const Preview: React.FC<PreviewProps> = ({ code, err }) => {
   const iframe = useRef<any>();
 
   useEffect(() => {
+    if (!iframe.current) {
+      return;
+    }
     iframe.current.srcdoc = html;
-    setTimeout(() => {
-      iframe.current.contentWindow.postMessage(code, '*');
+    const timer = setTimeout(() => {
+      // The component may unmount (or the iframe detach) before the settle
+      // delay elapses; an uncancelled timer would then dereference null.
+      iframe.current?.contentWindow?.postMessage(code, '*');
     }, PREVIEW_EXECUTE_DELAY_MS);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [code]);
 
   return (
