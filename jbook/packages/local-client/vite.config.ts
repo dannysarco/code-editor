@@ -2,24 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      // bulmaswatch's theme css @imports the Lato font from Google Fonts —
-      // the one remaining external request. The font is self-hosted via
-      // @fontsource/lato instead, so the app is fully offline-capable.
-      name: 'strip-remote-font-import',
-      enforce: 'pre',
-      transform(code, id) {
-        if (id.includes('bulmaswatch') && id.endsWith('.css')) {
-          return code.replace(
-            /@import url\([^)]*fonts\.googleapis[^)]*\);?/g,
-            ''
-          );
-        }
-      },
-    },
-  ],
+  plugins: [react()],
   test: {
     // State/plugin tests run in node; component tests opt into jsdom with a
     // `@vitest-environment jsdom` docblock.

@@ -72,30 +72,34 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
 
   return (
     <div className="editor-wrapper">
-      <button
-        className="button button-format is-primary is-small"
-        onClick={onFormatClick}
-      >
-        Format
-      </button>
-      <Editor
-        onMount={onEditorMount}
-        value={initialValue}
-        onChange={(value) => onChange(value ?? '')}
-        theme="vs-dark"
-        language="javascript"
-        height="100%"
-        options={{
-          wordWrap: 'on',
-          minimap: { enabled: false },
-          showUnused: false,
-          folding: false,
-          lineNumbersMinChars: 3,
-          fontSize: 16,
-          scrollBeyondLastLine: false,
-          automaticLayout: true,
-        }}
-      />
+      <div className="pane-toolbar editor-toolbar">
+        <span className="label editor-language">JavaScript</span>
+        <button className="format-btn" onClick={onFormatClick}>
+          Format
+        </button>
+      </div>
+      <div className="editor-host">
+        <Editor
+          onMount={onEditorMount}
+          value={initialValue}
+          onChange={(value) => onChange(value ?? '')}
+          theme="modernist-dark"
+          language="javascript"
+          height="100%"
+          options={{
+            wordWrap: 'on',
+            minimap: { enabled: false },
+            showUnused: false,
+            folding: false,
+            lineNumbersMinChars: 3,
+            fontSize: 13.5,
+            lineHeight: 22,
+            fontFamily: "ui-monospace, 'SF Mono', Menlo, monospace",
+            scrollBeyondLastLine: false,
+            automaticLayout: true,
+          }}
+        />
+      </div>
     </div>
   );
 };

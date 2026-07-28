@@ -1,37 +1,30 @@
 import './add-cell.css';
+import { Plus } from 'lucide-react';
 import { useActions } from '../hooks/use-actions';
 
 interface AddCellProps {
   previousCellId: string | null;
-  forceVisible?: boolean;
 }
 
-const AddCell: React.FC<AddCellProps> = ({ forceVisible, previousCellId }) => {
+const AddCell: React.FC<AddCellProps> = ({ previousCellId }) => {
   const { insertCellAfter } = useActions();
 
   return (
-    <div className={`add-cell ${forceVisible && 'force-visible'}`}>
-      <div className="add-buttons">
-        <button
-          className="button is-rounded is-primary is-small"
-          onClick={() => insertCellAfter(previousCellId, 'code')}
-        >
-          <span className="icon is-small">
-            <i className="fas fa-plus" />
-          </span>
-          <span>Code</span>
-        </button>
-        <button
-          className="button is-rounded is-primary is-small"
-          onClick={() => insertCellAfter(previousCellId, 'text')}
-        >
-          <span className="icon is-small">
-            <i className="fas fa-plus" />
-          </span>
-          <span>Text</span>
-        </button>
-      </div>
-      <div className="divider"></div>
+    <div className="add-cell">
+      <button
+        className="btn rail-btn"
+        onClick={() => insertCellAfter(previousCellId, 'code')}
+      >
+        <Plus size={12} strokeWidth={2.5} />
+        <span>Code</span>
+      </button>
+      <button
+        className="btn rail-btn"
+        onClick={() => insertCellAfter(previousCellId, 'text')}
+      >
+        <Plus size={12} strokeWidth={2.5} />
+        <span>Text</span>
+      </button>
     </div>
   );
 };

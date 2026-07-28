@@ -1,34 +1,35 @@
+/* Insert rail: a full-width rule with the two buttons sitting on it flush
+   left, always visible. */
 .add-cell {
   position: relative;
-  opacity: 0;
-  transition: opacity 0.3s ease-in 0.1s;
-  margin: 8px 0;
-}
-
-.add-cell:hover {
-  opacity: 1;
-}
-
-.add-cell.force-visible {
-  opacity: 1;
-}
-
-.add-cell .divider {
-  position: absolute;
-  top: 50%;
-  bottom: 50%;
-  right: 2.5%;
-  left: 2.5%;
-  border-bottom: 1px solid gray;
-  width: 95%;
-  z-index: -1;
-}
-
-.add-cell .add-buttons {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
 }
 
-.add-cell .add-buttons button {
-  margin: 0 20px;
+.add-cell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--color-divider);
+}
+
+.add-cell .rail-btn {
+  position: relative;
+  /* Matches the page ground so the button knocks a hole in the rule. */
+  background: var(--color-bg);
+  border-color: var(--color-divider);
+  font-size: 12px;
+  padding: 5px 10px;
+  gap: 6px;
+}
+
+.add-cell .rail-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
 }

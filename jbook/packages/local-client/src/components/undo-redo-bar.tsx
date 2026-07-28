@@ -1,6 +1,7 @@
 import './undo-redo-bar.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Undo2, Redo2 } from 'lucide-react';
 import { ActionCreators } from 'redux-undo';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import { selectCanRedo, selectCanUndo } from '../state';
@@ -52,26 +53,22 @@ const UndoRedoBar: React.FC = () => {
   return (
     <div className="undo-redo-bar">
       <button
-        className="button is-primary is-small"
+        className="btn btn-secondary btn-icon undo-redo-btn"
         disabled={!canUndo}
         title="Undo (Ctrl+Z)"
         aria-label="Undo"
         onClick={() => dispatch(ActionCreators.undo())}
       >
-        <span className="icon">
-          <i className="fas fa-undo"></i>
-        </span>
+        <Undo2 size={16} />
       </button>
       <button
-        className="button is-primary is-small"
+        className="btn btn-secondary btn-icon undo-redo-btn"
         disabled={!canRedo}
         title="Redo (Ctrl+Y)"
         aria-label="Redo"
         onClick={() => dispatch(ActionCreators.redo())}
       >
-        <span className="icon">
-          <i className="fas fa-redo"></i>
-        </span>
+        <Redo2 size={16} />
       </button>
     </div>
   );

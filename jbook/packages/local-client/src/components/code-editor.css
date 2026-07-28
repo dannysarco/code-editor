@@ -1,18 +1,42 @@
 .editor-wrapper {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  width: calc(100% - 10px);
+  flex: 1;
+  min-width: 0;
+  background: var(--color-neutral-900);
 }
 
-.editor-wrapper .button-format {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  z-index: 20;
+.editor-toolbar {
+  border-bottom: 1px solid var(--color-neutral-800);
+}
+
+.editor-toolbar .editor-language {
+  flex: 1;
+  color: var(--color-neutral-500);
+}
+
+.editor-toolbar .format-btn {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--color-accent-400);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 150ms;
 }
 
-.editor-wrapper:hover .button-format {
+/* Fades in when the pointer is anywhere over the cell, not just the pane. */
+.ms-cell:hover .format-btn,
+.editor-toolbar .format-btn:focus-visible {
   opacity: 1;
+}
+
+.editor-host {
+  flex: 1;
+  min-height: 0;
 }
