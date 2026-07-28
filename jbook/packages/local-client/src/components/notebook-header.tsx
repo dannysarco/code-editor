@@ -1,0 +1,80 @@
+import './notebook-header.css';
+import { useEffect, useRef, useState } from 'react';
+import { useTypedSelector } from '../hooks/use-typed-selector';
+import { useActions } from '../hooks/use-actions';
+import { selectCells } from '../state';
+import { cumulativeCodeFor } from '../hooks/use-cumulative-code';
+import { PERSIST_SAVE_DEBOUNCE_MS } from '../constants';
+import OfflineStatus from './offline-status';
+import UndoRedoBar from './undo-redo-bar';
+
+// The client edits whatever file local-api was started with; the API does
+// not expose the name, so the header shows the CLI's default.
+const NOTEBOOK_FILENAME = 'notebook.js';
+
+const formatTime = (date: Date) =>
+  date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+
+const NotebookHeader: React.FC = () => {
+  const { createBundle } = useActions();
+  // `present` is referentially stable across non-cell actions (bundles,
+  // undo bookkeeping), so the save-state effect only fires on real edits.
+  const present = useTypedSelector(selectCells);
+
+  const [saving, setSaving] = useState(false);
+  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const isFirstChange = useRef(true);
+
+  useEffect(() => {
+    // The first change is the initial fetch — the notebook is in sync on
+    // load, not being saved.
+    if (isFirstChange.current) {
+      isFirstChange.current = false;
+      setSavedAt(new Date());
+      return;
+    }
+    setSaving(true);
+    // The persist middleware debounces the POST; mirror its window (plus a
+    // little slack for the request itself) rather than tracking the request.
+    const timer = setTimeout(() => {
+      setSaving(false);
+      setSavedAt(new Date());
+    }, PERSIST_SAVE_DEBOUNCE_MS + 250);
+    return () => clearTimeout(timer);
+  }, [present]);
+
+  const onRunAll = () => {
+    const cells = present.order.map((id) => present.data[id]);
+    for (const cell of cells) {
+      if (cell.type === 'code') {
+        createBundle(cell.id, cumulativeCodeFor(cells, cell.id));
+      }
+    }
+  };
+
+  return (
+    <header className="notebook-header">
+      <span className="brand-mark" aria-hidden="true" />
+      <span className="brand-name">MY SCRAPBOOK</span>
+      <span className="header-divider" aria-hidden="true" />
+      <span className="file-meta">
+        <span className="file-name">{NOTEBOOK_FILENAME}</span>
+        <span className="save-state label">
+          {saving ? 'Saving…' : savedAt ? `Saved · ${formatTime(savedAt)}` : ''}
+        </span>
+      </span>
+      <span className="header-spacer" />
+      <OfflineStatus />
+      <UndoRedoBar />
+      <button className="btn btn-primary run-all" onClick={onRunAll}>
+        Run all
+      </button>
+    </header>
+  );
+};
+
+export default NotebookHeader;

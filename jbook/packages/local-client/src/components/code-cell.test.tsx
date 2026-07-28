@@ -38,7 +38,7 @@ describe('CodeCell', () => {
     // before the bundle resolves: progress bar, no preview. (Queried directly
     // rather than by role: react-resizable's Infinity inline widths crash
     // jsdom's computed-style walk during accessibility-tree checks.)
-    expect(container.querySelector('progress')).not.toBeNull();
+    expect(container.querySelector('[role="progressbar"]')).not.toBeNull();
     expect(bundler).toHaveBeenCalledTimes(1);
     expect(vi.mocked(bundler).mock.calls[0][0]).toContain("show('one');");
 
@@ -46,7 +46,7 @@ describe('CodeCell', () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
-    expect(container.querySelector('progress')).toBeNull();
+    expect(container.querySelector('[role="progressbar"]')).toBeNull();
     expect(screen.getByTitle('preview')).toBeInTheDocument();
   });
 

@@ -1,19 +1,80 @@
+/* — meta bar — */
+.notebook-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 32px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.notebook-meta .meta-summary {
+  flex: 1;
+}
+
+.guide-toggle {
+  font-size: 14px;
+}
+
+.guide-chevron {
+  transition: transform 150ms;
+}
+
+.guide-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* — cell list — */
 .cell-list {
-  margin: 0 25px 50vh;
+  padding: 0 32px 160px;
 }
 
 .react-draggable-transparent-selection .cell-list {
-  margin-bottom: 100vh;
+  padding-bottom: 100vh;
 }
 
-.notebook-toolbar {
+/* — empty state — */
+.empty-notebook {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 10px 0 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 520px;
+  padding: 96px 32px;
 }
 
-.notebook-toolbar .undo-redo-bar {
-  padding: 0;
+.empty-notebook h1 {
+  margin: 0;
+}
+
+.empty-notebook .hr {
+  width: 100%;
+  margin: 0;
+}
+
+.empty-lede {
+  font-size: 16px;
+  color: var(--color-neutral-700);
+  max-width: 44ch;
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.empty-actions .btn {
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.empty-footnote {
+  font-size: 13px;
+  color: var(--color-neutral-600);
+  margin: 0;
+}
+
+.empty-file {
+  font-family: var(--font-mono);
 }

@@ -36,7 +36,7 @@ describe('ErrorBoundary', () => {
       screen.getByText('Something went wrong in this cell')
     ).toBeInTheDocument();
     expect(screen.getByText('kaboom')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Reset' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reset cell' })).toBeInTheDocument();
   });
 
   it('recovers via the Reset button once the child stops throwing', async () => {
@@ -59,7 +59,7 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('kaboom')).toBeInTheDocument();
 
     await user.click(screen.getByText('defuse'));
-    await user.click(screen.getByRole('button', { name: 'Reset' }));
+    await user.click(screen.getByRole('button', { name: 'Reset cell' }));
     spy.mockRestore();
 
     expect(screen.getByText('all good')).toBeInTheDocument();

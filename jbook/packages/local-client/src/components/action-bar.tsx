@@ -1,4 +1,5 @@
 import './action-bar.css';
+import { ArrowUp, ArrowDown, X } from 'lucide-react';
 import { useActions } from '../hooks/use-actions';
 
 interface ActionBarProps {
@@ -11,28 +12,25 @@ const ActionBar: React.FC<ActionBarProps> = ({ id }) => {
   return (
     <div className="action-bar">
       <button
-        className="button is-primary is-small"
+        className="btn btn-icon cell-action"
+        aria-label="Move cell up"
         onClick={() => moveCell(id, 'up')}
       >
-        <span className="icon">
-          <i className="fas fa-arrow-up"></i>
-        </span>
+        <ArrowUp size={15} />
       </button>
       <button
-        className="button is-primary is-small"
+        className="btn btn-icon cell-action"
+        aria-label="Move cell down"
         onClick={() => moveCell(id, 'down')}
       >
-        <span className="icon">
-          <i className="fas fa-arrow-down"></i>
-        </span>
+        <ArrowDown size={15} />
       </button>
       <button
-        className="button is-primary is-small"
+        className="btn btn-icon cell-action"
+        aria-label="Delete cell"
         onClick={() => deleteCell(id)}
       >
-        <span className="icon">
-          <i className="fas fa-times"></i>
-        </span>
+        <X size={15} />
       </button>
     </div>
   );

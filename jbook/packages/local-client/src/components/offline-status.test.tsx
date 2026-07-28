@@ -18,7 +18,7 @@ describe('OfflineStatus', () => {
     render(<OfflineStatus />);
     expect(screen.queryByText(/offline/i)).not.toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /clear module cache/i })
+      screen.getByRole('button', { name: /clear cache/i })
     ).toBeInTheDocument();
   });
 
@@ -39,7 +39,7 @@ describe('OfflineStatus', () => {
     render(<OfflineStatus />);
 
     await user.click(
-      screen.getByRole('button', { name: /clear module cache/i })
+      screen.getByRole('button', { name: /clear cache/i })
     );
 
     expect(clearModuleCache).toHaveBeenCalledTimes(1);
@@ -54,7 +54,7 @@ describe('OfflineStatus', () => {
     render(<OfflineStatus />);
 
     await user.click(
-      screen.getByRole('button', { name: /clear module cache/i })
+      screen.getByRole('button', { name: /clear cache/i })
     );
 
     expect(

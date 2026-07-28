@@ -1,27 +1,73 @@
-.progress-wrapper {
+.code-cell {
+  display: flex;
+  flex-direction: row;
   height: 100%;
-  flex-grow: 1;
-  background-color: white;
+  border: 1px solid var(--color-divider);
 }
 
-.progress-cover {
-  height: 100%;
-  width: 100%;
+/* Shared 32px pane toolbar (JAVASCRIPT / PREVIEW). */
+.pane-toolbar {
   display: flex;
   align-items: center;
-  padding-left: 10%;
-  padding-right: 10%;
-  animation: fadeIn 0.5s;
+  height: 32px;
+  flex: none;
+  padding: 6px 12px;
 }
 
-@keyframes fadeIn {
+.preview-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  background: #ffffff;
+}
+
+.preview-toolbar {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.preview-toolbar .label {
+  flex: 1;
+}
+
+.preview-toolbar .live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+}
+
+.preview-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Bundling: a slim accent track at the top of the pane; the last good
+   preview stays visible beneath it. */
+.bundle-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-neutral-200);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.bundle-track-fill {
+  height: 100%;
+  width: 40%;
+  background: var(--color-accent);
+  animation: bundle-track-slide 1.1s ease-in-out infinite;
+}
+
+@keyframes bundle-track-slide {
   0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0;
+    transform: translateX(-100%);
   }
   100% {
-    opacity: 1;
+    transform: translateX(250%);
   }
 }

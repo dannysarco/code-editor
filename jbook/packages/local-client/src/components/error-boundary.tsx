@@ -1,5 +1,6 @@
 import './error-boundary.css';
 import { Component, ErrorInfo, ReactNode } from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -26,15 +27,30 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     this.setState({ error: null });
   };
 
+  onCopy = () => {
+    navigator.clipboard?.writeText(this.state.error?.message ?? '');
+  };
+
   render() {
     if (this.state.error) {
       return (
-        <div className="error-boundary notification is-danger">
-          <h4>Something went wrong in this cell</h4>
-          <p className="error-boundary-message">{this.state.error.message}</p>
-          <button className="button is-small" onClick={this.onReset}>
-            Reset
-          </button>
+        <div className="error-boundary" role="alert">
+          <AlertTriangle size={20} className="error-icon" aria-hidden="true" />
+          <div className="error-content">
+            <h4>Something went wrong in this cell</h4>
+            <p className="error-boundary-message">{this.state.error.message}</p>
+            <div className="error-actions">
+              <button className="btn btn-primary" onClick={this.onReset}>
+                Reset cell
+              </button>
+              <button
+                className="btn btn-secondary error-copy"
+                onClick={this.onCopy}
+              >
+                Copy error
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

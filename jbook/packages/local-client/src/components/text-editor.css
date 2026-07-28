@@ -1,77 +1,138 @@
-.w-md-editor .title {
-  line-height: unset;
-  font-size: unset;
-  font-weight: unset;
-  color: #d4d4d4 !important;
+/* — read view — */
+.text-editor .text-cell-body {
+  border: 1px solid var(--color-divider);
+  background: var(--color-neutral-100);
+  padding: 20px 24px;
+  max-width: 76ch;
+  cursor: text;
+  font-size: 15px;
 }
 
-.w-md-editor ul {
-  line-height: 1;
+/* — shared markdown rendering (read view + live preview) — */
+.text-editor .wmde-markdown {
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
 }
 
-.text-editor .w-md-editor-bar svg {
-  display: none;
+.text-editor .wmde-markdown h1,
+.text-editor .wmde-markdown h2,
+.text-editor .wmde-markdown h3,
+.text-editor .wmde-markdown h4,
+.text-editor .wmde-markdown h5,
+.text-editor .wmde-markdown h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin: 0 0 8px;
 }
 
-.text-editor .w-md-editor-bar {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
-  height: 11px;
-  cursor: row-resize;
-  background-color: #37414b;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  width: 100%;
-  position: relative;
+.text-editor .wmde-markdown h3 {
+  font-size: 25px;
+}
+
+.text-editor .wmde-markdown ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.text-editor .wmde-markdown ol {
+  list-style: decimal;
+  padding-left: 20px;
+}
+
+.text-editor .wmde-markdown code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--color-accent-100);
+  color: var(--color-accent-800);
+  padding: 1px 5px;
+  border-radius: 0;
+}
+
+.text-editor .wmde-markdown hr {
+  height: 2px;
+  border: 0;
+  background: var(--color-divider);
 }
 
 .text-editor em {
   font-style: italic;
 }
 
-.text-editor .wmde-markdown hr {
-  border-top: 1px solid #dee5ed;
+/* — edit view: restyled @uiw/react-md-editor, source | preview — */
+.text-editor.editing .w-md-editor {
+  border: 1px solid var(--color-divider);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--color-neutral-100);
+  color: var(--color-text);
+  min-height: 200px;
 }
 
-.text-editor .wmde-markdown ol {
-  list-style: decimal;
+/* Pane toolbars, drawn with pseudo-elements since the library owns the DOM:
+   32px, hairline underneath, 11px uppercase labels. */
+.text-editor.editing .w-md-editor-area::before,
+.text-editor.editing .w-md-editor-preview::before {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--color-divider);
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral-600);
 }
 
-.text-editor .w-md-editor-show-live {
-  /* Hide menu bar buttons to prevent accidental delete */
-  z-index: 20;
+.text-editor.editing .w-md-editor-area::before {
+  content: 'Markdown';
 }
 
-.text-editor .w-md-editor-toolbar {
-  background-color: #37414b;
-  border-bottom: 1px solid gray;
+.text-editor.editing .w-md-editor-preview::before {
+  content: 'Preview';
 }
 
-.text-editor .w-md-editor-toolbar li button {
-  color: #d4d4d4;
+.text-editor.editing .w-md-editor-content {
+  background: var(--color-neutral-100);
 }
 
-.text-editor .w-md-editor-content {
-  background-color: #202123;
+.text-editor.editing .w-md-editor-area {
+  border-radius: 0;
 }
 
-.text-editor .w-md-editor,
-.text-editor .w-md-editor .w-md-editor-text-pre {
-  color: #d4d4d4;
+.text-editor.editing .w-md-editor-text {
+  padding: 14px;
 }
 
-.text-editor .w-md-editor-text-pre .bold {
-  color: unset;
+.text-editor.editing .w-md-editor-text-pre > code,
+.text-editor.editing .w-md-editor-text-input {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
 }
 
-.text-editor .token.list.punctuation {
-  background-color: unset;
+.text-editor.editing .w-md-editor-text-input {
+  caret-color: var(--color-accent);
+  -webkit-text-fill-color: transparent;
 }
 
-/* Restore list markers: @uiw/react-md-editor 4.x's markdown styles no longer
-   override Bulma's `ul { list-style: none }` reset. */
-.wmde-markdown ul {
-  list-style: disc;
+/* The live preview pane, separated from the source by a 2px rule. */
+.text-editor.editing .w-md-editor-preview {
+  position: static;
+  display: block;
+  border-left: 2px solid var(--color-divider);
+  box-shadow: none;
+  padding: 0;
+  background: var(--color-neutral-100);
 }
-.wmde-markdown ol {
-  list-style: decimal;
+
+.text-editor.editing .w-md-editor-preview .wmde-markdown {
+  padding: 14px;
 }
