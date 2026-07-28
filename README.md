@@ -32,6 +32,11 @@ npx my-scrapbook serve
 - If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
 ![The install folder showing the saved notebook.js file](docs/images/notebook-file.png)
 
+## What's new in 3.1
+
+- **Undo/redo**: toolbar buttons plus Ctrl/Cmd+Z, Ctrl+Y, and Ctrl/Cmd+Shift+Z. Typing bursts undo as one step; the shortcuts stay out of the way while you're typing inside an editor.
+- **Works fully offline**: the editor and fonts are bundled with the app, and npm packages you've used before are served from a local cache — a badge tells you when you're offline, and a button clears the module cache to pick up fresh package versions.
+
 ## What's new in 3.0
 
 - Rebuilt on a modern toolchain: Vite, TypeScript 5, React 18, and Redux Toolkit.
@@ -142,6 +147,10 @@ npm test
 ```
 
 To work on the browser app with hot reload, run `npm start` in `jbook/packages/local-client` (it serves on port 3000; run the CLI's `serve` command alongside it to have a real API to talk to). Each package's README has more detail, and CI runs the builds and tests on every pull request.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the release history.
 
 ## Roadmap
 
