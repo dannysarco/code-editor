@@ -1,4 +1,5 @@
 import { isAnyOf, Middleware } from '@reduxjs/toolkit';
+import { ActionTypes as UndoActionTypes } from 'redux-undo';
 import {
   deleteCell,
   insertCellAfter,
@@ -9,12 +10,13 @@ import {
 import type { AppDispatch } from '../store';
 import { PERSIST_SAVE_DEBOUNCE_MS } from '../../constants';
 
-const isPersistTrigger = isAnyOf(
-  updateCell,
-  deleteCell,
-  moveCell,
-  insertCellAfter
-);
+const isCellEdit = isAnyOf(updateCell, deleteCell, moveCell, insertCellAfter);
+
+// Undo/redo restore a different notebook state and must be persisted too.
+const isPersistTrigger = (action: unknown): boolean =>
+  isCellEdit(action) ||
+  (action as { type?: string }).type === UndoActionTypes.UNDO ||
+  (action as { type?: string }).type === UndoActionTypes.REDO;
 
 // Debounces a saveCells dispatch after any action that changes cell content
 // or ordering.

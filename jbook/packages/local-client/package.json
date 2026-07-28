@@ -47,6 +47,8 @@
     "react-dom": "^18.3.1",
     "react-redux": "^9.3.0",
     "react-resizable": "^3.0.5",
+    "redux": "^5.0.1",
+    "redux-undo": "^1.1.0",
     "typescript": "^5.9.3",
     "uuid": "^11.1.1",
     "vite": "^7.3.6",
