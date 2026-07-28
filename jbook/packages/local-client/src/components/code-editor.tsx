@@ -1,3 +1,4 @@
+import '../monaco-setup';
 import './code-editor.css';
 import './syntax.css';
 import { useRef } from 'react';
