@@ -1,0 +1,10 @@
+.undo-redo-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  padding: 5px 10px 0 10px;
+}
+
+.undo-redo-bar .button[disabled] {
+  opacity: 0.4;
+}

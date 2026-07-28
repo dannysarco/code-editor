@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
 import { configureStore } from '@reduxjs/toolkit';
-import cellsReducer, { fetchCells, updateCell, deleteCell } from '../cells-slice';
+import { fetchCells, updateCell, deleteCell } from '../cells-slice';
+import { undoableCellsReducer } from '../store';
 import bundlesReducer from '../bundles-slice';
 import { persistMiddleware } from './persist-middleware';
 import { PERSIST_SAVE_DEBOUNCE_MS } from '../../constants';
@@ -11,7 +12,7 @@ vi.mock('../../bundler', () => ({ default: vi.fn() }));
 
 const makeStore = () => {
   const store = configureStore({
-    reducer: { cells: cellsReducer, bundles: bundlesReducer },
+    reducer: { cells: undoableCellsReducer, bundles: bundlesReducer },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(persistMiddleware),
   });
@@ -56,6 +57,23 @@ describe('persist middleware', () => {
     await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
 
     expect(axios.post).toHaveBeenCalledTimes(1);
+  });
+
+  it('saves after undo and redo', async () => {
+    const { ActionCreators } = await import('redux-undo');
+    const store = makeStore();
+
+    store.dispatch(updateCell('a', 'show(1);'));
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
+    expect(axios.post).toHaveBeenCalledTimes(1);
+
+    store.dispatch(ActionCreators.undo());
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
+    expect(axios.post).toHaveBeenCalledTimes(2);
+
+    store.dispatch(ActionCreators.redo());
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
+    expect(axios.post).toHaveBeenCalledTimes(3);
   });
 
   it('does not save on non-cell actions', async () => {

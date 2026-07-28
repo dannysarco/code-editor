@@ -18,3 +18,8 @@ export const JSX_HIGHLIGHT_DEBOUNCE_MS = 100;
 // listener. A load-event handshake would be more principled; this matches the
 // app's long-standing behavior.
 export const PREVIEW_EXECUTE_DELAY_MS = 50;
+
+// Maximum number of undo history entries kept for the notebook. Snapshots are
+// cheap (cells are small JSON), and 50 comfortably covers a working session
+// without unbounded growth.
+export const UNDO_HISTORY_LIMIT = 50;
