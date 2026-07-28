@@ -7,6 +7,9 @@ interface BundlesState {
         loading: boolean;
         code: string;
         err: string;
+        // How long the bundle took, for the cell header's "Bundled in N ms"
+        // label. Absent while loading and after unexpected failures.
+        durationMs?: number;
       }
     | undefined;
 }
@@ -16,7 +19,9 @@ const initialState: BundlesState = {};
 const createBundleThunk = createAsyncThunk(
   'bundles/createBundle',
   async ({ input }: { cellId: string; input: string }) => {
-    return await bundler(input);
+    const started = performance.now();
+    const result = await bundler(input);
+    return { ...result, durationMs: performance.now() - started };
   }
 );
 
@@ -42,6 +47,7 @@ const bundlesSlice = createSlice({
           loading: false,
           code: action.payload.code,
           err: action.payload.err,
+          durationMs: action.payload.durationMs,
         };
       })
       // bundler() reports errors through its result rather than throwing, so

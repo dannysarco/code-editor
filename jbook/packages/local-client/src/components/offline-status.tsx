@@ -40,23 +40,23 @@ const OfflineStatus: React.FC = () => {
     <div className="offline-status">
       {!online && (
         <span
-          className="tag is-warning"
+          className="tag tag-accent"
           title="No network connection. Previously used npm packages are cached and keep working; imports of new packages will fail until you are back online."
         >
           Offline — cached packages still work
         </span>
       )}
       {clearedCount !== null && (
-        <span className="tag is-info">
+        <span className="tag tag-neutral">
           Cleared {clearedCount} cached module{clearedCount === 1 ? '' : 's'}
         </span>
       )}
       <button
-        className="button is-small"
+        className="btn btn-secondary"
         title="Empty the npm module cache; the next run refetches packages from unpkg and picks up new versions"
         onClick={onClearCache}
       >
-        Clear module cache
+        Clear cache
       </button>
     </div>
   );

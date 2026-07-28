@@ -1,39 +1,38 @@
+import "./example-text.css";
 import React from "react";
+
+// The "How this works" strip that the meta bar's disclosure toggles open —
+// a tightened rewrite of the old permanent explainer wall.
+const GUIDE_ITEMS: React.ReactNode[] = [
+  <>Click any text or code cell to edit it.</>,
+  <>
+    Cells share one file — a variable from cell 01 works in every cell below.
+  </>,
+  <>
+    Call <code>show()</code> to render a component, string or number in the
+    preview.
+  </>,
+  <>Import any npm package — bundling happens in the browser.</>,
+];
 
 const ExplainerText: React.FC = () => {
   return (
-    <div className="card-content" id="hide-show">
-      <div className="wmde-markdown wmde-markdown-color ">
-        <h2>
-          <strong>Coding and Documentation Editor</strong>
-        </h2>
-        <p>
-          This is an interactive coding environment. You can write Javascript,
-          import any NPM modules and see it executed, and write comprehensive
-          documentation using markdown.
-        </p>
-        <ul>
-          <li>Click any text or code cell to edit it</li>
-          <li>
-            The code in each code editor is joined into one file. If you define
-            a variable in cell #1, you can refer to it in any of the following
-            cells!
-          </li>
-          <li>
-            Click the <strong>Format</strong> button in any code cell, and
-            Prettier will its thing to your code!
-          </li>
-          <li>
-            You can show any React component, string, number, or anything else
-            by calling the <code>show</code> function. This is a function built
-            into this environment. Call show multiple times to show multiple
-            values
-          </li>
-          <li>Re-order or delete cells using the buttons on the top right</li>
-          <li>Add new cells by hovering on the divider between each cell</li>
-        </ul>
+    <section className="guide-strip">
+      <div className="guide-intro">
+        <h4>Coding and documentation, in one file</h4>
+        <p>Everything you write saves to notebook.js.</p>
       </div>
-    </div>
+      <ol className="guide-items">
+        {GUIDE_ITEMS.map((item, index) => (
+          <li key={index} className="guide-item">
+            <span className="guide-index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 };
 

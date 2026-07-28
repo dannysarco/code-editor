@@ -1,10 +1,12 @@
 .undo-redo-bar {
   display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-  padding: 5px 10px 0 10px;
+  gap: 2px;
 }
 
-.undo-redo-bar .button[disabled] {
-  opacity: 0.4;
+.undo-redo-bar .undo-redo-btn {
+  border-color: transparent;
+}
+
+.undo-redo-bar .undo-redo-btn:disabled {
+  color: var(--color-neutral-600);
 }

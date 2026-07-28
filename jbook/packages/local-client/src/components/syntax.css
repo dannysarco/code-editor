@@ -1,116 +1,30 @@
-.editor-wrapper .mtk1 {
-  color: #d4d4d4;
-}
-.editor-wrapper .mtk2 {
-  color: #1e1e1e;
-}
-.editor-wrapper .mtk3 {
-  color: #000080;
-}
-.editor-wrapper .mtk4 {
-  color: #6a9955;
-}
-.editor-wrapper .mtk5 {
-  color: #569cd6;
-}
-.editor-wrapper .mtk6 {
-  color: #b5cea8;
-}
-.editor-wrapper .mtk7 {
-  color: #646695;
-}
-.editor-wrapper .mtk8 {
-  color: #c586c0;
-}
-.editor-wrapper .mtk9 {
-  color: #9cdcfe;
-}
-.editor-wrapper .mtk10 {
-  color: #f44747;
-}
-.editor-wrapper .mtk11 {
-  color: #ce9178;
-}
-.editor-wrapper .mtk12 {
-  color: #6796e6;
-}
-.editor-wrapper .mtk13 {
-  color: #808080;
-}
-.editor-wrapper .mtk14 {
-  color: #d16969;
-}
-.editor-wrapper .mtk15 {
-  color: #dcdcaa;
-}
-.editor-wrapper .mtk16 {
-  color: #4ec9b0;
-}
-.editor-wrapper .mtk17 {
-  color: #c586c0;
-}
-.editor-wrapper .mtk18 {
-  color: #4fc1ff;
-}
-.editor-wrapper .mtk19 {
-  color: #c8c8c8;
-}
-.editor-wrapper .mtk20 {
-  color: #cd9731;
-}
-.editor-wrapper .mtk21 {
-  color: #b267e6;
-}
-.editor-wrapper .mtki {
-  font-style: italic;
-}
-.editor-wrapper .mtkb {
-  font-weight: bold;
-}
-.editor-wrapper .mtku {
-  text-decoration: underline;
-  text-underline-position: under;
-}
+/* Syntax colors come from the 'modernist-dark' Monaco theme defined in
+   monaco-setup.ts; this file only styles the monaco-jsx-highlighter 2.x
+   decoration classes (see JSXTypes in that package), retuned to the
+   Modernist neutral/accent ramps. */
 
-/* monaco-jsx-highlighter 2.x decoration classes (see JSXTypes in that
-   package). Colors carried over from the previous highlighter's scheme. */
-
-.editor-wrapper .JSXElement.JSXBracket {
-  color: #0080ff;
-}
-
-.editor-wrapper .JSXOpeningElement.JSXBracket {
-  color: #808080;
-  font-weight: bold;
-}
-
-.editor-wrapper .JSXClosingElement.JSXBracket {
-  color: #808080;
-  font-weight: lighter;
+.editor-wrapper .JSXElement.JSXBracket,
+.editor-wrapper .JSXOpeningElement.JSXBracket,
+.editor-wrapper .JSXClosingElement.JSXBracket,
+.editor-wrapper .JSXOpeningFragment.JSXBracket,
+.editor-wrapper .JSXClosingFragment.JSXBracket,
+.editor-wrapper .JSXExpressionContainer.JSXBracket {
+  color: #9b9797;
 }
 
 .editor-wrapper .JSXElement.JSXIdentifier {
-  color: #569cd6;
+  color: #ffc4b8;
 }
 
 .editor-wrapper .JSXAttribute.JSXIdentifier {
-  color: #9cdcfe;
+  color: #d7d3d3;
 }
 
 .editor-wrapper .JSXElement.JSXText {
-  color: darkgoldenrod;
-}
-
-.editor-wrapper .JSXExpressionContainer.JSXBracket {
-  color: #fac863;
-}
-
-.editor-wrapper .JSXOpeningFragment.JSXBracket,
-.editor-wrapper .JSXClosingFragment.JSXBracket {
-  color: #808080;
+  color: #eae7e7;
 }
 
 .editor-wrapper .JSXElement.JSXGlyph {
-  background: #61dafb;
+  background: #ff563c;
   opacity: 0.25;
 }

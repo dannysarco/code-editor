@@ -7,11 +7,23 @@ interface ResizableProps {
   children?: React.ReactNode;
 }
 
+// Default split matches the design's 1.4fr / 1fr editor-to-preview ratio.
+const EDITOR_FRACTION = 1.4 / 2.4;
+
 const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   let resizableProps: ResizableBoxProps;
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-  const [width, setWidth] = useState(window.innerWidth * 0.75);
+  const [width, setWidth] = useState(window.innerWidth * EDITOR_FRACTION);
+
+  // If the component mounted before the window had been laid out (embedded
+  // previews report innerWidth 0 briefly), the editor pane would be stuck at
+  // 0px; re-derive the default once a real viewport width exists.
+  useEffect(() => {
+    if (!width && window.innerWidth) {
+      setWidth(window.innerWidth * EDITOR_FRACTION);
+    }
+  }, [width]);
 
   useEffect(() => {
     let timer: any;
@@ -24,6 +36,8 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
         setInnerWidth(window.innerWidth);
         if (window.innerWidth * 0.75 < width) {
           setWidth(window.innerWidth * 0.75);
+        } else if (!width) {
+          setWidth(window.innerWidth * EDITOR_FRACTION);
         }
       }, 100);
     };
@@ -50,7 +64,7 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
     resizableProps = {
       minConstraints: [Infinity, 24],
       maxConstraints: [Infinity, innerHeight * 0.9],
-      height: 300,
+      height: 340,
       width: Infinity,
       resizeHandles: ['s'],
     };

@@ -1,5 +1,5 @@
 import './code-cell.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
 import Resizable from './resizable';
@@ -18,6 +18,19 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
   const cumulativeCode = useCumulativeCode(cell.id);
 
+  // While re-bundling, the preview keeps showing the last good result under
+  // the progress track instead of being torn down.
+  const [lastBundle, setLastBundle] = useState<{
+    code: string;
+    err: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (bundle && !bundle.loading) {
+      setLastBundle({ code: bundle.code, err: bundle.err });
+    }
+  }, [bundle]);
+
   useEffect(() => {
     if (!bundle) {
       createBundle(cell.id, cumulativeCode);
@@ -34,31 +47,35 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cumulativeCode, cell.id, createBundle]);
 
+  const bundling = !bundle || bundle.loading;
+  const display = bundling ? lastBundle : bundle;
+
   return (
     <Resizable direction="vertical">
-      <div
-        style={{
-          height: 'calc(100% - 10px)',
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
+      <div className="code-cell">
         <Resizable direction="horizontal">
           <CodeEditor
             initialValue={cell.content}
             onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>
-        <div className="progress-wrapper">
-          {!bundle || bundle.loading ? (
-            <div className="progress-cover">
-              <progress className="progress is-small is-primary" max="100">
-                Loading
-              </progress>
-            </div>
-          ) : (
-            <Preview code={bundle.code} err={bundle.err} />
-          )}
+        <div className="preview-pane">
+          <div className="pane-toolbar preview-toolbar">
+            <span className="label">Preview</span>
+            <span className="live-dot" aria-hidden="true" />
+          </div>
+          <div className="preview-body">
+            {bundling && (
+              <div
+                className="bundle-track"
+                role="progressbar"
+                aria-label="Bundling"
+              >
+                <div className="bundle-track-fill" />
+              </div>
+            )}
+            {display && <Preview code={display.code} err={display.err} />}
+          </div>
         </div>
       </div>
     </Resizable>

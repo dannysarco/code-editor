@@ -1,9 +1,33 @@
 .error-boundary {
-  margin: 10px 0;
+  display: flex;
+  gap: 16px;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-100);
+  padding: 20px 24px;
+}
+
+.error-boundary .error-icon {
+  flex: none;
+  color: var(--color-accent-700);
+}
+
+.error-boundary h4 {
+  color: var(--color-accent-800);
 }
 
 .error-boundary-message {
-  font-family: monospace;
-  margin: 8px 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-accent-800);
   word-break: break-word;
+  margin: 0 0 12px;
+}
+
+.error-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.error-actions .error-copy {
+  border-color: var(--color-accent-300);
 }
