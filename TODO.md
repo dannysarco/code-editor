@@ -201,11 +201,11 @@
 **Effort:** 1 week
 **Impact:** Full offline capability
 
-- [ ] Create service worker for caching unpkg responses
-- [ ] Cache frequently used packages (react, axios, etc.)
-- [ ] Add "Offline Mode" indicator in UI
-- [ ] Handle cache invalidation strategy
-- [ ] Add settings to clear cache
+- [x] ~~Service worker~~ Implemented without one (PR #21): the app shell is served locally, npm module responses were already cached in IndexedDB by the bundler, and the real offline blocker was Monaco loading from a CDN — now self-hosted (with the theme font, the app makes zero external requests)
+- [x] Cache frequently used packages — every fetched module is cached on first use and served from IndexedDB after (PR #21)
+- [x] Add "Offline Mode" indicator in UI (PR #21)
+- [x] Handle cache invalidation strategy — entries pin the first-fetched version until cleared; clearing refetches and picks up new versions (PR #21)
+- [x] Add a Clear-module-cache button with cleared-count feedback (PR #21)
 
 ---
 
