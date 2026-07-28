@@ -16,7 +16,7 @@ describe('AddCell', () => {
 
     await user.click(screen.getByRole('button', { name: /code/i }));
 
-    const { order, data } = store.getState().cells;
+    const { order, data } = store.getState().cells.present;
     expect(order).toHaveLength(2);
     expect(order[0]).toBe('a');
     expect(data[order[1]].type).toBe('code');
@@ -29,7 +29,7 @@ describe('AddCell', () => {
 
     await user.click(screen.getByRole('button', { name: /text/i }));
 
-    const { order, data } = store.getState().cells;
+    const { order, data } = store.getState().cells.present;
     expect(order).toHaveLength(2);
     expect(order[1]).toBe('a');
     expect(data[order[0]].type).toBe('text');

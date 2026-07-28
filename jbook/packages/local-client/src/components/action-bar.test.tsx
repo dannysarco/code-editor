@@ -20,10 +20,10 @@ describe('ActionBar', () => {
     const [up, down] = screen.getAllByRole('button');
 
     await user.click(up);
-    expect(store.getState().cells.order).toEqual(['b', 'a']);
+    expect(store.getState().cells.present.order).toEqual(['b', 'a']);
 
     await user.click(down);
-    expect(store.getState().cells.order).toEqual(['a', 'b']);
+    expect(store.getState().cells.present.order).toEqual(['a', 'b']);
   });
 
   it('deletes the cell through the store', async () => {
@@ -34,7 +34,7 @@ describe('ActionBar', () => {
     const buttons = screen.getAllByRole('button');
     await user.click(buttons[2]);
 
-    expect(store.getState().cells.order).toEqual(['b']);
-    expect(store.getState().cells.data['a']).toBeUndefined();
+    expect(store.getState().cells.present.order).toEqual(['b']);
+    expect(store.getState().cells.present.data['a']).toBeUndefined();
   });
 });

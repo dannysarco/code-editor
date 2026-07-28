@@ -10,6 +10,7 @@ import reducer, {
   updateCell,
 } from './cells-slice';
 import { Cell } from './cell';
+import { undoableCellsReducer } from './store';
 
 vi.mock('axios');
 
@@ -85,7 +86,8 @@ describe('fetch/save thunks', () => {
     vi.mocked(axios.post).mockReset();
   });
 
-  const makeStore = () => configureStore({ reducer: { cells: reducer } });
+  const makeStore = () =>
+    configureStore({ reducer: { cells: undoableCellsReducer } });
 
   it('fetchCells loads cells into state', async () => {
     vi.mocked(axios.get).mockResolvedValue({ data: [cellA, cellB] });
@@ -93,7 +95,7 @@ describe('fetch/save thunks', () => {
 
     await store.dispatch(fetchCells());
 
-    const { cells } = store.getState();
+    const { present: cells } = store.getState().cells;
     expect(cells.loading).toBe(false);
     expect(cells.order).toEqual(['a', 'b']);
     expect(cells.data['b']).toEqual(cellB);
@@ -105,7 +107,7 @@ describe('fetch/save thunks', () => {
 
     await store.dispatch(fetchCells());
 
-    const { cells } = store.getState();
+    const { present: cells } = store.getState().cells;
     expect(cells.loading).toBe(false);
     expect(cells.error).toBe('nope');
   });
@@ -129,6 +131,6 @@ describe('fetch/save thunks', () => {
 
     await store.dispatch(saveCells());
 
-    expect(store.getState().cells.error).toBe('disk full');
+    expect(store.getState().cells.present.error).toBe('disk full');
   });
 });

@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { ReactElement, ReactNode } from 'react';
 import { render } from '@testing-library/react';
-import cellsReducer, { fetchCells } from './state/cells-slice';
+import { fetchCells } from './state/cells-slice';
+import { undoableCellsReducer } from './state/store';
 import bundlesReducer from './state/bundles-slice';
 import { Cell } from './state/cell';
 
@@ -10,7 +11,7 @@ import { Cell } from './state/cell';
 // don't fire network saves), optionally pre-seeded with cells.
 export const makeStore = (cells: Cell[] = []) => {
   const store = configureStore({
-    reducer: { cells: cellsReducer, bundles: bundlesReducer },
+    reducer: { cells: undoableCellsReducer, bundles: bundlesReducer },
   });
   if (cells.length > 0) {
     store.dispatch({ type: fetchCells.fulfilled.type, payload: cells });

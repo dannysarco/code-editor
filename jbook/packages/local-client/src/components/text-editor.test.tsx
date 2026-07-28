@@ -56,7 +56,7 @@ describe('TextEditor', () => {
     expect(editor).toBeInTheDocument();
 
     fireEvent.change(editor, { target: { value: '# Hello world' } });
-    expect(store.getState().cells.data['t1'].content).toBe('# Hello world');
+    expect(store.getState().cells.present.data['t1'].content).toBe('# Hello world');
   });
 
   it('closes the editor when clicking outside', async () => {
