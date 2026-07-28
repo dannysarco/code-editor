@@ -6,6 +6,7 @@ import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
 import ErrorBoundary from "./error-boundary";
 import UndoRedoBar from "./undo-redo-bar";
+import OfflineStatus from "./offline-status";
 import { useActions } from "../hooks/use-actions";
 
 const CellList: React.FC = () => {
@@ -30,7 +31,10 @@ const CellList: React.FC = () => {
 
   return (
     <div className="cell-list">
-      <UndoRedoBar />
+      <div className="notebook-toolbar">
+        <OfflineStatus />
+        <UndoRedoBar />
+      </div>
       <AddCell forceVisible={cells.length === 0} previousCellId={null} />
       {renderedCells}
     </div>

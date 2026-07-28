@@ -5,3 +5,15 @@
 .react-draggable-transparent-selection .cell-list {
   margin-bottom: 100vh;
 }
+
+.notebook-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px 0 10px;
+}
+
+.notebook-toolbar .undo-redo-bar {
+  padding: 0;
+}
