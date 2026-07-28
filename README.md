@@ -23,9 +23,9 @@ npm i my-scrapbook
 npx my-scrapbook serve
 ```
 - **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
-- Click the **+ Code** or **+Text** button at the top of the screen to get started!
-  ![The empty notebook with the add-cell buttons](docs/images/blank.png)
-  ![A text cell open in the markdown editor above an empty code cell](docs/images/editing.png)
+- Click **Code cell** or **Text cell** on the start screen to create your first cell. After that, use the **+ Code** / **+ Text** buttons between cells to add more.
+  ![The start screen with Code cell and Text cell buttons](docs/images/blank.png)
+  ![A text cell open in the markdown editor above a code cell](docs/images/editing.png)
 - All your work is saved to the file **notebook.js**.
 - Next time you run the application using the same command, it will open to your previous **notebook.js** file.
 - If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again. (Or you could leave the **notebook.js** and click the **X** button on all your previous work once the IDE is loaded into the browser.)
@@ -57,7 +57,7 @@ This is an interactive coding environment. You can write Javascript, see it exec
 - Click the **Format** button in any code cell, and Prettier will its thing to your code!
 - You can show any React component, string, number, or anything else by calling the `show` function. This is a function built into this environment. Call show multiple times to show multiple values
 - Re-order or delete cells using the buttons on the top right
-- Add new cells by hovering on the divider between each cell
+- Add new cells with the **+ Code** / **+ Text** buttons between cells
 
 All of your changes get saved to the file you opened My Scrapbook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
 
