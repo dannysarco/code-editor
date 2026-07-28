@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.2.0 — 2026-07-28
 
 ### Changed
 - **Notebook UI redesigned on the Modernist design system.** Light ground, flat surfaces, zero corner radius, Archivo type, and a single red accent replace the dark Bulmaswatch "Superhero" theme. Functionally the app is unchanged; the chrome is new:
