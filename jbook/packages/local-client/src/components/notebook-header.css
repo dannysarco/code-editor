@@ -1,0 +1,75 @@
+.notebook-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 32px;
+  background: var(--color-bg);
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.notebook-header .brand-mark {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  background: var(--color-accent);
+}
+
+.notebook-header .brand-name {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.notebook-header .header-divider {
+  width: 1px;
+  height: 20px;
+  flex: none;
+  background: var(--color-divider);
+}
+
+.notebook-header .file-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.notebook-header .file-name {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.notebook-header .header-spacer {
+  flex: 1;
+}
+
+/* The design orders the right cluster tag → undo/redo → Clear cache →
+   Run all; OfflineStatus owns both the tag slot and the Clear cache button,
+   so it flattens into the header row and flex `order` does the interleave. */
+.notebook-header .offline-status {
+  display: contents;
+}
+.notebook-header .offline-status .tag {
+  order: 0;
+}
+.notebook-header .undo-redo-bar {
+  order: 1;
+}
+.notebook-header .offline-status .btn {
+  order: 2;
+}
+.notebook-header .run-all {
+  order: 3;
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .notebook-header {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}

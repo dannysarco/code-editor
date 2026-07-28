@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- **Notebook UI redesigned on the Modernist design system.** Light ground, flat surfaces, zero corner radius, Archivo type, and a single red accent replace the dark Bulmaswatch "Superhero" theme. Functionally the app is unchanged; the chrome is new:
+  - A sticky app header (brand, filename, save state, undo/redo, **Clear cache**, **Run all**) replaces the floating toolbar above the first cell.
+  - The permanent explainer wall is now a collapsible "How this works" strip behind a meta-bar toggle (state persisted, open on first run), and an empty notebook shows a first-run screen with **Code cell** / **Text cell** buttons.
+  - Add-cell rails and cell actions are always visible instead of appearing on hover; each cell has a numbered header (`01 / TEXT`) with a bundle status slot ("Bundled in 84 ms" / "Bundling…").
+  - Code panes stay dark inside the light chrome with syntax colors from the design system's ramps; while re-bundling, the preview keeps the last good render under a slim progress track instead of being replaced by a progress bar.
+  - Icons moved from Font Awesome to Lucide and the UI font from Lato to Archivo (still self-hosted/offline-first); `bulmaswatch` and `@fortawesome/fontawesome-free` are gone.
+
 ## 3.1.0 — 2026-07-28
 
 ### Added

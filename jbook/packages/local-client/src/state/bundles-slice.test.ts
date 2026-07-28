@@ -32,6 +32,7 @@ describe('bundles slice', () => {
       loading: false,
       code: 'bundled!',
       err: '',
+      durationMs: expect.any(Number),
     });
   });
 
@@ -45,6 +46,7 @@ describe('bundles slice', () => {
       loading: false,
       code: '',
       err: 'syntax error',
+      durationMs: expect.any(Number),
     });
   });
 

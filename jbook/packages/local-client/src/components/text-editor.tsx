@@ -34,10 +34,13 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
 
   if (editing) {
     return (
-      <div className="text-editor" ref={ref} data-color-mode="dark">
+      <div className="text-editor editing" ref={ref} data-color-mode="light">
         <MDEditor
           value={cell.content}
           onChange={(v) => updateCell(cell.id, v || '')}
+          preview="live"
+          hideToolbar
+          visibleDragbar={false}
         />
       </div>
     );
@@ -45,11 +48,11 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
 
   return (
     <div
-      className="text-editor card"
+      className="text-editor"
       onClick={() => setEditing(true)}
-      data-color-mode="dark"
+      data-color-mode="light"
     >
-      <div className="card-content">
+      <div className="text-cell-body">
         <MDEditor.Markdown source={cell.content || 'Click to edit'} />
       </div>
     </div>

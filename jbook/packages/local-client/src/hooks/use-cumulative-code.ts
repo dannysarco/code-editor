@@ -1,12 +1,8 @@
 import { useTypedSelector } from './use-typed-selector';
 import { selectCells } from '../state';
+import { Cell } from '../state';
 
-export const useCumulativeCode = (cellId: string) => {
-  return useTypedSelector((state) => {
-    const { data, order } = selectCells(state);
-    const orderedCells = order.map((id) => data[id]);
-
-    const showFunc = `
+const showFunc = `
     import _React from 'react';
     import _ReactDOMClient from 'react-dom/client';
     var _reactRoot;
@@ -29,21 +25,35 @@ export const useCumulativeCode = (cellId: string) => {
       }
     };
   `;
-    const showFuncNoop = 'var show = () => {}';
-    const cumulativeCode = [];
-    for (let c of orderedCells) {
-      if (c.type === 'code') {
-        if (c.id === cellId) {
-          cumulativeCode.push(showFunc);
-        } else {
-          cumulativeCode.push(showFuncNoop);
-        }
-        cumulativeCode.push(c.content);
-      }
+const showFuncNoop = 'var show = () => {}';
+
+// The code a cell executes is every code cell above it plus itself, with the
+// real show() only in the target cell. Shared with the header's "Run all".
+export const cumulativeCodeFor = (
+  orderedCells: Cell[],
+  cellId: string
+): string => {
+  const cumulativeCode = [];
+  for (let c of orderedCells) {
+    if (c.type === 'code') {
       if (c.id === cellId) {
-        break;
+        cumulativeCode.push(showFunc);
+      } else {
+        cumulativeCode.push(showFuncNoop);
       }
+      cumulativeCode.push(c.content);
     }
-    return cumulativeCode;
-  }).join('\n');
+    if (c.id === cellId) {
+      break;
+    }
+  }
+  return cumulativeCode.join('\n');
+};
+
+export const useCumulativeCode = (cellId: string) => {
+  return useTypedSelector((state) => {
+    const { data, order } = selectCells(state);
+    const orderedCells = order.map((id) => data[id]);
+    return cumulativeCodeFor(orderedCells, cellId);
+  });
 };
