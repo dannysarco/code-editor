@@ -1,0 +1,9 @@
+.offline-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offline-status .tag {
+  height: auto;
+}
