@@ -50,6 +50,10 @@ npx my-scrapbook export
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
 
+## What's new in 3.7
+
+- **Drag cells to reorder them.** Grab the grip handle in any cell's header and drop the cell where you want it — or use it from the keyboard (space to lift, arrows to move, space to drop). A drag is a single undo step, and the new order saves like any other edit. The one-step arrow buttons are still there.
+
 ## What's new in 3.6
 
 - **Unchanged cells don't rebundle.** Bundle results are now cached, so reopening an unchanged notebook is instant, and undo/redo, moving a cell and moving it back, and **Run all** skip esbuild for anything already bundled — those cells say "Bundled from cache". **Clear cache** resets both the bundle and npm module caches.
