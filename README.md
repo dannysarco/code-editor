@@ -51,6 +51,10 @@ npx my-scrapbook export
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
 
+## What's new in 3.5
+
+- **TypeScript in code cells.** Interfaces, type annotations, and generics all work — the editor highlights TS properly, the **Format** button understands it, and types are stripped when your code runs (no type checking). Plain JavaScript works exactly as before.
+
 ## What's new in 3.4
 
 - **Console output in the preview.** `console.log` (and `info`/`warn`/`error`/`debug`) from your code now shows up in a console panel right under the preview — objects serialized, warnings and errors highlighted, with a **Clear** button. No more digging through the browser devtools.

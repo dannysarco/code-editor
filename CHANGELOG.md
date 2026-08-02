@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.5.0 — 2026-08-02
 
 ### Added
 - **TypeScript in code cells.** Cell code is now bundled with esbuild's `tsx` loader, so interfaces, type annotations, generics, and `.tsx`-style JSX all work — types are stripped at bundle time (no type checking). The editor treats cells as TypeScript models: TS syntax highlights correctly (including through the JSX highlighter), syntax errors squiggle, and the **Format** button uses prettier's `babel-ts` parser. Semantic validation is intentionally off since unpkg imports have no type definitions to check against. Plain JavaScript cells work exactly as before.
