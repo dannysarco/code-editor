@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
 import { useTypedSelector } from './use-typed-selector';
 import { selectCells } from '../state';
 import { Cell } from '../state';
@@ -51,9 +53,18 @@ export const cumulativeCodeFor = (
 };
 
 export const useCumulativeCode = (cellId: string) => {
-  return useTypedSelector((state) => {
-    const { data, order } = selectCells(state);
-    const orderedCells = order.map((id) => data[id]);
-    return cumulativeCodeFor(orderedCells, cellId);
-  });
+  // Memoized per hook instance: the join only recomputes when the cells
+  // slice actually changes, not on every store dispatch (bundle lifecycle
+  // actions fire constantly while typing).
+  const selectCumulativeCode = useMemo(
+    () =>
+      createSelector([selectCells], ({ data, order }) =>
+        cumulativeCodeFor(
+          order.map((id) => data[id]),
+          cellId
+        )
+      ),
+    [cellId]
+  );
+  return useTypedSelector(selectCumulativeCode);
 };

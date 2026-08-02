@@ -16,6 +16,12 @@ vi.mock('./code-editor', () => ({
   ),
 }));
 vi.mock('../bundler', () => ({ default: vi.fn() }));
+// The thunk consults the bundle cache before running the bundler; a real
+// cache (localforage) never resolves under jsdom + fake timers.
+vi.mock('../bundler/bundle-cache', () => ({
+  getCachedBundle: vi.fn().mockResolvedValue(null),
+  setCachedBundle: vi.fn().mockResolvedValue(undefined),
+}));
 
 const cell: Cell = { id: 'a', type: 'code', content: "show('one');" };
 
@@ -39,12 +45,14 @@ describe('CodeCell', () => {
     // rather than by role: react-resizable's Infinity inline widths crash
     // jsdom's computed-style walk during accessibility-tree checks.)
     expect(container.querySelector('[role="progressbar"]')).not.toBeNull();
-    expect(bundler).toHaveBeenCalledTimes(1);
-    expect(vi.mocked(bundler).mock.calls[0][0]).toContain("show('one');");
 
     await act(async () => {
+      // One flush for the cache-miss lookup, after which the bundler runs
+      // and its result commits.
       await vi.advanceTimersByTimeAsync(0);
     });
+    expect(bundler).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(bundler).mock.calls[0][0]).toContain("show('one');");
 
     expect(container.querySelector('[role="progressbar"]')).toBeNull();
     expect(screen.getByTitle('preview')).toBeInTheDocument();

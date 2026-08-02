@@ -4,14 +4,20 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import OfflineStatus from './offline-status';
 import { clearModuleCache } from '../bundler/module-cache';
+import { clearBundleCache } from '../bundler/bundle-cache';
 
 vi.mock('../bundler/module-cache', () => ({
   clearModuleCache: vi.fn(),
 }));
 
+vi.mock('../bundler/bundle-cache', () => ({
+  clearBundleCache: vi.fn(),
+}));
+
 describe('OfflineStatus', () => {
   beforeEach(() => {
     vi.mocked(clearModuleCache).mockReset().mockResolvedValue(4);
+    vi.mocked(clearBundleCache).mockReset().mockResolvedValue(undefined);
   });
 
   it('shows no offline badge while online', () => {
@@ -43,6 +49,9 @@ describe('OfflineStatus', () => {
     );
 
     expect(clearModuleCache).toHaveBeenCalledTimes(1);
+    // Cached bundle outputs pin module versions, so both caches clear
+    // together.
+    expect(clearBundleCache).toHaveBeenCalledTimes(1);
     expect(
       await screen.findByText('Cleared 4 cached modules')
     ).toBeInTheDocument();

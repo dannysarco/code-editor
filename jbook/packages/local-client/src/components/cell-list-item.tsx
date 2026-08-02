@@ -18,6 +18,8 @@ const CellListItem: React.FC<CellListItemProps> = ({ cell, index }) => {
   if (cell.type === 'code') {
     if (!bundle || bundle.loading) {
       status = 'Bundling…';
+    } else if (bundle.cached) {
+      status = 'Bundled from cache';
     } else if (bundle.durationMs !== undefined) {
       status = `Bundled in ${Math.max(1, Math.round(bundle.durationMs))} ms`;
     }

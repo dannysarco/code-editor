@@ -1,15 +1,27 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer, { createBundle } from './bundles-slice';
 import bundler from '../bundler';
+import { getCachedBundle, setCachedBundle } from '../bundler/bundle-cache';
 
 vi.mock('../bundler', () => ({
   default: vi.fn(),
 }));
 
+vi.mock('../bundler/bundle-cache', () => ({
+  getCachedBundle: vi.fn(),
+  setCachedBundle: vi.fn(),
+}));
+
 const makeStore = () => configureStore({ reducer: { bundles: reducer } });
 
 describe('bundles slice', () => {
+  beforeEach(() => {
+    vi.mocked(bundler).mockReset();
+    vi.mocked(getCachedBundle).mockReset().mockResolvedValue(null);
+    vi.mocked(setCachedBundle).mockReset().mockResolvedValue(undefined);
+  });
+
   it('marks the cell as loading while bundling', async () => {
     let resolveBundle!: (value: { code: string; err: string }) => void;
     vi.mocked(bundler).mockReturnValue(
@@ -33,6 +45,36 @@ describe('bundles slice', () => {
       code: 'bundled!',
       err: '',
       durationMs: expect.any(Number),
+      cached: false,
+    });
+  });
+
+  it('serves a cached bundle without running the bundler', async () => {
+    vi.mocked(getCachedBundle).mockResolvedValue({ code: 'cached!', err: '' });
+    const store = makeStore();
+
+    await store.dispatch(createBundle('cell-1', 'show(1);'));
+
+    expect(bundler).not.toHaveBeenCalled();
+    expect(setCachedBundle).not.toHaveBeenCalled();
+    expect(store.getState().bundles['cell-1']).toEqual({
+      loading: false,
+      code: 'cached!',
+      err: '',
+      durationMs: undefined,
+      cached: true,
+    });
+  });
+
+  it('caches results after bundling', async () => {
+    vi.mocked(bundler).mockResolvedValue({ code: 'fresh', err: '' });
+    const store = makeStore();
+
+    await store.dispatch(createBundle('cell-1', 'show(1);'));
+
+    expect(setCachedBundle).toHaveBeenCalledWith('cell-1', 'show(1);', {
+      code: 'fresh',
+      err: '',
     });
   });
 
@@ -47,6 +89,7 @@ describe('bundles slice', () => {
       code: '',
       err: 'syntax error',
       durationMs: expect.any(Number),
+      cached: false,
     });
   });
 
