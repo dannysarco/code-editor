@@ -12,7 +12,7 @@
 
 ## Install Instructions.
 
-- You'll need [Node.js](https://nodejs.org/) 18 or newer.
+- You'll need [Node.js](https://nodejs.org/) 20 or newer.
 - Open a folder on your terminal where you don't mind a few files being written.
 - Run the following command:
 ```
@@ -52,6 +52,11 @@ npx my-scrapbook export
 ```
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
+
+## What's new in 3.8
+
+- **Node 20 or newer is now required** (Node 18 reached end of life). Under the hood the CLI's dependencies moved to current majors — express 5 and commander 14 — so a command with stray extra arguments now fails with a clear error instead of being silently ignored.
+- **Releases are verified end-to-end.** CI packs the npm packages, installs the real tarball into a clean project, and runs it — version check, notebook creation, API, and app shell — before anything ships.
 
 ## What's new in 3.7
 

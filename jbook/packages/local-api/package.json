@@ -1,6 +1,6 @@
 {
   "name": "@my-scrapbook/local-api",
-  "version": "3.0.0",
+  "version": "3.8.0",
   "description": "",
   "keywords": [],
   "author": "Danny Sarco",
@@ -8,6 +8,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +24,7 @@
   },
   "devDependencies": {
     "@my-scrapbook/types": "^3.0.0",
-    "@types/express": "^4.17.25",
+    "@types/express": "^5.0.6",
     "@types/node": "^20.19.0",
     "@types/supertest": "^6.0.2",
     "@vitest/coverage-v8": "^3.2.7",
@@ -31,7 +34,7 @@
   },
   "dependencies": {
     "@my-scrapbook/local-client": "^3.0.0",
-    "express": "^4.22.2",
+    "express": "^5.2.1",
     "http-proxy-middleware": "^3.0.7",
     "zod": "^4.4.3"
   },

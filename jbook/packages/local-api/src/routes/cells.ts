@@ -37,9 +37,9 @@ export const createCellsRouter = (filename: string, dir: string) => {
         await fs.writeFile(fullPath, "[]", "utf-8");
         res.send([]);
       } else {
-        // Rethrowing from an async express 4 handler is an unhandled
-        // rejection and would take down the server (e.g. on a notebook file
-        // with invalid JSON); answer with a 500 instead.
+        // Answer with a JSON 500 rather than rethrowing (e.g. on a notebook
+        // file with invalid JSON) — express 5 would catch the rejection, but
+        // its default error page is HTML, not the {error} shape clients expect.
         res.status(500).send({
           error: `Could not read ${filename}: ${err.message}`,
         });
