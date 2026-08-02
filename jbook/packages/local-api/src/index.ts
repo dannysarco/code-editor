@@ -30,6 +30,10 @@ export const serve = (
   }
 
   return new Promise<void>((resolve, reject) => {
-    app.listen(port, resolve).on("error", reject);
+    // express 5 reports listen failures through the callback; keep the
+    // "error" listener too for failures the callback doesn't cover.
+    app
+      .listen(port, (err?: Error) => (err ? reject(err) : resolve()))
+      .on("error", reject);
   });
 };

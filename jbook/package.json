@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "lerna run start --parallel",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "smoke": "scripts/pack-smoke.sh"
   }
 }

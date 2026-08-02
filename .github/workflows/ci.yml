@@ -37,3 +37,9 @@ jobs:
 
       - name: Test
         run: npm test
+
+      # Packs the packages and installs the cli from the tarballs in a scratch
+      # project, then runs it — catches packaging bugs (missing dist files,
+      # runtime deps declared as devDependencies) that unit tests can't see.
+      - name: Pack & install smoke test
+        run: ./scripts/pack-smoke.sh

@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.8.0 — 2026-08-02
+
+Dependency and release-hygiene refresh; no notebook features.
+
+### Added
+- **Pack-and-install smoke test in CI** (also runnable locally with `npm run smoke`). Every CI run now packs the four packages, installs the `my-scrapbook` tarball into a scratch project — npm overrides point the `@my-scrapbook/*` names at the local tarballs, so nothing silently falls back to the registry — and runs the installed binary: `--version` must report the release version, and `serve` must create `notebook.js`, answer `GET /cells` with `[]`, and serve the app shell. This guards the class of bug that shipped in 2.0.3 (a runtime dependency declared under devDependencies), and was verified by breaking the manifest on purpose and watching the test fail.
+
+### Changed
+- **Node 20 is the new floor.** `engines.node` moves from `>=18` to `>=20` in the CLI (and local-api gains the same declaration) — Node 18 left maintenance in April 2025. READMEs updated to match.
+- **express 4 → 5 in local-api**, with `@types/express` 5. The routes were already written defensively around express 4's async-handler behavior, so the change is mechanical; the server-start promise now also surfaces listen failures that express 5 reports through the `listen` callback.
+- **commander 7 → 14 in the CLI.** Seven majors of catch-up; the one behavior change is that excess command arguments (e.g. `serve a.js b.js`) now error instead of being silently ignored. commander 15 was deliberately skipped — it requires Node ≥ 22.12, which would outrun the engines floor above.
+- The root README no longer lists undo/redo and offline module caching as future roadmap ideas; both shipped in 3.1.
+
 ## 3.7.2 — 2026-08-02
 
 No functional changes: ships the refreshed npm-page README below.

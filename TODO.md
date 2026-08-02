@@ -10,9 +10,9 @@
 **Impact:** Product literally doesn't work
 
 - [x] Move `@my-scrapbook/local-api` from devDependencies to dependencies in `jbook/packages/cli/package.json` (PR #5)
-- [ ] Test: Run `npm pack` and verify package contents
-- [ ] Test: Clean install in fresh directory
-- [ ] Publish patch version (pending: v3.0.0 was never published to npm; latest on the registry is 2.0.3 with the same bug — needs an `npm publish` decision)
+- [x] Test: Run `npm pack` and verify package contents (CI pack-and-install smoke test, 3.8.0)
+- [x] Test: Clean install in fresh directory (same smoke test — installs the packed cli into a scratch project and runs `--version` and `serve` against it, on every CI run)
+- [x] Publish patch version — superseded: 3.x publishes from CI on release tags since v3.7.1 (see `publish.yml`)
 
 **Files:**
 - `jbook/packages/cli/package.json:23-24`
@@ -344,5 +344,5 @@
 
 ---
 
-**Last Updated:** 2025-10-29
+**Last Updated:** 2026-08-02
 **Next Review:** After Sprint 1 completion
