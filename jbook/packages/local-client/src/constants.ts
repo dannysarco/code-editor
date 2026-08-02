@@ -13,13 +13,12 @@ export const PERSIST_SAVE_DEBOUNCE_MS = 250;
 // coalesces bursts of keystrokes.
 export const JSX_HIGHLIGHT_DEBOUNCE_MS = 100;
 
-// Pause between resetting the preview iframe's srcdoc and posting the bundled
-// code into it, giving the fresh document time to install its message
-// listener. A load-event handshake would be more principled; this matches the
-// app's long-standing behavior.
-export const PREVIEW_EXECUTE_DELAY_MS = 50;
-
 // Maximum number of undo history entries kept for the notebook. Snapshots are
 // cheap (cells are small JSON), and 50 comfortably covers a working session
 // without unbounded growth.
 export const UNDO_HISTORY_LIMIT = 50;
+
+// Maximum console entries kept per preview. A console.log inside a loop can
+// emit thousands of messages per second; keeping only the newest N bounds
+// both memory and re-render cost while still showing where the output ended.
+export const MAX_CONSOLE_ENTRIES = 200;
