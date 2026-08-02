@@ -8,7 +8,9 @@ export const fetchPlugin = (inputCode: string) => {
     setup(build: esbuild.PluginBuild) {
       build.onLoad({ filter: /(^index\.js$)/ }, () => {
         return {
-          loader: 'jsx',
+          // tsx rather than jsx: cell code may use TypeScript syntax, which
+          // esbuild strips (no type checking). Plain JS/JSX parses the same.
+          loader: 'tsx',
           contents: inputCode,
         };
       });

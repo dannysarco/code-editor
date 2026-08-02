@@ -2,7 +2,7 @@
 // package instead of @monaco-editor/react's default CDN loader, so the app
 // works fully offline. Vite's ?worker imports produce the web workers Monaco
 // needs; only the base editor worker and the typescript worker are included
-// since the notebook only edits JavaScript.
+// since the notebook only edits TypeScript/JavaScript.
 import * as monaco from 'monaco-editor';
 import { loader } from '@monaco-editor/react';
 import EditorWorker from 'monaco-editor/editor/editor.worker.js?worker';
@@ -43,6 +43,22 @@ monaco.editor.defineTheme('modernist-dark', {
     'scrollbarSlider.background': '#44414180',
     'scrollbarSlider.hoverBackground': '#605d5d80',
   },
+});
+
+// Cell models are .tsx so TypeScript and JSX both parse. Semantic validation
+// is off: the language service has no type definitions for react or anything
+// else imported from unpkg, so every import would squiggle "cannot find
+// module". Syntax errors still show.
+monaco.typescript.typescriptDefaults.setCompilerOptions({
+  jsx: monaco.typescript.JsxEmit.React,
+  target: monaco.typescript.ScriptTarget.ESNext,
+  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
+  allowNonTsExtensions: true,
+  esModuleInterop: true,
+});
+monaco.typescript.typescriptDefaults.setDiagnosticsOptions({
+  noSemanticValidation: true,
+  noSyntaxValidation: false,
 });
 
 self.MonacoEnvironment = {

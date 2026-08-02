@@ -13,6 +13,10 @@ const GUIDE_ITEMS: React.ReactNode[] = [
     preview.
   </>,
   <>Import any npm package — bundling happens in the browser.</>,
+  <>
+    Code cells accept TypeScript too — types are stripped before the code
+    runs.
+  </>,
 ];
 
 const ExplainerText: React.FC = () => {

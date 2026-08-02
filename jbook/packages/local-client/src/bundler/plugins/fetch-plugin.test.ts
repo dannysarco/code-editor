@@ -46,11 +46,12 @@ describe('fetch plugin', () => {
     vi.mocked(axios.get).mockReset();
   });
 
-  it('serves the entry point from the raw cell code', async () => {
-    const load = makeLoader('show(42);');
+  it('serves the entry point from the raw cell code as tsx', async () => {
+    // tsx so cells can use TypeScript syntax; plain JS/JSX parses the same.
+    const load = makeLoader('const n: number = 42;\nshow(n);');
     expect(await load({ path: 'index.js' })).toEqual({
-      loader: 'jsx',
-      contents: 'show(42);',
+      loader: 'tsx',
+      contents: 'const n: number = 42;\nshow(n);',
     });
   });
 
