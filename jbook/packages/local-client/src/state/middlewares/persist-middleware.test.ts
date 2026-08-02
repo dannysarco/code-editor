@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
 import { configureStore } from '@reduxjs/toolkit';
-import { fetchCells, updateCell, deleteCell } from '../cells-slice';
+import {
+  fetchCells,
+  updateCell,
+  deleteCell,
+  reorderCell,
+} from '../cells-slice';
 import { undoableCellsReducer } from '../store';
 import bundlesReducer from '../bundles-slice';
 import { persistMiddleware } from './persist-middleware';
@@ -43,6 +48,15 @@ describe('persist middleware', () => {
     expect(axios.post).not.toHaveBeenCalled();
 
     await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
+    expect(axios.post).toHaveBeenCalledTimes(1);
+  });
+
+  it('saves after a drag reorder', async () => {
+    const store = makeStore();
+
+    store.dispatch(reorderCell('a', 1));
+    await vi.advanceTimersByTimeAsync(PERSIST_SAVE_DEBOUNCE_MS);
+
     expect(axios.post).toHaveBeenCalledTimes(1);
   });
 

@@ -1,9 +1,23 @@
 import "./cell-list.css";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
+import {
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { useTypedSelector } from "../hooks/use-typed-selector";
 import { selectCells } from "../state";
-import CellListItem from "./cell-list-item";
+import SortableCell from "./sortable-cell";
 import AddCell from "./add-cell";
 import ExplainerText from "./example-text";
 import { useActions } from "../hooks/use-actions";
@@ -24,11 +38,30 @@ const CellList: React.FC = () => {
     const { order, data } = selectCells(state);
     return order.map((id) => data[id]);
   });
-  const { fetchCells, insertCellAfter } = useActions();
+  const { fetchCells, insertCellAfter, reorderCell } = useActions();
 
   // Don't flash the empty state before the initial fetch has answered.
   const [ready, setReady] = useState(false);
   const [guideOpen, setGuideOpen] = useState(readGuideOpen);
+  // While a drag is live, previews get pointer-events: none — an iframe
+  // under the cursor would otherwise swallow the pointermove stream.
+  const [dragging, setDragging] = useState(false);
+
+  // A small activation distance keeps plain clicks on the grip from starting
+  // a drag; the keyboard sensor makes the handle work with space + arrows.
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const onDragEnd = (event: DragEndEvent) => {
+    setDragging(false);
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const toIndex = cells.findIndex((cell) => cell.id === over.id);
+      reorderCell(String(active.id), toIndex);
+    }
+  };
 
   useEffect(() => {
     // bindActionCreators types the bound thunk by its creator, but at runtime
@@ -103,14 +136,24 @@ const CellList: React.FC = () => {
         </button>
       </div>
       {guideOpen && <ExplainerText />}
-      <main className="cell-list">
+      <main className={`cell-list${dragging ? " is-dragging" : ""}`}>
         <AddCell previousCellId={null} />
-        {cells.map((cell, index) => (
-          <Fragment key={cell.id}>
-            <CellListItem cell={cell} index={index} />
-            <AddCell previousCellId={cell.id} />
-          </Fragment>
-        ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={() => setDragging(true)}
+          onDragCancel={() => setDragging(false)}
+          onDragEnd={onDragEnd}
+        >
+          <SortableContext
+            items={cells.map((cell) => cell.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {cells.map((cell, index) => (
+              <SortableCell key={cell.id} cell={cell} index={index} />
+            ))}
+          </SortableContext>
+        </DndContext>
       </main>
     </>
   );

@@ -4,13 +4,20 @@ import {
   deleteCell,
   insertCellAfter,
   moveCell,
+  reorderCell,
   saveCells,
   updateCell,
 } from '../cells-slice';
 import type { AppDispatch } from '../store';
 import { PERSIST_SAVE_DEBOUNCE_MS } from '../../constants';
 
-const isCellEdit = isAnyOf(updateCell, deleteCell, moveCell, insertCellAfter);
+const isCellEdit = isAnyOf(
+  updateCell,
+  deleteCell,
+  moveCell,
+  reorderCell,
+  insertCellAfter
+);
 
 // Undo/redo restore a different notebook state and must be persisted too.
 const isPersistTrigger = (action: unknown): boolean =>

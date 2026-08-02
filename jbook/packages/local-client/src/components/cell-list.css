@@ -78,3 +78,46 @@
 .empty-file {
   font-family: var(--font-mono);
 }
+
+/* Drag-to-reorder */
+
+.sortable-cell {
+  position: relative;
+}
+
+.sortable-cell.dragging {
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+  background: var(--color-bg);
+}
+
+/* While a drag is live, iframes must not swallow the pointer stream, and
+   stray text selection just looks broken. */
+.cell-list.is-dragging {
+  user-select: none;
+}
+
+.cell-list.is-dragging iframe {
+  pointer-events: none;
+}
+
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  background: none;
+  padding: 2px;
+  margin-right: 4px;
+  color: var(--color-neutral-400);
+  cursor: grab;
+  touch-action: none;
+}
+
+.drag-handle:hover,
+.drag-handle:focus-visible {
+  color: var(--color-neutral-800);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}

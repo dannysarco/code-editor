@@ -7,6 +7,7 @@ import {
   fetchCells,
   insertCellAfter,
   moveCell,
+  reorderCell,
   updateCell,
 } from './cells-slice';
 import { Cell } from './cell';
@@ -63,6 +64,15 @@ describe('notebook undo/redo', () => {
   it('undo reverts a move', () => {
     const store = makeStore();
     store.dispatch(moveCell('b', 'up'));
+    expect(present(store).order).toEqual(['b', 'a']);
+
+    store.dispatch(ActionCreators.undo());
+    expect(present(store).order).toEqual(['a', 'b']);
+  });
+
+  it('undo reverts a drag reorder', () => {
+    const store = makeStore();
+    store.dispatch(reorderCell('a', 1));
     expect(present(store).order).toEqual(['b', 'a']);
 
     store.dispatch(ActionCreators.undo());

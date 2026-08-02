@@ -88,6 +88,29 @@ const cellsSlice = createSlice({
         return { payload: { id, direction } };
       },
     },
+    // Drag-and-drop reorder: move a cell to an absolute position in the
+    // notebook (moveCell above stays for the one-step arrow buttons).
+    reorderCell: {
+      reducer(
+        state,
+        action: PayloadAction<{ id: string; toIndex: number }>
+      ) {
+        const { id, toIndex } = action.payload;
+        const from = state.order.findIndex((cellId) => cellId === id);
+        if (from < 0) {
+          return;
+        }
+        const to = Math.max(0, Math.min(toIndex, state.order.length - 1));
+        if (to === from) {
+          return;
+        }
+        state.order.splice(from, 1);
+        state.order.splice(to, 0, id);
+      },
+      prepare(id: string, toIndex: number) {
+        return { payload: { id, toIndex } };
+      },
+    },
     insertCellAfter: {
       reducer(
         state,
@@ -142,7 +165,7 @@ const cellsSlice = createSlice({
   },
 });
 
-export const { updateCell, deleteCell, moveCell, insertCellAfter } =
+export const { updateCell, deleteCell, moveCell, reorderCell, insertCellAfter } =
   cellsSlice.actions;
 
 export default cellsSlice.reducer;

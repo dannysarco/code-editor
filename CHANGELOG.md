@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Drag-to-reorder cells.** Every cell header has a grip handle — drag it to move the cell anywhere in the notebook (the one-step arrow buttons remain). The handle is keyboard-accessible (space to lift, arrows to move, space to drop), a drag counts as one undo step, and the new order saves to `notebook.js` like any other edit. Only the handle starts a drag, so selecting code or clicking in the preview is unaffected.
+
 ## 3.6.0 — 2026-08-02
 
 ### Changed

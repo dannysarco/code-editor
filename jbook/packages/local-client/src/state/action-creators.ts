@@ -3,6 +3,7 @@ export {
   fetchCells,
   insertCellAfter,
   moveCell,
+  reorderCell,
   saveCells,
   updateCell,
 } from './cells-slice';
