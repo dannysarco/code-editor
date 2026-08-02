@@ -6,6 +6,7 @@ import reducer, {
   fetchCells,
   insertCellAfter,
   moveCell,
+  reorderCell,
   saveCells,
   updateCell,
 } from './cells-slice';
@@ -48,6 +49,28 @@ describe('cells reducers', () => {
     const state = stateWith(cellA, cellB);
     expect(reducer(state, moveCell('a', 'up')).order).toEqual(['a', 'b']);
     expect(reducer(state, moveCell('b', 'down')).order).toEqual(['a', 'b']);
+  });
+
+  it('reorderCell moves a cell to an absolute position in either direction', () => {
+    const cellC: Cell = { id: 'c', type: 'code', content: 'show(3);' };
+    const state = stateWith(cellA, cellB, cellC);
+
+    expect(reducer(state, reorderCell('a', 2)).order).toEqual(['b', 'c', 'a']);
+    expect(reducer(state, reorderCell('c', 0)).order).toEqual(['c', 'a', 'b']);
+  });
+
+  it('reorderCell clamps out-of-range targets and ignores no-ops', () => {
+    const cellC: Cell = { id: 'c', type: 'code', content: 'show(3);' };
+    const state = stateWith(cellA, cellB, cellC);
+
+    expect(reducer(state, reorderCell('a', 99)).order).toEqual(['b', 'c', 'a']);
+    expect(reducer(state, reorderCell('a', -5)).order).toEqual(['a', 'b', 'c']);
+    expect(reducer(state, reorderCell('b', 1)).order).toEqual(['a', 'b', 'c']);
+    expect(reducer(state, reorderCell('nope', 0)).order).toEqual([
+      'a',
+      'b',
+      'c',
+    ]);
   });
 
   it('insertCellAfter inserts after the given id', () => {

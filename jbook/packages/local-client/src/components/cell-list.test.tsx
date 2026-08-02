@@ -66,6 +66,15 @@ describe('CellList', () => {
     expect(document.querySelectorAll('.add-cell')).toHaveLength(3);
   });
 
+  it('renders a drag handle on every cell', async () => {
+    renderWithStore(<CellList />);
+    await screen.findByTestId('editor');
+
+    expect(
+      screen.getAllByRole('button', { name: /drag to reorder/i })
+    ).toHaveLength(2);
+  });
+
   it('isolates a crashing cell without unmounting its siblings', async () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.mocked(axios.get).mockResolvedValue({

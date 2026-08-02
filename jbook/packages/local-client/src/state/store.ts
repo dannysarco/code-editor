@@ -5,6 +5,7 @@ import cellsReducer, {
   deleteCell,
   insertCellAfter,
   moveCell,
+  reorderCell,
   updateCell,
 } from './cells-slice';
 import bundlesReducer from './bundles-slice';
@@ -22,6 +23,7 @@ export const undoableCellsReducer = undoable(cellsReducer, {
     updateCell.type,
     deleteCell.type,
     moveCell.type,
+    reorderCell.type,
     insertCellAfter.type,
   ]),
   // Keep the internal snapshot in sync when filtered actions (like the
