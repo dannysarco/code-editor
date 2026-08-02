@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.3.0 — 2026-08-02
 
 ### Added
 - **Markdown export.** `npx my-scrapbook export` converts a notebook to a plain markdown file: text cells come through as-is and code cells become fenced ```` ```jsx ```` blocks (the fence grows automatically if a cell itself contains backtick runs). `-o` picks the output path, which defaults to the notebook's name with `.md`; refuses to overwrite the notebook itself.
