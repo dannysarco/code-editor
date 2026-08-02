@@ -1,0 +1,61 @@
+name: Publish
+
+# Publishes every package whose version isn't on the registry yet, with npm
+# provenance attestations. Runs when a release tag is pushed (the release
+# flow: merge the release-prep PR, then push the vX.Y.Z tag), or manually.
+#
+# Auth is npm "trusted publishing" (OIDC): each package on npmjs.com is
+# configured to trust this repo + workflow file, so no npm token is stored in
+# the repo and the user's 2FA stays untouched. Provenance requires the OIDC
+# id-token permission below.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: jbook/package-lock.json
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs a recent npm (>= 11.5.1 for OIDC exchange).
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Install
+        run: npm ci
+        working-directory: jbook
+
+      - name: Test
+        run: npm test
+        working-directory: jbook
+
+      # Dependency order: types -> local-api -> local-client -> cli. Each
+      # package's prepublishOnly script builds it. Versions already on the
+      # registry are skipped, so a release that bumps only some packages
+      # publishes only those.
+      - name: Publish packages with provenance
+        run: |
+          for dir in types local-api local-client cli; do
+            pkg="jbook/packages/$dir"
+            name=$(node -p "require('./$pkg/package.json').name")
+            version=$(node -p "require('./$pkg/package.json').version")
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "$name@$version already on the registry — skipping"
+            else
+              echo "Publishing $name@$version"
+              (cd "$pkg" && npm publish --provenance)
+            fi
+          done
