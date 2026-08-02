@@ -28,11 +28,15 @@ jobs:
       # (empty) token makes npm skip the OIDC trusted-publishing exchange —
       # the publish then fails with a masked E404. With no token configured,
       # npm detects the Actions OIDC environment and exchanges automatically.
+      #
+      # Deliberately no dependency caching either: this job holds id-token
+      # write for trusted publishing, and a poisoned npm cache could run
+      # attacker-controlled code with access to the OIDC token (per the
+      # setup-node trusted-publishing docs). Publish runs are rare, so the
+      # full npm ci is a fine trade.
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
-          cache-dependency-path: jbook/package-lock.json
 
       # Trusted publishing needs npm >= 11.5.1 for the OIDC exchange —
       # pinned to 11 because npm 12.0.x fails the exchange with "OIDC token
