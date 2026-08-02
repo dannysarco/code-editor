@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.4.0 — 2026-08-02
 
 ### Added
 - **Console output in the preview.** `console.log`/`info`/`warn`/`error`/`debug` calls in cell code now show up in a console panel under the preview pane: objects are serialized (cycles become `[Circular]`), warnings and errors are tinted, the panel keeps the newest 200 entries, auto-scrolls, and has a **Clear** button. Runtime errors still render in the preview and now land in the console too.

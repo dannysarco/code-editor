@@ -1,6 +1,6 @@
 {
   "name": "my-scrapbook",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "An in-browser coding notebook: write JavaScript with npm imports and markdown docs, see it run live",
   "keywords": [
     "notebook",
