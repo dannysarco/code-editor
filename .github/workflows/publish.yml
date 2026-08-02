@@ -42,6 +42,15 @@ jobs:
         run: npm test
         working-directory: jbook
 
+      # The cli bundle resolves @my-scrapbook/local-api through the workspace
+      # symlink to its dist output. When local-api itself is skipped (already
+      # published), its prepublishOnly never runs — so build it explicitly or
+      # the cli's esbuild step fails with "could not resolve". (types builds
+      # via its prepare script during npm ci.)
+      - name: Build workspace dependencies
+        run: npx tsc
+        working-directory: jbook/packages/local-api
+
       # Dependency order: types -> local-api -> local-client -> cli. Each
       # package's prepublishOnly script builds it. Versions already on the
       # registry are skipped, so a release that bumps only some packages
