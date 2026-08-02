@@ -23,12 +23,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Deliberately no registry-url: setting it makes setup-node write an
+      # .npmrc with _authToken=${NODE_AUTH_TOKEN}, and the presence of a
+      # (empty) token makes npm skip the OIDC trusted-publishing exchange —
+      # the publish then fails with a masked E404. With no token configured,
+      # npm detects the Actions OIDC environment and exchanges automatically.
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: jbook/package-lock.json
-          registry-url: https://registry.npmjs.org
 
       # Trusted publishing needs a recent npm (>= 11.5.1 for OIDC exchange).
       - name: Update npm
