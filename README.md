@@ -96,93 +96,88 @@ npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ## Markdown sample text for the text editor that contains an "Explainer".
 
 ```
-**My Scrapbook** 
+**My Scrapbook**
 ----------
-This is an interactive coding environment. You can write Javascript, see it executed, and write comprehensive documentation using markdown. 
+This is an interactive coding environment. Write JavaScript or TypeScript, see it run as you type, and keep the documentation right next to the code in markdown.
 
-- Click any text cell (including this one) to edit it 
-- The code in each code editor is joined into one file. If you define a variable in cell #1, you can refer to it in any of the following cells!
-- Click the **Format** button in any code cell, and Prettier will its thing to your code!
-- You can show any React component, string, number, or anything else by calling the `show` function. This is a function built into this environment. Call show multiple times to show multiple values
-- Re-order or delete cells using the buttons on the top right
-- Add new cells with the **+ Code** / **+ Text** buttons between cells
+- Click any text cell (including this one) to edit it
+- Cells share one file — a variable defined in cell #1 works in every cell below it
+- Call the built-in `show()` with a React component, string, number, or object to render it in the preview
+- `console.log` output shows up in a console panel under the preview
+- Import any npm package — bundling happens right in the browser, and packages you've used keep working offline
+- Click **Format** in any code cell and Prettier tidies it up
+- Reorder cells with the grip handle (or the arrows), and undo any of it with Ctrl/Cmd+Z
 
-All of your changes get saved to the file you opened My Scrapbook with. So if you ran `npx my-scrapbook serve`, all of the text and code you write will be saved to the `notebook.js` file.
-
+Everything you write saves to the file you opened — with a bare `npx my-scrapbook`, that's `notebook.js`.
 ```
 
 ## Code samples for the code editor.
 
-```
+TypeScript, React, and the console panel — types are stripped when the code runs, and `console.log` lands under the preview:
+
+```tsx
 import { useState } from 'react';
 
-const buttonStyle = {
-  padding: '10px 20px',
-  fontSize: '16px',
-  borderRadius: '4px',
-  fontWeight: 600,
-  backgroundColor: '#007BFF',
-  color: '#ffffff',
-  transition: 'background-color 0.3s, transform 0.3s, color 0.3s',
-  margin: '10px',
-};
+interface Task {
+  title: string;
+  done: boolean;
+}
 
-const hoverStyles = {
-  ...buttonStyle,
-  backgroundColor: '#0056b3',
-};
+const initial: Task[] = [
+  { title: 'Write some TypeScript', done: true },
+  { title: 'Import an npm package', done: false },
+  { title: 'Drag a cell somewhere new', done: false },
+];
 
-const countStyle = {
-  fontSize: '20px',
-  fontWeight: 'bold',
-   fontFamily: 'Arial, sans-serif',
-  color: '#333',
-  marginTop: '20px',
-  border: '1px solid #007BFF',
-  padding: '10px',
-  borderRadius: '4px',
-};
+const TaskList = () => {
+  const [tasks, setTasks] = useState(initial);
+  const toggle = (title: string) =>
+    setTasks(
+      tasks.map((t) => (t.title === title ? { ...t, done: !t.done } : t))
+    );
 
-const Counter = () => {
-  const [isAddHovered, setIsAddHovered] = useState(false); // for Add button
-  const [isResetHovered, setIsResetHovered] = useState(false); // for Reset button
-  const [count, setCount] = useState(0);
   return (
-    <div>
-      <button
-        style={isAddHovered ? hoverStyles : buttonStyle}
-        onMouseEnter={() => setIsAddHovered(true)}
-        onMouseLeave={() => setIsAddHovered(false)}
-        onClick={() => setCount(count + 1)}
-      >
-        Add to Count
-      </button>
-      <button
-        style={isResetHovered ? hoverStyles : buttonStyle}
-        onMouseEnter={() => setIsResetHovered(true)}
-        onMouseLeave={() => setIsResetHovered(false)}
-        onClick={() => setCount(0)}
-      >
-        Reset
-      </button>
-      <h3 style={countStyle}>Count: {count}</h3>
-    </div>
+    <ul style={{ listStyle: 'none', padding: 4, fontFamily: 'sans-serif' }}>
+      {tasks.map((t) => (
+        <li
+          key={t.title}
+          onClick={() => toggle(t.title)}
+          style={{ cursor: 'pointer', padding: 2 }}
+        >
+          {t.done ? '✅' : '⬜️'} {t.title}
+        </li>
+      ))}
+    </ul>
   );
-}; // Display any variable or React Component by calling 'show'
-show(<Counter />);
+};
 
+console.log('tasks:', initial.map((t) => t.title));
+show(<TaskList />);
 ```
 
-```
+Any npm package works — including CSS. This fetches live data with axios and styles it with bulma:
+
+```jsx
 import axios from 'axios';
 import 'bulma/css/bulma.css';
 
-axios
-  .get('https://jsonplaceholder.typicode.com/users/1')
-  .then(({ data }) => show(data.name))
-  .catch(error => console.error('There was an error!', error));
+axios.get('https://jsonplaceholder.typicode.com/users').then(({ data }) => {
+  console.log('fetched', data.length, 'users');
+  show(
+    <div className="content m-4">
+      <h4>Team</h4>
+      <ul>
+        {data.slice(0, 4).map((user) => (
+          <li key={user.id}>
+            {user.name} — <em>{user.company.name}</em>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+});
 ```
-![A notebook with markdown documentation and a React counter component rendered in the preview](docs/images/sample.png)
+![A notebook with markdown documentation, a TypeScript task-list component with console output, and an npm-powered cell rendering live data](docs/images/sample.png)
 
 ## Development
 
