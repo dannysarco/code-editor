@@ -1,5 +1,8 @@
 # My Scrapbook - a dynamic coding environment.
 
+[![CI](https://github.com/dannysarco/code-editor/actions/workflows/ci.yml/badge.svg?branch=live)](https://github.com/dannysarco/code-editor/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/my-scrapbook)](https://www.npmjs.com/package/my-scrapbook)
+
 ## What is My Scrapbook, and what does it do?
 
 - It's a full-featured in-browser IDE and markdown editor for documentation.
