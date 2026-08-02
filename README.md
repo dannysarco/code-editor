@@ -51,6 +51,11 @@ npx my-scrapbook export
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
 
+## What's new in 3.4
+
+- **Console output in the preview.** `console.log` (and `info`/`warn`/`error`/`debug`) from your code now shows up in a console panel right under the preview — objects serialized, warnings and errors highlighted, with a **Clear** button. No more digging through the browser devtools.
+- **The preview no longer goes randomly blank.** Bundled code used to be handed to the preview on a fixed timer and was silently lost if the preview loaded slower; it's now delivered on an explicit ready signal, every time.
+
 ## What's new in 3.3
 
 - **Markdown export.** `npx my-scrapbook export` turns a notebook into a plain markdown file you can share anywhere — see "Export a notebook to Markdown" above.
