@@ -1,7 +1,7 @@
 import '../monaco-setup';
 import './code-editor.css';
 import './syntax.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
 import prettier from 'prettier/standalone';
 import parser from 'prettier/parser-babel';
@@ -10,9 +10,14 @@ import traverse from '@babel/traverse';
 import MonacoJSXHighlighter, { makeBabelParse } from 'monaco-jsx-highlighter';
 import { JSX_HIGHLIGHT_DEBOUNCE_MS } from '../constants';
 
-// Configures @babel/parser for module source type + JSX with error recovery;
-// the raw parse function rejects top-level import/export statements.
-const babelParse = makeBabelParse(parse);
+// Configures @babel/parser for module source type + JSX + TypeScript with
+// error recovery; the raw parse function rejects top-level import/export
+// statements, and without the second flag TS syntax would kill highlighting.
+const babelParse = makeBabelParse(parse, true);
+
+// Each editor needs its own model path (Monaco keys models by URI), and the
+// .tsx extension is what makes the TypeScript worker accept JSX syntax.
+let editorSeq = 0;
 
 interface CodeEditorProps {
   initialValue: string;
@@ -21,6 +26,7 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
+  const [modelPath] = useState(() => `cell-${++editorSeq}.tsx`);
 
   const onEditorMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -58,7 +64,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     // format that value
     const formatted = prettier
       .format(unformatted, {
-        parser: 'babel',
+        // babel-ts handles TypeScript and is a superset of what the plain
+        // babel parser accepted for JS/JSX cells.
+        parser: 'babel-ts',
         plugins: [parser],
         useTabs: false,
         semi: true,
@@ -73,7 +81,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   return (
     <div className="editor-wrapper">
       <div className="pane-toolbar editor-toolbar">
-        <span className="label editor-language">JavaScript</span>
+        <span className="label editor-language">JS / TS</span>
         <button className="format-btn" onClick={onFormatClick}>
           Format
         </button>
@@ -84,7 +92,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
           value={initialValue}
           onChange={(value) => onChange(value ?? '')}
           theme="modernist-dark"
-          language="javascript"
+          language="typescript"
+          path={modelPath}
           height="100%"
           options={{
             wordWrap: 'on',
