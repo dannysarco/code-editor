@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 3.7.2 — 2026-08-02
+
+No functional changes: ships the refreshed npm-page README below.
 
 ### Changed
 - **README examples and screenshots refreshed.** The sample explainer now describes the current feature set (TypeScript, the console panel, drag-to-reorder, offline packages) and loses a long-standing typo; the code samples are a TypeScript task-list component (interface + generics + `console.log`) and an axios + bulma cell that fetches and renders live data. Screenshots regenerated against the current UI — JS/TS labels, grip handles, and console panels included. Every sample was verified running in the app before being captured.
