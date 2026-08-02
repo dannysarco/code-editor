@@ -20,9 +20,14 @@ npm i my-scrapbook
 - In the same folder you install My Scrapbook, open up a terminal session and run:
 
 ```
-npx my-scrapbook serve
+npx my-scrapbook
 ```
-- **Ctrl + click** on the link in the terminal that says **http://localhost:4005**
+- Your browser opens to the notebook automatically. (Prefer to open it yourself? Pass `--no-open` and **Ctrl + click** the **http://localhost:4005** link in the terminal.)
+- Want a different port or a named notebook? Both are options of the `serve` command (running `npx my-scrapbook` alone is shorthand for `npx my-scrapbook serve notebook.js`):
+
+```
+npx my-scrapbook serve mynotes.js -p 4200
+```
 - Click **Code cell** or **Text cell** on the start screen to create your first cell. After that, use the **+ Code** / **+ Text** buttons between cells to add more.
   ![The start screen with Code cell and Text cell buttons](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/blank.png)
   ![A text cell open in the markdown editor above a code cell](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/editing.png)
@@ -30,6 +35,20 @@ npx my-scrapbook serve
 - Next time you run the application using the same command, it will open to your previous **notebook.js** file.
 - If you want to start a new notebook and don't care about the saved work from your previous session, delete the **notebook.js** file in the same directory before starting My Scrapbook again.
 - If you want to keep your previous work and start a new notebook, rename or move the **notebook.js** file in the same directory before starting My Scrapbook again.
+
+## Export a notebook to Markdown
+
+- To turn a notebook into a plain markdown file you can share anywhere (GitHub, a blog, a teammate without My Scrapbook), run:
+
+```
+npx my-scrapbook export
+```
+- This writes **notebook.md** next to **notebook.js**: text cells come through as-is, and code cells become fenced ` ```jsx ` blocks.
+- Exporting a named notebook to a specific file works too:
+
+```
+npx my-scrapbook export mynotes.js -o docs/mynotes.md
+```
 
 ## What's new in 3.2
 

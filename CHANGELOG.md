@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Markdown export.** `npx my-scrapbook export` converts a notebook to a plain markdown file: text cells come through as-is and code cells become fenced ```` ```jsx ```` blocks (the fence grows automatically if a cell itself contains backtick runs). `-o` picks the output path, which defaults to the notebook's name with `.md`; refuses to overwrite the notebook itself.
+- `my-scrapbook --version` reports the installed version, and the package declares `engines.node >= 18` so npm warns on unsupported Node versions at install time.
+
+### Changed
+- `serve` opens your browser automatically once the server is up. Pass `--no-open` to just print the URL like before.
+- `serve` is now the default command: a bare `npx my-scrapbook` opens `notebook.js`.
+
 ## 3.2.0 — 2026-07-28
 
 ### Changed
