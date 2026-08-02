@@ -21,14 +21,15 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      # Deliberately no registry-url: setting it makes setup-node write an
-      # .npmrc with _authToken=${NODE_AUTH_TOKEN}, and the presence of a
-      # (empty) token makes npm skip the OIDC trusted-publishing exchange —
-      # the publish then fails with a masked E404. With no token configured,
-      # npm detects the Actions OIDC environment and exchanges automatically.
-      - uses: actions/setup-node@v4
+      # Deliberately no registry-url: we publish to the default registry, and
+      # npm >= 11.5.1 detects the Actions OIDC environment and exchanges
+      # automatically. Before setup-node v7, setting registry-url also broke
+      # the exchange (it exported a dummy NODE_AUTH_TOKEN, making npm skip
+      # OIDC and fail with a masked E404); v7 fixed that upstream, but there
+      # is still no reason to set it here.
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
