@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- **README examples and screenshots refreshed.** The sample explainer now describes the current feature set (TypeScript, the console panel, drag-to-reorder, offline packages) and loses a long-standing typo; the code samples are a TypeScript task-list component (interface + generics + `console.log`) and an axios + bulma cell that fetches and renders live data. Screenshots regenerated against the current UI — JS/TS labels, grip handles, and console panels included. Every sample was verified running in the app before being captured.
+
 ## 3.7.1 — 2026-08-02
 
 First release published by CI. No functional changes: the npm package README gains the CI and version badges, and the release itself carries the provenance attestation introduced below.

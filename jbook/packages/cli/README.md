@@ -94,22 +94,49 @@ npx my-scrapbook export mynotes.js -o docs/mynotes.md
 
 ## Example
 
-```js
+TypeScript, React, and the console panel — types are stripped when the code runs, and `console.log` lands in a panel under the preview:
+
+```tsx
 import { useState } from 'react';
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
+interface Task {
+  title: string;
+  done: boolean;
+}
+
+const initial: Task[] = [
+  { title: 'Write some TypeScript', done: true },
+  { title: 'Import an npm package', done: false },
+  { title: 'Drag a cell somewhere new', done: false },
+];
+
+const TaskList = () => {
+  const [tasks, setTasks] = useState(initial);
+  const toggle = (title: string) =>
+    setTasks(
+      tasks.map((t) => (t.title === title ? { ...t, done: !t.done } : t))
+    );
+
   return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>Click</button>
-      <h3>Count: {count}</h3>
-    </div>
+    <ul style={{ listStyle: 'none', padding: 4, fontFamily: 'sans-serif' }}>
+      {tasks.map((t) => (
+        <li
+          key={t.title}
+          onClick={() => toggle(t.title)}
+          style={{ cursor: 'pointer', padding: 2 }}
+        >
+          {t.done ? '✅' : '⬜️'} {t.title}
+        </li>
+      ))}
+    </ul>
   );
-}; // Display any variable or React Component by calling 'show'
-show(<Counter />);
+};
+
+console.log('tasks:', initial.map((t) => t.title));
+show(<TaskList />);
 ```
 
-![A notebook with markdown documentation and a React counter component rendered in the preview](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/sample.png)
+![A notebook with markdown documentation, a TypeScript task-list component with console output, and an npm-powered cell rendering live data](https://raw.githubusercontent.com/dannysarco/code-editor/live/docs/images/sample.png)
 
 ## Source & development
 
