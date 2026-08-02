@@ -50,6 +50,10 @@ npx my-scrapbook export
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
 
+## What's new in 3.6
+
+- **Unchanged cells don't rebundle.** Bundle results are now cached, so reopening an unchanged notebook is instant, and undo/redo, moving a cell and moving it back, and **Run all** skip esbuild for anything already bundled — those cells say "Bundled from cache". **Clear cache** resets both the bundle and npm module caches.
+
 ## What's new in 3.5
 
 - **TypeScript in code cells.** Interfaces, type annotations, and generics all work — the editor highlights TS properly, the **Format** button understands it, and types are stripped when your code runs (no type checking). Plain JavaScript works exactly as before.
