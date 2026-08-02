@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Console output in the preview.** `console.log`/`info`/`warn`/`error`/`debug` calls in cell code now show up in a console panel under the preview pane: objects are serialized (cycles become `[Circular]`), warnings and errors are tinted, the panel keeps the newest 200 entries, auto-scrolls, and has a **Clear** button. Runtime errors still render in the preview and now land in the console too.
+
+### Fixed
+- The preview could silently render nothing: the bundled code was posted into the iframe on a fixed 50 ms timer, so it was lost whenever the document hadn't installed its message listener yet — and the iframe loaded twice (JSX attribute plus effect), so a second load could wipe output that had already rendered. The iframe document now posts a `ready` signal once its listener is installed, and the parent posts the code exactly once, on that signal.
+
 ## 3.3.0 — 2026-08-02
 
 ### Added
