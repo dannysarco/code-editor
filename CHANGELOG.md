@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 3.7.1 — 2026-08-02
+
+First release published by CI. No functional changes: the npm package README gains the CI and version badges, and the release itself carries the provenance attestation introduced below.
 
 ### Added
 - **Automated npm publishing with provenance.** A new `publish.yml` GitHub Actions workflow runs on release tags (`v*`): it tests the workspace and publishes every package whose version isn't on the registry yet with `npm publish --provenance`, using npm trusted publishing (OIDC) — no npm token stored anywhere, and published versions get the registry's verified provenance attestation. CI and npm version badges added to the READMEs.
