@@ -34,9 +34,13 @@ jobs:
           cache: npm
           cache-dependency-path: jbook/package-lock.json
 
-      # Trusted publishing needs a recent npm (>= 11.5.1 for OIDC exchange).
+      # Trusted publishing needs npm >= 11.5.1 for the OIDC exchange —
+      # pinned to 11 because npm 12.0.x fails the exchange with "OIDC token
+      # exchange error - package not found" (verified: 12.0.2 fails, 11
+      # publishes; this is what broke the first v3.7.1 pipeline runs).
+      # Revisit the pin when npm 12 fixes the regression.
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11
 
       - name: Install
         run: npm ci
