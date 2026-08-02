@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- **Unchanged cells no longer re-run esbuild.** Bundle outputs are cached two ways: an in-memory store for same-session repeats (undo/redo, moving a cell and moving it back, Run all over unchanged cells) and one persisted entry per cell in IndexedDB, which makes an unchanged notebook load instantly on reload instead of rebundling every cell. Cells served this way say "Bundled from cache" in their header. Only successful bundles are cached, and **Clear cache** empties the bundle cache along with the module cache (cached outputs pin the module versions they were built with). Cumulative cell code is also now memoized, so it only recomputes when cells actually change rather than on every store update.
+
 ## 3.5.0 — 2026-08-02
 
 ### Added

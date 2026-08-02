@@ -1,6 +1,7 @@
 import './offline-status.css';
 import { useEffect, useState } from 'react';
 import { clearModuleCache } from '../bundler/module-cache';
+import { clearBundleCache } from '../bundler/bundle-cache';
 
 // Everything the app needs at runtime is served locally or cached: the
 // editor and bundler are part of the build, and npm modules fetched from
@@ -32,6 +33,10 @@ const OfflineStatus: React.FC = () => {
   }, [clearedCount]);
 
   const onClearCache = async () => {
+    // Cached bundle outputs bake in the pinned module versions, so they must
+    // go whenever the module cache does — otherwise unchanged cells would
+    // keep serving bundles built against the old versions.
+    await clearBundleCache();
     const count = await clearModuleCache();
     setClearedCount(count);
   };
