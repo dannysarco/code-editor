@@ -60,6 +60,10 @@ npx my-scrapbook export mynotes.js -o docs/mynotes.md
 - The file is completely self-contained — open it in any browser, no My Scrapbook, server, or internet connection needed. Text cells keep their formatting, and code cells **actually run**: each one executes its bundled code in a sandboxed frame, renders its preview, and shows its console output, exactly like in the app.
 - Each code cell's source is included too, behind a collapsible **Source** toggle.
 
+## What's new in 3.10
+
+- **Dark mode.** Click the moon in the header to switch the notebook to a dark theme — your choice is remembered, and until you choose, the app follows your system preference. Code panes were always dark; now the rest of the notebook can match. Previews keep their white background so your cells render the same in both themes.
+
 ## What's new in 3.9
 
 - **Export a notebook as a live HTML page.** The new **Export HTML** button in the header downloads your notebook as a single self-contained file: markdown rendered, code cells runnable — previews execute and console output appears when the file is opened, in any browser, offline, with nothing installed. See "Share a notebook as a live HTML page" above.
