@@ -21,6 +21,10 @@ jobs:
           - os: macos-latest
             node: 22
     runs-on: ${{ matrix.os }}
+    env:
+      # The local-client vite build (it bundles a self-hosted Monaco) needs
+      # more heap than Node's default on the 7 GB macOS runners.
+      NODE_OPTIONS: --max-old-space-size=4096
     defaults:
       run:
         working-directory: jbook
