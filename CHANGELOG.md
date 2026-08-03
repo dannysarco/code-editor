@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- **Exported HTML pages are now theme-aware.** An exported notebook follows its viewer's OS color preference and has its own Dark/Light toggle in the header, with the choice remembered per browser — the same stored-choice-beats-OS rule as the app, applied before first paint so a dark reload never flashes light. With JavaScript disabled the page still themes via `prefers-color-scheme` (and the toggle stays hidden). As in the app, previews keep their white ground and source blocks stay dark in both themes.
+
 ## 3.10.0 — 2026-08-02
 
 ### Added
