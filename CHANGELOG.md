@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.10.0 — 2026-08-02
 
 ### Added
 - **Dark mode.** A sun/moon toggle in the header switches the notebook between light and dark. The choice is remembered per browser; before any choice is made, the OS preference applies. An inline script applies the stored theme before first paint, so reloading in dark mode never flashes light. The dark palette re-derives the design system's roles on a dark ground with each tonal ramp mirrored (dark 100 = light 900, and so on), which lets almost all component CSS work unchanged in both themes; code panes keep their fixed dark look either way (they now use dedicated `--color-code-pane` tokens instead of ramp steps), previews stay white so cell output renders on the same ground in both themes, and the markdown editor follows the theme. Exported HTML pages are unaffected and stay light.
