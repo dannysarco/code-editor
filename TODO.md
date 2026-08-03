@@ -1,6 +1,12 @@
 # My Scrapbook - Prioritized Refactor Roadmap
 
 > Generated from architecture analysis on 2025-10-29
+>
+> **Status as of 3.11.0 (2026-08-02):** items 1–11 and 14 are complete, item 12
+> is closed (memoization done, the rest obsolete or not planned), item 13 is
+> parked, and item 15 (collaborative editing) is the one big open item. For
+> ideas beyond the original fifteen, see Future Considerations at the bottom —
+> that list is kept current.
 
 ## 🔴 CRITICAL - Do Immediately (Blocking Issues)
 
@@ -228,6 +234,12 @@
 **Effort:** 3 days
 **Impact:** Pluggable bundler system
 
+> **Parked (3.11 reassessment):** the bundler already lives in its own module
+> behind a one-function API (`bundle(code)` in
+> `jbook/packages/local-client/src/bundler/`), with caching layered on
+> separately. An interface + dependency injection buys nothing until a second
+> bundler implementation actually exists; revisit only if one does.
+
 - [ ] Create `BundlerService` interface
 - [ ] Implement `EsbuildBundlerService`
 - [ ] Add dependency injection for bundler
@@ -254,6 +266,10 @@
 **Priority:** P3 - Major feature
 **Effort:** 3-4 weeks
 **Impact:** Competitive differentiation
+
+> The last open roadmap item. Big enough to change the product's character
+> (server becomes stateful, notebook file stops being the single source of
+> truth) — decide deliberately before starting, not as a default next task.
 
 - [ ] Research CRDT libraries (Yjs, Automerge)
 - [ ] Add WebSocket server to local-api
@@ -325,23 +341,27 @@
 - Why file-based storage vs. database
 
 ### Future Considerations
-- Multi-file notebooks (import from other notebooks)
-- Dark mode support
-- Syntax themes
+
+Shipped from the original list: ~~dark mode~~ (3.10), ~~export to static
+HTML~~ (3.9). Markdown export (3.3) and import (3.11) also cover moving
+notebooks in and out as plain files.
+
+Still open, roughly by value-for-effort:
+- **CLI update notice** — print a one-liner when a newer version is on npm; small, standard for CLIs
+- **Version pinning in imports** (e.g. `import x from 'lodash@4'`) — pairs naturally with the IndexedDB module cache, which currently pins whatever version was fetched first; a package version management UI would build on this
+- Import from GitHub gists (export already works via markdown/HTML)
 - Mobile responsive design
-- Export to static HTML
-- Import from GitHub gists
-- Package version management UI
+- Syntax themes
+- Multi-file notebooks (import from other notebooks)
 - Custom bundler configurations per notebook
 
 ---
 
 ## 🔗 Related Documents
-- See `ARCHITECTURE.md` for detailed analysis
-- See `CONTRIBUTING.md` for development setup
+- See `CHANGELOG.md` for what shipped in each release
 - See individual package READMEs for package-specific details
 
 ---
 
-**Last Updated:** 2026-08-02
-**Next Review:** After Sprint 1 completion
+**Last Updated:** 2026-08-02 (post-3.11.0)
+**Next Review:** before committing to collaborative editing (item 15) or the next feature batch
