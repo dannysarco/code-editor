@@ -183,7 +183,7 @@
 - [x] Test thunks (saveCells, fetchCells) with mocked axios (PR #14)
 - [x] Test bundler plugins (fetch-plugin, unpkg-path-plugin) at 100% coverage (PR #14)
 - [x] Test API routes (/cells GET, POST) with supertest, incl. validation and corrupted-file cases (PR #14)
-- [ ] Test CLI command parsing (deferred; the serve command is a thin commander wrapper)
+- [x] Test CLI command parsing (serve/export: defaults, flags, nested paths, error paths, excess-argument rejection)
 
 #### Phase 3: Integration Tests
 - [ ] Test Express server setup (partially covered via the router tests; the proxy path was verified manually in PR #9)

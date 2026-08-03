@@ -53,18 +53,20 @@ jobs:
         run: npm ci
         working-directory: jbook
 
-      - name: Test
-        run: npm test
-        working-directory: jbook
-
-      # The cli bundle resolves @my-scrapbook/local-api through the workspace
-      # symlink to its dist output. When local-api itself is skipped (already
-      # published), its prepublishOnly never runs — so build it explicitly or
-      # the cli's esbuild step fails with "could not resolve". (types builds
-      # via its prepare script during npm ci.)
+      # Built BEFORE the tests: the cli's serve tests import (a mock of)
+      # @my-scrapbook/local-api, and vitest still resolves the specifier to
+      # the package's dist entry point, which must exist. The cli bundle
+      # below needs it for the same reason. When local-api itself is skipped
+      # at publish time (already on the registry), its prepublishOnly never
+      # runs — so build it explicitly here. (types builds via its prepare
+      # script during npm ci.)
       - name: Build workspace dependencies
         run: npx tsc
         working-directory: jbook/packages/local-api
+
+      - name: Test
+        run: npm test
+        working-directory: jbook
 
       # Dependency order: types -> local-api -> local-client -> cli. Each
       # package's prepublishOnly script builds it. Versions already on the
