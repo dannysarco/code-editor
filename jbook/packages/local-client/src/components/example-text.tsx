@@ -1,5 +1,6 @@
 import "./example-text.css";
 import React from "react";
+import { IS_DEMO } from "../demo-mode";
 
 // The "How this works" strip that the meta bar's disclosure toggles open —
 // a tightened rewrite of the old permanent explainer wall.
@@ -24,7 +25,11 @@ const ExplainerText: React.FC = () => {
     <section className="guide-strip">
       <div className="guide-intro">
         <h4>Coding and documentation, in one file</h4>
-        <p>Everything you write saves to notebook.js.</p>
+        <p>
+          {IS_DEMO
+            ? 'Everything you write saves in this browser.'
+            : 'Everything you write saves to notebook.js.'}
+        </p>
       </div>
       <ol className="guide-items">
         {GUIDE_ITEMS.map((item, index) => (

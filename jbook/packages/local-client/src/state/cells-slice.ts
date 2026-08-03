@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { StateWithHistory } from 'redux-undo';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import type { FetchCellsResponse, SaveCellsRequest } from '@my-scrapbook/types';
+import { persistence } from '../persistence';
 import { Cell, CellTypes } from './cell';
 
 export type Direction = 'up' | 'down';
@@ -23,9 +22,11 @@ const initialState: CellsState = {
   data: {},
 };
 
+// Persistence is behind an adapter: the CLI build talks to the local API,
+// the hosted demo build stores the notebook in the browser (see
+// ../persistence).
 export const fetchCells = createAsyncThunk('cells/fetchCells', async () => {
-  const { data }: { data: FetchCellsResponse } = await axios.get('/cells');
-  return data;
+  return persistence.loadCells();
 });
 
 // The state type is declared structurally instead of importing RootState from
@@ -45,8 +46,7 @@ export const saveCells = createAsyncThunk<
 
   const cells = order.map((id) => data[id]);
 
-  const body: SaveCellsRequest = { cells };
-  await axios.post('/cells', body);
+  await persistence.saveCells(cells);
 });
 
 const cellsSlice = createSlice({

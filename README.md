@@ -10,6 +10,12 @@
 - React and ReactDOM are already imported and ready for use.
 - All of your text and code are automatically saved to a file named notebook.js
 
+## Try it in your browser — nothing to install
+
+- A hosted demo runs at **[try-my-scrapbook.vercel.app](https://try-my-scrapbook.vercel.app)**: the same app, with the notebook saved in your browser instead of a file.
+- It opens on a sample notebook you can edit, and **Download notebook.js** in the header hands you a file the CLI opens as-is — so you can start in the demo and keep going locally.
+- The demo is `jbook/packages/local-client` built with `npm run build:demo` (deploy config in `jbook/vercel.json`).
+
 ## Install Instructions.
 
 - You'll need [Node.js](https://nodejs.org/) 20 or newer.

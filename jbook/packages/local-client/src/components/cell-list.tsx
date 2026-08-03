@@ -20,6 +20,7 @@ import { selectCells } from "../state";
 import SortableCell from "./sortable-cell";
 import AddCell from "./add-cell";
 import ExplainerText from "./example-text";
+import { IS_DEMO } from "../demo-mode";
 import { useActions } from "../hooks/use-actions";
 
 const GUIDE_STORAGE_KEY = "scrapbook.guideOpen";
@@ -108,8 +109,14 @@ const CellList: React.FC = () => {
           </button>
         </div>
         <p className="empty-footnote">
-          Saving to <span className="empty-file">notebook.js</span> in the
-          folder you started from.
+          {IS_DEMO ? (
+            <>Saving in this browser — nothing to install.</>
+          ) : (
+            <>
+              Saving to <span className="empty-file">notebook.js</span> in the
+              folder you started from.
+            </>
+          )}
         </p>
       </section>
     );

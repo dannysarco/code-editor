@@ -7,7 +7,9 @@ import { useActions } from '../hooks/use-actions';
 import { selectCells } from '../state';
 import { cumulativeCodeFor } from '../hooks/use-cumulative-code';
 import { PERSIST_SAVE_DEBOUNCE_MS, NOTEBOOK_FILENAME } from '../constants';
+import { IS_DEMO } from '../demo-mode';
 import { exportNotebookHtml } from '../export/export-notebook';
+import { downloadFile } from '../export/download';
 import OfflineStatus from './offline-status';
 import UndoRedoBar from './undo-redo-bar';
 
@@ -58,6 +60,13 @@ const NotebookHeader: React.FC = () => {
     }
   };
 
+  // notebook.js is JSON despite the extension — the CLI's serve command
+  // reads exactly this shape, so a downloaded demo notebook opens as-is.
+  const onDownloadNotebook = () => {
+    const cells = present.order.map((id) => present.data[id]);
+    downloadFile(JSON.stringify(cells), NOTEBOOK_FILENAME, 'application/json');
+  };
+
   const [exportState, setExportState] = useState<
     'idle' | 'exporting' | 'failed'
   >('idle');
@@ -86,7 +95,16 @@ const NotebookHeader: React.FC = () => {
       <span className="brand-name">MY SCRAPBOOK</span>
       <span className="header-divider" aria-hidden="true" />
       <span className="file-meta">
-        <span className="file-name">{NOTEBOOK_FILENAME}</span>
+        <span
+          className="file-name"
+          title={
+            IS_DEMO
+              ? 'This is the hosted demo — the notebook is saved in this browser. Download notebook.js to take it to the CLI.'
+              : undefined
+          }
+        >
+          {IS_DEMO ? 'demo notebook' : NOTEBOOK_FILENAME}
+        </span>
         <span className="save-state label">
           {saving ? 'Saving…' : savedAt ? `Saved · ${formatTime(savedAt)}` : ''}
         </span>
@@ -106,6 +124,26 @@ const NotebookHeader: React.FC = () => {
       >
         {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
       </button>
+      {IS_DEMO && (
+        <>
+          <a
+            className="btn btn-secondary get-cli"
+            href="https://www.npmjs.com/package/my-scrapbook"
+            target="_blank"
+            rel="noreferrer"
+            title="The full version runs locally, saves plain files, and converts notebooks to and from markdown"
+          >
+            Get the CLI
+          </a>
+          <button
+            className="btn btn-secondary download-notebook"
+            onClick={onDownloadNotebook}
+            title="Download this notebook as notebook.js — drop it in a folder and `npx my-scrapbook` opens it"
+          >
+            Download notebook.js
+          </button>
+        </>
+      )}
       <button
         className="btn btn-secondary export-html"
         onClick={onExportHtml}
