@@ -4,13 +4,12 @@ import { useTypedSelector } from '../hooks/use-typed-selector';
 import { useActions } from '../hooks/use-actions';
 import { selectCells } from '../state';
 import { cumulativeCodeFor } from '../hooks/use-cumulative-code';
-import { PERSIST_SAVE_DEBOUNCE_MS } from '../constants';
+import { PERSIST_SAVE_DEBOUNCE_MS, NOTEBOOK_FILENAME } from '../constants';
+import { exportNotebookHtml } from '../export/export-notebook';
 import OfflineStatus from './offline-status';
 import UndoRedoBar from './undo-redo-bar';
 
-// The client edits whatever file local-api was started with; the API does
-// not expose the name, so the header shows the CLI's default.
-const NOTEBOOK_FILENAME = 'notebook.js';
+const EXPORT_FILENAME = NOTEBOOK_FILENAME.replace(/\.[^.]*$/, '') + '.html';
 
 const formatTime = (date: Date) =>
   date.toLocaleTimeString([], {
@@ -56,6 +55,28 @@ const NotebookHeader: React.FC = () => {
     }
   };
 
+  const [exportState, setExportState] = useState<
+    'idle' | 'exporting' | 'failed'
+  >('idle');
+
+  const onExportHtml = async () => {
+    setExportState('exporting');
+    try {
+      await exportNotebookHtml(
+        present.order.map((id) => present.data[id]),
+        EXPORT_FILENAME
+      );
+      setExportState('idle');
+    } catch (err) {
+      // Bundler errors come back through the result, so reaching here is
+      // unexpected (e.g. esbuild failed to initialize while offline on a
+      // first visit). Keep the notebook usable and say the export failed.
+      console.error('HTML export failed:', err);
+      setExportState('failed');
+      setTimeout(() => setExportState('idle'), 3000);
+    }
+  };
+
   return (
     <header className="notebook-header">
       <span className="brand-mark" aria-hidden="true" />
@@ -70,6 +91,17 @@ const NotebookHeader: React.FC = () => {
       <span className="header-spacer" />
       <OfflineStatus />
       <UndoRedoBar />
+      <button
+        className="btn btn-secondary export-html"
+        onClick={onExportHtml}
+        disabled={exportState === 'exporting'}
+      >
+        {exportState === 'exporting'
+          ? 'Exporting…'
+          : exportState === 'failed'
+          ? 'Export failed'
+          : 'Export HTML'}
+      </button>
       <button className="btn btn-primary run-all" onClick={onRunAll}>
         Run all
       </button>

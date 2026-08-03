@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import bundler from '../bundler';
-import { getCachedBundle, setCachedBundle } from '../bundler/bundle-cache';
+import { bundleWithCache } from '../bundler/bundle-with-cache';
 
 interface BundlesState {
   [key: string]:
@@ -33,17 +32,7 @@ const createBundleThunk = createAsyncThunk(
     err: string;
     durationMs?: number;
     cached: boolean;
-  }> => {
-    const cached = await getCachedBundle(cellId, input);
-    if (cached) {
-      return { ...cached, cached: true };
-    }
-
-    const started = performance.now();
-    const result = await bundler(input);
-    await setCachedBundle(cellId, input, result);
-    return { ...result, durationMs: performance.now() - started, cached: false };
-  }
+  }> => bundleWithCache(cellId, input)
 );
 
 // Keeps the original two-argument call signature, createBundle(cellId, input).
