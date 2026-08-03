@@ -4,6 +4,8 @@
    app keeps working offline. */
 
 :root {
+  color-scheme: light;
+
   --color-bg: #f3f2f2;
   --color-surface: #eae9e9;
   --color-text: #201e1d;
@@ -49,6 +51,53 @@
   --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
   --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
   --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  /* Code panes are dark in BOTH themes (the redesign's "dark pane inside
+     light chrome"), so they get their own tokens instead of ramp steps —
+     the ramps flip in dark mode and would turn the panes light. */
+  --color-code-pane: #2d2b2b;
+  --color-code-pane-border: #444141;
+}
+
+/* Dark theme: the same roles re-derived on a dark ground, with each tonal
+   ramp mirrored (dark 100 = light 900 …) so component CSS written against
+   "100 ≈ near the page, 900 ≈ near the text" keeps meaning in both themes.
+   The accent midpoint moves to the ramp's 500 (#ff563c): the light theme's
+   #ec3013 loses too much contrast against a dark ground. The toggle in the
+   header sets data-theme; an inline script in index.html sets it before
+   first paint. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg: #191817;
+  --color-surface: #242221;
+  --color-text: #eae9e9;
+  --color-accent: #ff563c;
+  --color-divider: color-mix(in srgb, #f8f4f4 32%, transparent);
+
+  --color-neutral-100: #2d2b2b;
+  --color-neutral-200: #444141;
+  --color-neutral-300: #605d5d;
+  --color-neutral-400: #7d7979;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #bab6b6;
+  --color-neutral-700: #d7d3d3;
+  --color-neutral-800: #eae7e7;
+  --color-neutral-900: #f8f4f4;
+
+  --color-accent-100: #4d170e;
+  --color-accent-200: #7c1405;
+  --color-accent-300: #ae1800;
+  --color-accent-400: #dd2b0f;
+  --color-accent-500: #ff563c;
+  --color-accent-600: #ff9783;
+  --color-accent-700: #ffc4b8;
+  --color-accent-800: #ffe0d9;
+  --color-accent-900: #fff2ef;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #000000 45%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #000000 50%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #000000 60%, transparent);
 }
 
 *,

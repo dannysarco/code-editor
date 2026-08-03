@@ -1,5 +1,7 @@
 import './notebook-header.css';
 import { useEffect, useRef, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from '../theme-context';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import { useActions } from '../hooks/use-actions';
 import { selectCells } from '../state';
@@ -20,6 +22,7 @@ const formatTime = (date: Date) =>
 
 const NotebookHeader: React.FC = () => {
   const { createBundle } = useActions();
+  const { theme, toggleTheme } = useTheme();
   // `present` is referentially stable across non-cell actions (bundles,
   // undo bookkeeping), so the save-state effect only fires on real edits.
   const present = useTypedSelector(selectCells);
@@ -91,6 +94,18 @@ const NotebookHeader: React.FC = () => {
       <span className="header-spacer" />
       <OfflineStatus />
       <UndoRedoBar />
+      <button
+        className="btn btn-secondary theme-toggle"
+        onClick={toggleTheme}
+        aria-label={
+          theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'
+        }
+        title={
+          theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'
+        }
+      >
+        {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+      </button>
       <button
         className="btn btn-secondary export-html"
         onClick={onExportHtml}

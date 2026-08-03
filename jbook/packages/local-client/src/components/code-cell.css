@@ -51,7 +51,9 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--color-neutral-200);
+  /* Overlays the always-white preview; fixed colors so the track reads the
+     same in both themes. */
+  background: #eae7e7;
   overflow: hidden;
   z-index: 2;
 }
@@ -59,7 +61,7 @@
 .bundle-track-fill {
   height: 100%;
   width: 40%;
-  background: var(--color-accent);
+  background: #ec3013;
   animation: bundle-track-slide 1.1s ease-in-out infinite;
 }
 
