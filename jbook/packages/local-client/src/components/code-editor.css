@@ -4,11 +4,13 @@
   height: 100%;
   flex: 1;
   min-width: 0;
-  background: var(--color-neutral-900);
+  /* Fixed code-pane tokens, not ramp steps: the pane stays dark in both
+     themes while the ramps flip. */
+  background: var(--color-code-pane);
 }
 
 .editor-toolbar {
-  border-bottom: 1px solid var(--color-neutral-800);
+  border-bottom: 1px solid var(--color-code-pane-border);
 }
 
 .editor-toolbar .editor-language {
@@ -21,7 +23,9 @@
   font-weight: var(--font-heading-weight);
   font-size: 11px;
   letter-spacing: 0.02em;
-  color: var(--color-accent-400);
+  /* Sits on the always-dark code pane; a ramp step would flip with the
+     theme and lose contrast there. */
+  color: #ff9783;
   background: transparent;
   border: 0;
   padding: 0;

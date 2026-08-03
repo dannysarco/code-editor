@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { Cell } from '../state';
 import { useActions } from '../hooks/use-actions';
+import { useTheme } from '../theme-context';
 
 interface TextEditorProps {
   cell: Cell;
@@ -12,6 +13,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [editing, setEditing] = useState(false);
   const { updateCell } = useActions();
+  // MDEditor themes itself off this attribute rather than our CSS variables.
+  const { theme } = useTheme();
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -34,7 +37,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
 
   if (editing) {
     return (
-      <div className="text-editor editing" ref={ref} data-color-mode="light">
+      <div className="text-editor editing" ref={ref} data-color-mode={theme}>
         <MDEditor
           value={cell.content}
           onChange={(v) => updateCell(cell.id, v || '')}
@@ -50,7 +53,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
     <div
       className="text-editor"
       onClick={() => setEditing(true)}
-      data-color-mode="light"
+      data-color-mode={theme}
     >
       <div className="text-cell-body">
         <MDEditor.Markdown source={cell.content || 'Click to edit'} />

@@ -7,14 +7,17 @@ import "./theme.css";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./state";
+import { ThemeProvider } from "./theme-context";
 import NotebookHeader from "./components/notebook-header";
 import CellList from "./components/cell-list";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <NotebookHeader />
-      <CellList />
+      <ThemeProvider>
+        <NotebookHeader />
+        <CellList />
+      </ThemeProvider>
     </Provider>
   );
 };

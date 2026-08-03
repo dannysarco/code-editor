@@ -21,7 +21,9 @@
   right: 12px;
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--color-accent-700);
+  /* Overlays the always-white preview area, so the color must not flip
+     with the theme (the dark ramp's 700 is a pale tint). */
+  color: #ae1800;
   word-break: break-word;
 }
 
