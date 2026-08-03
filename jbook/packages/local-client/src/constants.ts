@@ -22,3 +22,7 @@ export const UNDO_HISTORY_LIMIT = 50;
 // emit thousands of messages per second; keeping only the newest N bounds
 // both memory and re-render cost while still showing where the output ended.
 export const MAX_CONSOLE_ENTRIES = 200;
+
+// The client edits whatever file local-api was started with; the API does
+// not expose the name, so the header and exports use the CLI's default.
+export const NOTEBOOK_FILENAME = 'notebook.js';

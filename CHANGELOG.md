@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Static HTML export.** An **Export HTML** button in the notebook header downloads the notebook as one self-contained `notebook.html`: text cells as rendered markdown, code cells with their source behind a collapsible toggle plus a live preview — each cell's bundled code executes in a sandboxed iframe with the same shell the app uses (shared, not copied), console output included. The file makes zero network requests, so it works offline and can be shared with anyone. Exporting bundles through the same cache as the app, so an already-bundled notebook exports instantly; cells that fail to bundle export their error message where the preview would be.
+
 ## 3.8.0 — 2026-08-02
 
 Dependency and release-hygiene refresh; no notebook features.
