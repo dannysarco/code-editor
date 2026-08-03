@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 3.10.2 — 2026-08-02
+
+No functional changes.
 
 ### Added
 - **CLI command tests.** The `serve` and `export` commands' argument parsing is now unit-tested (13 tests): default and named notebooks, nested paths, port and `--no-open`/`-o` flags, the friendly port-in-use and missing-notebook errors, the refuse-to-overwrite guard, and commander's excess-argument rejection. This closes the last deferred item from the original test-coverage roadmap. The publish workflow now builds local-api before running tests (the new tests resolve its package entry), mirroring CI's existing order.
