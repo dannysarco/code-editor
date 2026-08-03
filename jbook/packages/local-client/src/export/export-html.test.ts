@@ -45,9 +45,27 @@ describe('buildExportHtml', () => {
       exportedAt
     );
 
-    // The only literal closing tag is the runtime script's own.
-    expect(html.match(/<\/script>/g)).toHaveLength(1);
+    // The only literal closing tags are the page's own two scripts
+    // (pre-paint theme script in <head>, runtime script in <body>).
+    expect(html.match(/<\/script>/g)).toHaveLength(2);
     expect(html).toContain('\\u003c/script>');
+  });
+
+  it('themes the page: dark palette, OS-preference fallback, and a toggle', () => {
+    const html = buildExportHtml([codeCell()], exportedAt);
+
+    expect(html).toContain(":root[data-theme='dark']");
+    // Without JavaScript the pre-paint script never sets data-theme; the
+    // media query must cover that case.
+    expect(html).toContain('@media (prefers-color-scheme: dark)');
+    expect(html).toContain(':root:not([data-theme])');
+    // Pre-paint script and toggle share the storage key.
+    expect(html.match(/scrapbook\.export\.theme/g)!.length).toBeGreaterThanOrEqual(
+      2
+    );
+    // The toggle ships hidden so it stays out of the noscript rendering.
+    expect(html).toContain('id="theme-toggle"');
+    expect(html).toMatch(/<button[^>]*theme-toggle[^>]*hidden/);
   });
 
   it('sandboxes every preview iframe', () => {
