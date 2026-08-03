@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Hosted demo.** [try-my-scrapbook.vercel.app](https://try-my-scrapbook.vercel.app) is the app with nothing to install: a new demo build (`npm run build:demo` in local-client, `vite build --mode demo` underneath) swaps the local API for browser persistence — the notebook is stored whole in IndexedDB, the same mechanism the module cache already uses. Notebook persistence now sits behind a two-function adapter (`src/persistence/`) chosen at build time; the CLI build's behavior is unchanged. A first visit opens on a seeded sample notebook (persisted immediately, so deleting every cell stays deleted), the header labels it "demo notebook" and gains **Get the CLI** and **Download notebook.js** buttons — the download is the exact JSON shape `npx my-scrapbook` opens — and the empty-state/guide copy says the notebook saves in the browser. Deploys from `jbook/` via the Vercel CLI (`vercel deploy --prod`; config in `jbook/vercel.json`, where the install pins `--include=dev` because Vercel builds set `NODE_ENV=production`).
+
+### Fixed
+- `jbook/.gitignore` had lost a newline (`node_modulescoverage`), so `coverage/` output was never actually ignored.
+
 ## 3.11.0 — 2026-08-02
 
 ### Added

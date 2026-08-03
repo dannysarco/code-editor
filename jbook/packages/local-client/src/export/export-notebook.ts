@@ -3,15 +3,7 @@ import { cumulativeCodeFor } from '../hooks/use-cumulative-code';
 import { bundleWithCache } from '../bundler/bundle-with-cache';
 import { renderMarkdownToHtml } from './render-markdown';
 import { buildExportHtml, ExportCell } from './export-html';
-
-const downloadHtml = (html: string, filename: string): void => {
-  const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = filename;
-  anchor.click();
-  URL.revokeObjectURL(url);
-};
+import { downloadFile } from './download';
 
 // Assembles a self-contained HTML file from the notebook and hands it to the
 // browser as a download. Code cells are bundled exactly as the app bundles
@@ -41,5 +33,5 @@ export const exportNotebookHtml = async (
     }
   }
 
-  downloadHtml(buildExportHtml(items, new Date()), filename);
+  downloadFile(buildExportHtml(items, new Date()), filename, 'text/html');
 };
