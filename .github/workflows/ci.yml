@@ -56,7 +56,16 @@ jobs:
         working-directory: jbook/packages/cli
 
       - name: Test
+        if: matrix.node != 20
         run: npm test
+
+      # jsdom 30's bundled undici needs worker_threads.markAsUncloneable
+      # (added in Node 22.10), so local-client's browser-env suites can't run
+      # on Node 20. The cli and local-api suites plus the smoke test below
+      # still exercise everything the shipped package runs on Node 20.
+      - name: Test (Node 20 — cli and local-api only)
+        if: matrix.node == 20
+        run: npm run test --workspace=my-scrapbook --workspace=@my-scrapbook/local-api
 
       # Packs the packages and installs the cli from the tarballs in a scratch
       # project, then runs it — catches packaging bugs (missing dist files,
