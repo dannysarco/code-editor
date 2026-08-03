@@ -60,6 +60,10 @@ npx my-scrapbook export mynotes.js -o docs/mynotes.md
 - The file is completely self-contained — open it in any browser, no My Scrapbook, server, or internet connection needed. Text cells keep their formatting, and code cells **actually run**: each one executes its bundled code in a sandboxed frame, renders its preview, and shows its console output, exactly like in the app.
 - Each code cell's source is included too, behind a collapsible **Source** toggle.
 
+## What's new in 3.9
+
+- **Export a notebook as a live HTML page.** The new **Export HTML** button in the header downloads your notebook as a single self-contained file: markdown rendered, code cells runnable — previews execute and console output appears when the file is opened, in any browser, offline, with nothing installed. See "Share a notebook as a live HTML page" above.
+
 ## What's new in 3.8
 
 - **Node 20 or newer is now required** (Node 18 reached end of life). Under the hood the CLI's dependencies moved to current majors — express 5 and commander 14 — so a command with stray extra arguments now fails with a clear error instead of being silently ignored.
