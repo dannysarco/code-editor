@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.11.0 — 2026-08-02
 
 ### Added
 - **Markdown import.** `my-scrapbook import notes.md` creates a notebook from a markdown file — the inverse of `export`. Fenced `js`/`jsx`/`ts`/`tsx` blocks (case-insensitive, any CommonMark fence length, unclosed fences run to end of file) become code cells; everything between them becomes text cells, with fenced blocks in other languages kept as markdown inside them. Output defaults to the markdown name with `.js`, `-o` picks another path, and an existing notebook is never overwritten without `-f`. A notebook survives `export` → `import` unchanged (verified by a round-trip test).
