@@ -7,16 +7,36 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The full engines range (>=20) on Linux, plus one current-LTS job on
+        # each other OS — the CLI writes files, resolves paths, and spawns a
+        # server, all of which are platform-sensitive.
+        os: [ubuntu-latest]
+        node: [20, 22, 24]
+        include:
+          - os: windows-latest
+            node: 22
+          - os: macos-latest
+            node: 22
+    runs-on: ${{ matrix.os }}
+    env:
+      # The local-client vite build (it bundles a self-hosted Monaco) needs
+      # more heap than Node's default on the 7 GB macOS runners.
+      NODE_OPTIONS: --max-old-space-size=4096
     defaults:
       run:
         working-directory: jbook
+        # bash everywhere, including Windows: the build steps and the smoke
+        # script are written for it.
+        shell: bash
     steps:
       - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: ${{ matrix.node }}
           cache: npm
           cache-dependency-path: jbook/package-lock.json
 
@@ -36,7 +56,16 @@ jobs:
         working-directory: jbook/packages/cli
 
       - name: Test
+        if: matrix.node != 20
         run: npm test
+
+      # jsdom 30's bundled undici needs worker_threads.markAsUncloneable
+      # (added in Node 22.10), so local-client's browser-env suites can't run
+      # on Node 20. The cli and local-api suites plus the smoke test below
+      # still exercise everything the shipped package runs on Node 20.
+      - name: Test (Node 20 — cli and local-api only)
+        if: matrix.node == 20
+        run: npm run test --workspace=my-scrapbook --workspace=@my-scrapbook/local-api
 
       # Packs the packages and installs the cli from the tarballs in a scratch
       # project, then runs it — catches packaging bugs (missing dist files,
