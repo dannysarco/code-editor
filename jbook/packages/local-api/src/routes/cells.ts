@@ -1,6 +1,7 @@
 import express from "express";
 import fs from "fs/promises";
 import path from "path";
+import JSON5 from "json5";
 import { z } from "zod";
 import { Cell, SaveCellsRequest, SaveCellsResponse } from "@my-scrapbook/types";
 
@@ -15,6 +16,34 @@ const cellSchema: z.ZodType<Cell> = z.object({
 const saveCellsRequestSchema: z.ZodType<SaveCellsRequest> = z.object({
   cells: z.array(cellSchema),
 });
+
+const notebookSchema: z.ZodType<Cell[]> = z.array(cellSchema);
+
+// Notebooks written by pre-3.x versions of the app are JS object-literal
+// syntax (unquoted keys, trailing commas, trailing semicolon) rather than
+// strict JSON, which is what the save path writes today. JSON5 covers the
+// object-literal relaxations; the trailing semicolon has to be stripped
+// separately since even JSON5 rejects it.
+const parseNotebookFile = (raw: string): Cell[] => {
+  let data: unknown;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    try {
+      data = JSON5.parse(raw.replace(/;\s*$/, ""));
+    } catch {
+      throw new Error("the file is not a valid notebook (unparseable)");
+    }
+  }
+
+  const parsed = notebookSchema.safeParse(data);
+  if (!parsed.success) {
+    throw new Error(
+      "the file parsed but does not contain a list of notebook cells"
+    );
+  }
+  return parsed.data;
+};
 
 // Explicit body size limit; the express default (100kb) is small enough that
 // a large notebook could fail to save.
@@ -31,7 +60,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
       // Read the file
       const result = await fs.readFile(fullPath, { encoding: "utf-8" });
 
-      res.send(JSON.parse(result));
+      res.send(parseNotebookFile(result));
     } catch (err: any) {
       if (err.code === "ENOENT") {
         await fs.writeFile(fullPath, "[]", "utf-8");
