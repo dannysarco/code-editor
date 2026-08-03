@@ -7,12 +7,18 @@ import type { BundleResult } from "@my-scrapbook/types";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
+// If the local binary can't be loaded (e.g. a corrupted install), fall back
+// to unpkg, pinned to the installed package's version so the binary still
+// matches the JS API.
+const fallbackWasmURL = `https://unpkg.com/esbuild-wasm@${esbuild.version}/esbuild.wasm`;
+
 let initPromise: Promise<void> | null = null;
 
 const ensureInitialized = () => {
   if (!initPromise) {
     initPromise = esbuild
       .initialize({ wasmURL, worker: true })
+      .catch(() => esbuild.initialize({ wasmURL: fallbackWasmURL, worker: true }))
       .catch((err) => {
         // Allow a later bundle() call to retry initialization.
         initPromise = null;

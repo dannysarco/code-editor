@@ -54,12 +54,40 @@ npx my-scrapbook export
 npx my-scrapbook export mynotes.js -o docs/mynotes.md
 ```
 
+## Import a notebook from Markdown
+
+- Going the other way works too — turn any markdown file into a notebook:
+
+```
+npx my-scrapbook import notes.md
+```
+
+- This writes **notes.js** next to **notes.md**: fenced `js` / `jsx` / `ts` / `tsx` blocks become runnable code cells, and everything between them becomes text cells. Fenced blocks in other languages (python, bash, …) stay inside the text cells as ordinary markdown.
+- It won't overwrite an existing notebook unless you pass `-f`, and `-o` picks a different output name:
+
+```
+npx my-scrapbook import notes.md -o scratch.js
+```
+
+- `export` and `import` are inverses, so a notebook survives the round trip unchanged — edit your notebook as markdown in another tool and bring it back, or bootstrap a notebook from a README.
+
 ## Share a notebook as a live HTML page
 
 - Click **Export HTML** in the notebook's header to download the whole notebook as a single **notebook.html** file.
 - The file is completely self-contained — open it in any browser, no My Scrapbook, server, or internet connection needed. Text cells keep their formatting, and code cells **actually run**: each one executes its bundled code in a sandboxed frame, renders its preview, and shows its console output, exactly like in the app.
 - Each code cell's source is included too, behind a collapsible **Source** toggle.
 - The page matches its reader's light or dark preference and has its own theme toggle — independent of the theme you were using when you exported.
+
+## Works offline
+
+- Once installed, My Scrapbook doesn't need the internet: the app, the editor, and the bundler all ship with the package and are served from your machine.
+- npm imports are fetched once and cached in your browser (IndexedDB). A package you've used before keeps working offline; only importing a *new* package needs a connection. The header shows an offline indicator, and a **Clear module cache** button refetches fresh versions when you want them.
+- The bundler's WebAssembly binary is bundled locally too, with unpkg (pinned to the matching version) as an automatic fallback if the local copy ever fails to load.
+
+## What's new in 3.11
+
+- **Import from markdown.** `npx my-scrapbook import notes.md` turns a markdown file into a notebook — the inverse of `export`, and a round trip through both leaves a notebook unchanged. See "Import a notebook from Markdown" above.
+- The esbuild WebAssembly binary now falls back to unpkg (version-pinned) if the locally shipped copy fails to load, and CI now tests every supported Node version (20/22/24) on Linux, Windows, and macOS.
 
 ## What's new in 3.10
 

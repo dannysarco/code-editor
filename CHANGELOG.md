@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Markdown import.** `my-scrapbook import notes.md` creates a notebook from a markdown file — the inverse of `export`. Fenced `js`/`jsx`/`ts`/`tsx` blocks (case-insensitive, any CommonMark fence length, unclosed fences run to end of file) become code cells; everything between them becomes text cells, with fenced blocks in other languages kept as markdown inside them. Output defaults to the markdown name with `.js`, `-o` picks another path, and an existing notebook is never overwritten without `-f`. A notebook survives `export` → `import` unchanged (verified by a round-trip test).
+- **esbuild.wasm fallback.** If the locally bundled WebAssembly binary fails to load (e.g. a corrupted install), the bundler now retries from unpkg, pinned to the installed esbuild-wasm version so the binary always matches the JS API. A failed initialization still isn't cached — the next bundle retries both sources.
+
+### Changed
+- **CI now covers the whole support matrix**: Node 20, 22, and 24 on Linux, plus Node 22 on Windows and macOS — build, unit tests, and the pack-and-install smoke test all run on every job. The smoke script's one non-portable line (a `node -p require()` with an interpolated absolute path) now passes the path as an argument so Git Bash on Windows converts it.
+- README gains a "Works offline" section documenting what already worked — self-hosted app shell and editor, IndexedDB module cache, offline indicator — plus the new wasm fallback; TODO.md checkboxes that had actually shipped (UUID test, invalid-input API tests, `useCumulativeCode` memoization) are marked done.
+
 ## 3.10.2 — 2026-08-02
 
 No functional changes.

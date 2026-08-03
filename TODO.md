@@ -26,7 +26,7 @@
 
 - [x] Install `uuid` package in local-client (PR #10)
 - [x] Replace `Math.random().toString(36).substr(2, 5)` with `uuidv4()` (PR #10)
-- [ ] Add unit test for unique ID generation (deferred to item 10 — no test infrastructure yet)
+- [x] Add unit test for unique ID generation (landed with the cellsReducer suite in PR #14, which covers UUID uniqueness)
 - [x] Migration note: Existing 5-char IDs still work (IDs are opaque keys)
 
 **Files:**
@@ -144,7 +144,7 @@
 - [x] Validate POST /cells request body (PR #13)
 - [x] Return 400 with validation errors (PR #13)
 - [x] Add request body size limits (5mb explicit; express default was 100kb) (PR #13)
-- [ ] Add tests for invalid inputs (deferred to item 10 — no test infrastructure yet; the cases were exercised manually against the running server)
+- [x] Add tests for invalid inputs (landed with the API route tests in PR #14: validation rejections and corrupted-file cases)
 
 **Files:**
 - `jbook/packages/local-api/src/routes/cells.ts:33-42`
@@ -158,9 +158,9 @@
 
 - [x] Ship esbuild.wasm locally — bundled from the installed package via Vite `?url` import (PR #7)
 - [x] Update bundler to use the local WASM file (PR #7)
-- [ ] Fallback to unpkg if local fails
+- [x] Fallback to unpkg if local fails (pinned to the installed version; 3.11)
 - [x] Version always matches the installed esbuild-wasm package (PR #7)
-- [ ] Update README with offline capabilities
+- [x] Update README with offline capabilities ("Works offline" section; 3.11)
 
 **Files:**
 - `jbook/packages/local-client/src/bundler/index.ts:10`
@@ -214,10 +214,9 @@
 **Effort:** 2 days
 **Impact:** Faster re-renders, less bundling
 
-- [ ] Memoize `useCumulativeCode` hook with `useMemo`
-- [ ] Track cell dependencies
-- [ ] Only rebundle cells affected by changes
-- [ ] Add performance monitoring
+- [x] Memoize `useCumulativeCode` hook — done via a per-instance `createSelector` (the join only recomputes when the cells slice changes)
+- [x] ~~Track cell dependencies~~ / ~~Only rebundle cells affected by changes~~ obsolete — unchanged cells already skip rebundling: cumulative code is a string, so an edit to cell N leaves the selector output for cells above it `===`-equal and their debounced rebundle never fires
+- [ ] Add performance monitoring (not planned; no observed need at notebook sizes)
 
 **Files:**
 - `jbook/packages/local-client/src/hooks/use-cumulative-code.ts`

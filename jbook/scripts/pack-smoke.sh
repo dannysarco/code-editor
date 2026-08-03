@@ -75,7 +75,9 @@ npm install "$CLI_TGZ" --no-audit --no-fund --loglevel=error
 BIN="$APP/node_modules/.bin/my-scrapbook"
 
 echo "==> Checking --version"
-EXPECTED="$(node -p "require('$ROOT/packages/cli/package.json').version")"
+# The path is passed as an argument (not interpolated into the expression) so
+# Git Bash on Windows converts it to a form Windows node can require().
+EXPECTED="$(node -p "require(process.argv[1]).version" "$ROOT/packages/cli/package.json")"
 ACTUAL="$("$BIN" --version)"
 if [ "$ACTUAL" != "$EXPECTED" ]; then
   echo "--version reported '$ACTUAL', expected '$EXPECTED'" >&2
