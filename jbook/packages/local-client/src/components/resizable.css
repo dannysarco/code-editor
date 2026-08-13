@@ -33,4 +33,15 @@
   cursor: row-resize;
   position: relative;
   z-index: 2;
+  /* A drag on the handle resizes; without this the browser scrolls instead. */
+  touch-action: none;
+}
+
+/* Touch: a wider grab strip (still a 2px visible line). */
+@media (pointer: coarse) {
+  .react-resizable-handle-s {
+    height: 18px;
+    margin-top: -18px;
+    padding: 16px 0 0;
+  }
 }

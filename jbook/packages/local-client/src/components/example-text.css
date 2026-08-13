@@ -58,3 +58,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 768px) {
+  .guide-strip {
+    padding: 16px;
+    gap: 16px;
+  }
+}

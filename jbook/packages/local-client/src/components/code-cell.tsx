@@ -8,6 +8,7 @@ import { BUNDLE_DEBOUNCE_MS } from '../constants';
 import { useActions } from '../hooks/use-actions';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import { useCumulativeCode } from '../hooks/use-cumulative-code';
+import { useIsMobile } from '../hooks/use-media-query';
 
 interface CodeCellProps {
   cell: Cell;
@@ -50,15 +51,20 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const bundling = !bundle || bundle.loading;
   const display = bundling ? lastBundle : bundle;
 
+  // On mobile the panes stack vertically (CSS splits the height 50/50), so
+  // the horizontal editor/preview resizer has nothing to resize.
+  const isMobile = useIsMobile();
+  const editor = (
+    <CodeEditor
+      initialValue={cell.content}
+      onChange={(value) => updateCell(cell.id, value)}
+    />
+  );
+
   return (
     <Resizable direction="vertical">
-      <div className="code-cell">
-        <Resizable direction="horizontal">
-          <CodeEditor
-            initialValue={cell.content}
-            onChange={(value) => updateCell(cell.id, value)}
-          />
-        </Resizable>
+      <div className={isMobile ? 'code-cell stacked' : 'code-cell'}>
+        {isMobile ? editor : <Resizable direction="horizontal">{editor}</Resizable>}
         <div className="preview-pane">
           <div className="pane-toolbar preview-toolbar">
             <span className="label">Preview</span>

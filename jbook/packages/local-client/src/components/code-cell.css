@@ -5,6 +5,23 @@
   border: 1px solid var(--color-divider);
 }
 
+/* Mobile: editor over preview, each half the cell height (flex-basis wins
+   over the editor's height: 100%). The cell's south handle still resizes
+   the whole. Breakpoint mirrors MOBILE_BREAKPOINT_PX in constants.ts. */
+.code-cell.stacked {
+  flex-direction: column;
+}
+
+.code-cell.stacked .editor-wrapper,
+.code-cell.stacked .preview-pane {
+  flex: 1 1 50%;
+  min-height: 0;
+}
+
+.code-cell.stacked .preview-pane {
+  border-top: 1px solid var(--color-divider);
+}
+
 /* Shared 32px pane toolbar (JAVASCRIPT / PREVIEW). */
 .pane-toolbar {
   display: flex;

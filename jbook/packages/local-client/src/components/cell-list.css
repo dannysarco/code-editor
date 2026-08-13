@@ -121,3 +121,15 @@
 .drag-handle:active {
   cursor: grabbing;
 }
+
+@media (max-width: 768px) {
+  .notebook-meta {
+    padding: 10px 16px;
+  }
+  .cell-list {
+    padding: 0 16px 120px;
+  }
+  .empty-notebook {
+    padding: 48px 16px;
+  }
+}
