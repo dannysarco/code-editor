@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Version-pinned imports.** `import _ from 'lodash@4'` fetches that version instead of the latest — any exact version or semver range unpkg understands works, on scoped packages (`@scope/pkg@2`) and subpaths (`bulma@0.9/css/bulma.css`) too. Pinned and bare imports of the same package cache separately, so pinning is the explicit way to control a version while clearing the module cache remains the way to float bare imports forward.
+
+### Fixed
+- A failed package fetch used to surface as a bare `Network Error` in the preview. It now names the import and the likely cause: a bad package name or version (`Could not fetch 'lodash@99' from unpkg — check the package name and version`) or being offline with an uncached module.
+
 ## 3.12.0 — 2026-08-13
 
 ### Added

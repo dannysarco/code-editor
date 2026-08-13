@@ -4,7 +4,10 @@ import localForage from 'localforage';
 // (IndexedDB), keyed by URL. Cache hits skip the network entirely, which is
 // what makes bundling previously-used packages work offline. Entries are
 // pinned until cleared: 'react' resolves to whatever version unpkg served
-// when it was first fetched.
+// when it was first fetched. Version-pinned imports ('lodash@4') are
+// distinct keys, so they never collide with a bare import of the same
+// package — pinning is the explicit way to control a version, clearing the
+// cache is the way to float bare imports forward.
 export const moduleCache = localForage.createInstance({
   name: 'filecache',
 });

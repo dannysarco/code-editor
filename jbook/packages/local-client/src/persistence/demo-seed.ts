@@ -16,7 +16,7 @@ This is an interactive coding environment. Write JavaScript or TypeScript, see i
 - Cells share one file — a variable defined in cell #1 works in every cell below it
 - Call the built-in \`show()\` with a React component, string, number, or object to render it in the preview
 - \`console.log\` output shows up in a console panel under the preview
-- Import any npm package — bundling happens right in the browser, and packages you've used keep working offline
+- Import any npm package — bundling happens right in the browser, and packages you've used keep working offline. Pin a version with \`import _ from 'lodash@4'\`
 - Click **Format** in any code cell and Prettier tidies it up
 - Reorder cells with the grip handle (or the arrows), and undo any of it with Ctrl/Cmd+Z
 
