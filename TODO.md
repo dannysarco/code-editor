@@ -343,14 +343,15 @@
 ### Future Considerations
 
 Shipped from the original list: ~~dark mode~~ (3.10), ~~export to static
-HTML~~ (3.9). Markdown export (3.3) and import (3.11) also cover moving
-notebooks in and out as plain files.
+HTML~~ (3.9), ~~mobile responsive design~~ (PR #64 — code and markdown cells
+stack their panes on ≤768px, compact non-sticky header, touch-sized targets).
+Markdown export (3.3) and import (3.11) also cover moving notebooks in and
+out as plain files.
 
 Still open, roughly by value-for-effort:
 - **CLI update notice** — print a one-liner when a newer version is on npm; small, standard for CLIs
 - **Version pinning in imports** (e.g. `import x from 'lodash@4'`) — pairs naturally with the IndexedDB module cache, which currently pins whatever version was fetched first; a package version management UI would build on this
 - Import from GitHub gists (export already works via markdown/HTML)
-- Mobile responsive design
 - Syntax themes
 - Multi-file notebooks (import from other notebooks)
 - Custom bundler configurations per notebook
@@ -363,5 +364,5 @@ Still open, roughly by value-for-effort:
 
 ---
 
-**Last Updated:** 2026-08-02 (post-3.11.0)
+**Last Updated:** 2026-08-13 (post-3.11.0; mobile responsive merged in PR #64)
 **Next Review:** before committing to collaborative editing (item 15) or the next feature batch
