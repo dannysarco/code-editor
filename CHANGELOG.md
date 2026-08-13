@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.14.0 — 2026-08-13
 
 ### Added
 - **Import from GitHub gists.** `my-scrapbook import https://gist.github.com/user/abc123` creates a notebook from a gist. The most notebook-like file wins: an exported `notebook.js` imports exactly, a markdown file goes through the markdown importer, and plain JS/TS sources become code cells (with a filename header cell when there are several). `--file <name>` picks a specific file when the gist has several candidates; `-o` and `-f` work as for markdown imports, and files the API truncates (~1 MB) are refetched whole from their raw URL.
