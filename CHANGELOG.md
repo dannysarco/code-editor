@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.13.0 — 2026-08-13
 
 ### Added
 - **Version-pinned imports.** `import _ from 'lodash@4'` fetches that version instead of the latest — any exact version or semver range unpkg understands works, on scoped packages (`@scope/pkg@2`) and subpaths (`bulma@0.9/css/bulma.css`) too. Pinned and bare imports of the same package cache separately, so pinning is the explicit way to control a version while clearing the module cache remains the way to float bare imports forward.
