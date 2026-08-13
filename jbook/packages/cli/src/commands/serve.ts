@@ -2,6 +2,8 @@ import path from "path";
 import { Command } from "commander";
 import { serve } from "@my-scrapbook/local-api";
 import { openBrowser } from "../open-browser";
+import { notifyIfOutdated } from "../update-check";
+import { version } from "../version";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -27,6 +29,10 @@ export const serveCommand = new Command()
         console.log(`Opened ${filename}. Edit it at ${url}`);
         if (options.open) {
           openBrowser(url);
+        }
+        // Only for humans at a terminal — stays quiet in scripts and CI.
+        if (process.stdout.isTTY) {
+          void notifyIfOutdated(version);
         }
       } catch (err) {
         const code = (err as NodeJS.ErrnoException).code;
