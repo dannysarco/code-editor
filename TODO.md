@@ -350,8 +350,11 @@ stack their panes on ≤768px, compact non-sticky header, touch-sized targets),
 management UI could still build on this). Markdown export (3.3) and import
 (3.11) also cover moving notebooks in and out as plain files.
 
+Shipped since: ~~import from GitHub gists~~ (unreleased — `my-scrapbook
+import <gist url>`, picking notebook > markdown > JS/TS sources, with
+`--file` to disambiguate).
+
 Still open, roughly by value-for-effort:
-- Import from GitHub gists (export already works via markdown/HTML)
 - Syntax themes
 - Multi-file notebooks (import from other notebooks)
 - Custom bundler configurations per notebook
