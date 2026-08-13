@@ -136,3 +136,25 @@
 .text-editor.editing .w-md-editor-preview .wmde-markdown {
   padding: 14px;
 }
+
+/* Mobile: source over preview instead of side-by-side half-widths. The
+   library's fixed 200px inline height would squeeze the stacked panes, so
+   the editor grows with its content instead. */
+@media (max-width: 768px) {
+  .text-editor.editing .w-md-editor {
+    height: auto !important;
+  }
+  .text-editor.editing .w-md-editor-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .text-editor.editing .w-md-editor-area {
+    width: 100% !important;
+    min-height: 140px;
+  }
+  .text-editor.editing .w-md-editor-preview {
+    width: 100% !important;
+    border-left: 0;
+    border-top: 2px solid var(--color-divider);
+  }
+}

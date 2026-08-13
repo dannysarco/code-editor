@@ -26,3 +26,8 @@ export const MAX_CONSOLE_ENTRIES = 200;
 // The client edits whatever file local-api was started with; the API does
 // not expose the name, so the header and exports use the CLI's default.
 export const NOTEBOOK_FILENAME = 'notebook.js';
+
+// Below this width the code cell stacks editor over preview instead of
+// splitting side-by-side (two ~350px panes stop being usable). The CSS media
+// queries hardcode the same 768px — keep them in sync when changing this.
+export const MOBILE_BREAKPOINT_PX = 768;

@@ -40,6 +40,13 @@
   opacity: 1;
 }
 
+/* No hover on touch devices — keep the button visible. */
+@media (hover: none) {
+  .editor-toolbar .format-btn {
+    opacity: 1;
+  }
+}
+
 .editor-host {
   flex: 1;
   min-height: 0;

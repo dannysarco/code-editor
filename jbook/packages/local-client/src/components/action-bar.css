@@ -15,3 +15,13 @@
   opacity: 1;
   color: var(--color-accent);
 }
+
+/* Touch: bigger targets, and full strength since there's no hover to
+   promote them. */
+@media (pointer: coarse) {
+  .action-bar .cell-action {
+    width: 36px;
+    height: 36px;
+    opacity: 0.7;
+  }
+}

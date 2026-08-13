@@ -73,3 +73,22 @@
     row-gap: 8px;
   }
 }
+
+/* Mobile: the wrapped header is 2–3 rows tall, so it scrolls away instead of
+   staying stuck over a small screen; tighter padding and buttons to match. */
+@media (max-width: 768px) {
+  .notebook-header {
+    position: static;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  .notebook-header .btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  .notebook-header .btn-icon {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+}
