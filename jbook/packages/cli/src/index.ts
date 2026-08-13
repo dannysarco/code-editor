@@ -3,10 +3,7 @@ import { program } from 'commander';
 import { serveCommand } from './commands/serve';
 import { exportCommand } from './commands/export';
 import { importCommand } from './commands/import';
-
-// Resolved at runtime relative to dist/index.js (esbuild inlines it into the
-// published bundle), so the reported version always matches the package.
-const { version } = require('../package.json') as { version: string };
+import { version } from './version';
 
 program
   .name('my-scrapbook')
