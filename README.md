@@ -77,6 +77,16 @@ npx my-scrapbook import notes.md -o scratch.js
 
 - `export` and `import` are inverses, so a notebook survives the round trip unchanged — edit your notebook as markdown in another tool and bring it back, or bootstrap a notebook from a README.
 
+### …or from a GitHub gist
+
+- `import` also accepts a gist URL:
+
+```
+npx my-scrapbook import https://gist.github.com/user/abc123
+```
+
+- It picks the most notebook-like file automatically — an exported `notebook.js` wins (it round-trips exactly), then a markdown file, then JS/TS sources become code cells (with a filename header cell when there are several). `--file <name>` picks a specific file when the gist has several candidates, and `-o`/`-f` work as for markdown imports.
+
 ## Share a notebook as a live HTML page
 
 - Click **Export HTML** in the notebook's header to download the whole notebook as a single **notebook.html** file.
@@ -92,7 +102,7 @@ npx my-scrapbook import notes.md -o scratch.js
 
 ## What's new in 3.11
 
-- **Import from markdown.** `npx my-scrapbook import notes.md` turns a markdown file into a notebook — the inverse of `export`, and a round trip through both leaves a notebook unchanged. See "Import a notebook from Markdown" above.
+- **Import from markdown or a gist.** `npx my-scrapbook import notes.md` turns a markdown file into a notebook — the inverse of `export`, and a round trip through both leaves a notebook unchanged. A gist URL works too: `npx my-scrapbook import https://gist.github.com/user/abc123`. See "Import a notebook from Markdown" above.
 - The esbuild WebAssembly binary now falls back to unpkg (version-pinned) if the locally shipped copy fails to load, and CI now tests every supported Node version (20/22/24) on Linux, Windows, and macOS.
 
 ## What's new in 3.10

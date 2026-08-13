@@ -121,4 +121,116 @@ describe('import command parsing', () => {
     });
     expect(fs.readFile).not.toHaveBeenCalled();
   });
+
+  it('rejects --file for local imports', async () => {
+    await expect(
+      run(['import', 'notes.md', '--file', 'a.md'])
+    ).rejects.toThrow('exit:1');
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('--file only applies to gist imports')
+    );
+  });
+});
+
+describe('import command with a gist URL', () => {
+  const gistResponse = (files: Record<string, string>) => ({
+    ok: true,
+    status: 200,
+    json: async () => ({
+      files: Object.fromEntries(
+        Object.entries(files).map(([filename, content]) => [
+          filename,
+          { filename, content, truncated: false, raw_url: '' },
+        ])
+      ),
+    }),
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(fs.access).mockRejectedValue(
+      Object.assign(new Error('ENOENT'), { code: 'ENOENT' })
+    );
+    vi.spyOn(process, 'exit').mockImplementation(((code?: number) => {
+      throw new Error(`exit:${code}`);
+    }) as never);
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it('imports a markdown gist, naming the output after its file', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => gistResponse({ 'notes.md': MARKDOWN }))
+    );
+
+    await run(['import', 'https://gist.github.com/danny/abc123']);
+
+    expect(fs.readFile).not.toHaveBeenCalled();
+    const [outPath, json] = vi.mocked(fs.writeFile).mock.calls[0];
+    expect(outPath).toBe(path.resolve(process.cwd(), 'notes.js'));
+    const cells = JSON.parse(json as string);
+    expect(cells[1]).toMatchObject({ type: 'code', content: 'show(1);' });
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('Imported gist (notes.md) to notes.js')
+    );
+  });
+
+  it('--file picks a gist file and -o still names the output', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        gistResponse({ 'a.md': '# a', 'b.md': '# b\n\n```js\nshow(9);\n```' })
+      )
+    );
+
+    await run([
+      'import',
+      'https://gist.github.com/abc123',
+      '--file',
+      'b.md',
+      '-o',
+      'nb.js',
+    ]);
+
+    const [outPath, json] = vi.mocked(fs.writeFile).mock.calls[0];
+    expect(outPath).toBe(path.resolve(process.cwd(), 'nb.js'));
+    expect(JSON.parse(json as string)[1]).toMatchObject({
+      type: 'code',
+      content: 'show(9);',
+    });
+  });
+
+  it('still refuses to overwrite an existing notebook', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => gistResponse({ 'notes.md': MARKDOWN }))
+    );
+    vi.mocked(fs.access).mockResolvedValue(undefined);
+
+    await expect(
+      run(['import', 'https://gist.github.com/danny/abc123'])
+    ).rejects.toThrow('exit:1');
+    expect(fs.writeFile).not.toHaveBeenCalled();
+  });
+
+  it('reports fetch failures and exits 1', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({ ok: false, status: 404 }))
+    );
+
+    await expect(
+      run(['import', 'https://gist.github.com/danny/abc123'])
+    ).rejects.toThrow('exit:1');
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('Could not import the gist')
+    );
+    expect(fs.writeFile).not.toHaveBeenCalled();
+  });
 });
