@@ -84,6 +84,41 @@ describe('fetch plugin', () => {
     );
   });
 
+  it('names the import when unpkg answers 404', async () => {
+    vi.mocked(axios.get).mockRejectedValue({ response: { status: 404 } });
+    vi.mocked(axios.isAxiosError).mockReturnValue(true);
+    const load = makeLoader('');
+
+    await expect(load({ path: 'https://unpkg.com/lodash@99' })).rejects.toThrow(
+      "Could not fetch 'lodash@99' from unpkg — check the package name and version"
+    );
+  });
+
+  it('says a response-less failure is a bad specifier while online', async () => {
+    // unpkg 404s can be CORS-blocked, so a bad version often has no response.
+    vi.mocked(axios.get).mockRejectedValue(new Error('Network Error'));
+    vi.mocked(axios.isAxiosError).mockReturnValue(false);
+    vi.stubGlobal('navigator', { onLine: true });
+    const load = makeLoader('');
+
+    await expect(load({ path: 'https://unpkg.com/lodash@99' })).rejects.toThrow(
+      "Could not fetch 'lodash@99' from unpkg — check the package name and version"
+    );
+    vi.unstubAllGlobals();
+  });
+
+  it('says a response-less failure is the network while offline', async () => {
+    vi.mocked(axios.get).mockRejectedValue(new Error('Network Error'));
+    vi.mocked(axios.isAxiosError).mockReturnValue(false);
+    vi.stubGlobal('navigator', { onLine: false });
+    const load = makeLoader('');
+
+    await expect(load({ path: 'https://unpkg.com/lodash' })).rejects.toThrow(
+      "Could not fetch 'lodash' — you're offline and it isn't in the module cache yet"
+    );
+    vi.unstubAllGlobals();
+  });
+
   it('wraps CSS in a style-injecting script with escaped content', async () => {
     vi.mocked(axios.get).mockResolvedValue({
       data: '.button {\n  color: "red";\n}',

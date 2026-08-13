@@ -13,7 +13,10 @@ const GUIDE_ITEMS: React.ReactNode[] = [
     Call <code>show()</code> to render a component, string or number in the
     preview.
   </>,
-  <>Import any npm package — bundling happens in the browser.</>,
+  <>
+    Import any npm package — bundling happens in the browser. Pin a version
+    with <code>lodash@4</code>.
+  </>,
   <>
     Code cells accept TypeScript too — types are stripped before the code
     runs.

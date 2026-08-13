@@ -46,6 +46,28 @@ describe('unpkg path plugin', () => {
     });
   });
 
+  it('passes version-pinned specifiers through to unpkg', async () => {
+    // unpkg resolves the semver range server-side, so the URL carries the
+    // pin verbatim: unpkg.com/lodash@4 answers with lodash@4.x's code.
+    const resolve = makeResolver();
+    expect(await resolve({ path: 'lodash@4' })).toEqual({
+      namespace: 'a',
+      path: 'https://unpkg.com/lodash@4',
+    });
+    expect(await resolve({ path: 'axios@0.27.2' })).toEqual({
+      namespace: 'a',
+      path: 'https://unpkg.com/axios@0.27.2',
+    });
+    expect(await resolve({ path: '@tanstack/react-query@5' })).toEqual({
+      namespace: 'a',
+      path: 'https://unpkg.com/@tanstack/react-query@5',
+    });
+    expect(await resolve({ path: 'bulma@0.9/css/bulma.css' })).toEqual({
+      namespace: 'a',
+      path: 'https://unpkg.com/bulma@0.9/css/bulma.css',
+    });
+  });
+
   it('resolves relative paths against the importing module directory', () => {
     const resolve = makeResolver();
     expect(
