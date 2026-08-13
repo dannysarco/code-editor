@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 3.12.0 — 2026-08-13
 
 ### Added
+- **Mobile responsive design.** The notebook is now usable on phones: on viewports ≤768px, code cells stack the editor over the preview (each half the cell height; the cell-height drag handle still works, with a wider touch strip) and markdown cells stack source over preview, growing with their content instead of the fixed 200px editor height. The header goes compact and non-sticky, page gutters drop from 32px to 16px, and touch devices get bigger targets: 36px cell-action buttons at near-full opacity and an always-visible Format button. Desktop layouts are unchanged.
+- **CLI update notice.** `serve` prints a one-liner when a newer version is on npm (`A newer my-scrapbook is available: … Update: npm i -g my-scrapbook@latest`). It only appears at an interactive terminal, the registry check is capped at 2 seconds, and every failure path — offline, slow, or broken registry — is silent, so it can never break or delay serving a notebook.
 - **Hosted demo.** [try-my-scrapbook.vercel.app](https://try-my-scrapbook.vercel.app) is the app with nothing to install: a new demo build (`npm run build:demo` in local-client, `vite build --mode demo` underneath) swaps the local API for browser persistence — the notebook is stored whole in IndexedDB, the same mechanism the module cache already uses. Notebook persistence now sits behind a two-function adapter (`src/persistence/`) chosen at build time; the CLI build's behavior is unchanged. A first visit opens on a seeded sample notebook (persisted immediately, so deleting every cell stays deleted), the header labels it "demo notebook" and gains **Get the CLI** and **Download notebook.js** buttons — the download is the exact JSON shape `npx my-scrapbook` opens — and the empty-state/guide copy says the notebook saves in the browser. Deploys from `jbook/` via the Vercel CLI (`vercel deploy --prod`; config in `jbook/vercel.json`, where the install pins `--include=dev` because Vercel builds set `NODE_ENV=production`).
 
 ### Fixed
