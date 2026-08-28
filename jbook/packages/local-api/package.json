@@ -36,6 +36,7 @@
     "@my-scrapbook/local-client": "^3.0.0",
     "express": "^5.2.1",
     "http-proxy-middleware": "^3.0.7",
+    "json5": "^2.2.3",
     "zod": "^4.4.3"
   },
   "repository": {

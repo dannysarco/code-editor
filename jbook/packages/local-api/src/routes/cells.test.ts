@@ -43,6 +43,41 @@ describe("cells router", () => {
       expect(res.body).toEqual(cells);
     });
 
+    it("reads legacy notebooks written in relaxed JS object-literal syntax", async () => {
+      // Format written by pre-3.x versions of the app: unquoted keys,
+      // trailing commas, and a trailing semicolon.
+      const legacy = `[
+  {
+    content: "**Hello** markdown cell",
+    type: "text",
+    id: "qw4rr",
+  },
+  {
+    content: "show(1);\\r\\n",
+    type: "code",
+    id: "ldq45",
+  },
+];
+`;
+      await fs.writeFile(notebookPath(), legacy, "utf-8");
+
+      const res = await request(app).get("/cells");
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual([
+        { content: "**Hello** markdown cell", type: "text", id: "qw4rr" },
+        { content: "show(1);\r\n", type: "code", id: "ldq45" },
+      ]);
+    });
+
+    it("answers 500 when the file parses but is not a cell list", async () => {
+      await fs.writeFile(notebookPath(), '{"not": "cells"}', "utf-8");
+
+      const res = await request(app).get("/cells");
+      expect(res.status).toBe(500);
+      expect(res.body.error).toContain(FILENAME);
+    });
+
     it("answers 500 for a corrupted notebook instead of crashing", async () => {
       await fs.writeFile(notebookPath(), "not json{{{", "utf-8");
 
